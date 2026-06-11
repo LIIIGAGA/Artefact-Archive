@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARCHIVE // [SUBJECT REDACTED]</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #E3000F;
+    --red-dim: #7A0008;
+    --white: #F0EDE8;
+    --white-dim: #888880;
+    --bg: #080808;
+    --bg2: #111111;
+    --bg3: #1A1A1A;
+    --border: #2A2A2A;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Space Grotesk', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* SCANLINE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* NOISE TEXTURE */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  /* HUD FRAME */
+  .hud-corner {
+    position: fixed;
+    z-index: 100;
+    font-size: 11px;
+    color: var(--white-dim);
+    letter-spacing: 0.05em;
+    pointer-events: none;
+  }
+  .hud-tl { top: 20px; left: 24px; display: flex; align-items: center; gap: 10px; }
+  .hud-tr { top: 20px; right: 24px; }
+  .hud-bl { bottom: 20px; left: 24px; }
+  .hud-br { bottom: 20px; right: 24px; }
+
+  .rec-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--red);
+    display: inline-block;
+    animation: blink 1.4s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  .hud-box {
+    border: 1px solid var(--border);
+    width: 14px; height: 14px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  /* BOOT SCREEN */
+  #boot {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 9000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: opacity 0.8s ease;
+  }
+  #boot.hidden { opacity: 0; pointer-events: none; }
+
+  .boot-line {
+    font-size: 12px;
+    color: var(--white-dim);
+    opacity: 0;
+    animation: fadeIn 0.3s forwards;
+    letter-spacing: 0.04em;
+  }
+  .boot-line.red { color: var(--red); }
+  .boot-line.bright { color: var(--white); }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  .boot-bar-wrap {
+    width: 300px;
+    height: 2px;
+    background: var(--border);
+    margin-top: 24px;
+    opacity: 0;
+    animation: fadeIn 0.3s 1.6s forwards;
+  }
+  .boot-bar {
+    height: 100%;
+    background: var(--red);
+    width: 0%;
+    animation: barFill 1s 1.8s cubic-bezier(.4,0,.2,1) forwards;
+  }
+  @keyframes barFill { to { width: 100%; } }
+
+  /* MAIN */
+  main { opacity: 0; transition: opacity 0.6s ease; }
+  main.visible { opacity: 1; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 56px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 80px;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(8px);
+    z-index: 500;
+    justify-content: space-between;
+  }
+
+  .nav-id {
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--white-dim);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--red); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 80px;
+    padding-top: 56px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-label {
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .hero-name {
+    font-family: var(--sans);
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+
+  .hero-name span { color: var(--red); }
+
+  .hero-title {
+    font-size: 13px;
+    color: var(--white-dim);
+    letter-spacing: 0.08em;
+    margin-bottom: 48px;
+    max-width: 560px;
+    line-height: 1.8;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .hero-meta-item .label {
+    font-size: 10px;
+    color: var(--white-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .hero-meta-item .value {
+    font-size: 13px;
+    color: var(--white);
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 320px;
+    height: 320px;
+    opacity: 0.06;
+    background-image:
+      linear-gradient(var(--red) 1px, transparent 1px),
+      linear-gradient(90deg, var(--red) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+
+  /* SECTION SHARED */
+  section {
+    padding: 80px 80px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .section-num {
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.12em;
+  }
+
+  .section-title {
+    font-family: var(--sans);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: -0.01em;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin-left: 16px;
+  }
+
+  /* CATEGORY GRID */
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .category-card {
+    background: var(--bg);
+    text-decoration: none;
+    color: inherit;
+    padding: 48px 40px;
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 260px;
+  }
+  .category-card:hover { background: var(--bg2); }
+  .category-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0;
+    width: 2px; height: 0;
+    background: var(--red);
+    transition: height 0.4s ease;
+  }
+  .category-card:hover::before { height: 100%; }
+
+  .cat-index {
+    font-size: 11px;
+    color: var(--white-dim);
+    letter-spacing: 0.12em;
+    margin-bottom: 20px;
+    transition: color 0.2s;
+  }
+  .category-card:hover .cat-index { color: var(--red); }
+
+  .cat-title {
+    font-family: var(--sans);
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .cat-desc {
+    font-size: 12px;
+    color: var(--white-dim);
+    line-height: 1.7;
+    max-width: 360px;
+    margin-bottom: 28px;
+  }
+
+  .cat-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .cat-count {
+    font-size: 11px;
+    color: var(--white-dim);
+    letter-spacing: 0.08em;
+  }
+  .cat-count span { color: var(--red); }
+
+  .cat-arrow {
+    font-size: 20px;
+    color: var(--red);
+    transition: transform 0.2s;
+  }
+  .category-card:hover .cat-arrow { transform: translateX(6px); }
+
+  .cat-wip-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+    margin-right: 6px;
+    animation: blink 1.2s infinite;
+  }
+
+  /* ABOUT */
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .about-file {
+    border: 1px solid var(--border);
+    padding: 28px;
+    background: var(--bg2);
+    position: relative;
+  }
+
+  .about-file::before {
+    content: 'PERSONNEL FILE';
+    position: absolute;
+    top: -1px; left: 20px;
+    background: var(--bg2);
+    padding: 0 8px;
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    transform: translateY(-50%);
+  }
+
+  .file-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 8px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .file-row:last-child { border-bottom: none; }
+  .file-key { color: var(--white-dim); letter-spacing: 0.06em; text-transform: uppercase; font-size: 11px; }
+  .file-val { color: var(--white); }
+  .file-val.red { color: var(--red); }
+
+  .about-text p {
+    font-size: 13px;
+    color: var(--white-dim);
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+  .about-text p strong { color: var(--white); font-weight: 500; }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 24px;
+  }
+
+  .skill-item {
+    background: var(--bg);
+    padding: 10px 14px;
+    font-size: 11px;
+    color: var(--white-dim);
+    letter-spacing: 0.06em;
+  }
+
+  /* CONTACT */
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .contact-message {
+    font-size: 13px;
+    color: var(--white-dim);
+    line-height: 1.9;
+    margin-bottom: 32px;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .contact-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    transition: border-color 0.2s, background 0.2s;
+    margin-bottom: 1px;
+  }
+  .contact-link:hover { background: var(--bg3); border-color: var(--red-dim); }
+  .contact-link .arrow { color: var(--red); }
+
+  .contact-availability {
+    border: 1px solid var(--border);
+    padding: 28px;
+    background: var(--bg2);
+    position: relative;
+  }
+  .contact-availability::before {
+    content: 'SYSTEM STATUS';
+    position: absolute;
+    top: -1px; left: 20px;
+    background: var(--bg2);
+    padding: 0 8px;
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    transform: translateY(-50%);
+  }
+
+  .status-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .status-row:last-child { border-bottom: none; }
+  .status-green { color: #3A9A3A; }
+
+  /* FOOTER */
+  footer {
+    padding: 24px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--white-dim);
+    letter-spacing: 0.06em;
+  }
+
+  /* SCROLL ANIMATIONS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* CURSOR CROSSHAIR EFFECT */
+  .crosshair-h, .crosshair-v {
+    position: fixed;
+    background: rgba(227,0,15,0.15);
+    pointer-events: none;
+    z-index: 200;
+    transition: opacity 0.3s;
+    opacity: 0;
+  }
+  .crosshair-h { height: 1px; left: 0; right: 0; }
+  .crosshair-v { width: 1px; top: 0; bottom: 0; }
+  body:hover .crosshair-h,
+  body:hover .crosshair-v { opacity: 1; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    #hero, section { padding-left: 20px; padding-right: 20px; }
+    .about-layout, .contact-layout { grid-template-columns: 1fr; gap: 32px; }
+    .hero-grid-bg { display: none; }
+    footer { padding: 24px 20px; flex-direction: column; gap: 8px; }
+    .nav-links { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSOR CROSSHAIR -->
+<div class="crosshair-h" id="ch"></div>
+<div class="crosshair-v" id="cv"></div>
+
+<!-- HUD OVERLAY -->
+<div class="hud-corner hud-tl">
+  <div class="hud-box"></div>
+  <span class="rec-dot"></span>
+  <span>REC</span>
+</div>
+<div class="hud-corner hud-tr">[2025]</div>
+<div class="hud-corner hud-bl">[Currently Available Info]</div>
+<div class="hud-corner hud-br">[CVA]</div>
+
+<!-- BOOT SCREEN -->
+<div id="boot">
+  <div class="boot-line" style="animation-delay:0.1s">ARCHIVE SYSTEM v2.4.1 — INITIALIZING</div>
+  <div class="boot-line" style="animation-delay:0.4s">LOADING SUBJECT DATABASE...</div>
+  <div class="boot-line" style="animation-delay:0.7s">CLEARANCE LEVEL: UNRESTRICTED</div>
+  <div class="boot-line bright" style="animation-delay:1.0s">SUBJECT LOCATED — ACCESSING FILE</div>
+  <div class="boot-line red" style="animation-delay:1.3s">WARNING: SOME FILES MAY BE INCOMPLETE</div>
+  <div class="boot-bar-wrap">
+    <div class="boot-bar"></div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-id">ARCHIVE // SUBJECT_[01]</div>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#about">Profile</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-label">// FILE_001 — PERSONNEL RECORD ACCESSED</div>
+    <h1 class="hero-name">LIIIGAGA<br><span>Jiaying</span><br>Li</h1>
+    <p class="hero-title">
+      Cinematic &amp; Videogame Architecture · The Bartlett, UCL<br>
+      Working at the intersection of architectural storytelling, immersive environments, and narrative game design.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="label">Status</span>
+        <span class="value" style="color:var(--red);">● Open to Opportunities</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">Location</span>
+        <span class="value">London, UK → Shenzhen, China</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">Institution</span>
+        <span class="value">The Bartlett, UCL</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">Programme</span>
+        <span class="value">MArch CVA 2025-26</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-header reveal">
+      <span class="section-num">// 002</span>
+      <h2 class="section-title">COLLECTED WORKS</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="category-grid">
+
+      <a href="category-films.html" class="category-card reveal">
+        <div>
+          <div class="cat-index">// CATEGORY 01</div>
+          <h3 class="cat-title">Films</h3>
+          <p class="cat-desc">Experimental music videos, VFX composites, and moving image works exploring spatial disorientation, architectural memory, and cinematic environments.</p>
+        </div>
+        <div class="cat-footer">
+          <div class="cat-count"><span>2</span> works</div>
+          <div class="cat-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="category-games.html" class="category-card reveal">
+        <div>
+          <div class="cat-index">// CATEGORY 02</div>
+          <h3 class="cat-title">Games</h3>
+          <p class="cat-desc">Playable environments where architecture becomes the narrative medium — interactive spaces built for player agency and spatial storytelling.</p>
+        </div>
+        <div class="cat-footer">
+          <div class="cat-count"><span>2</span> works · <span class="cat-wip-dot"></span><span style="color:var(--red)">1 in development</span></div>
+          <div class="cat-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="category-immersive.html" class="category-card reveal">
+        <div>
+          <div class="cat-index">// CATEGORY 03</div>
+          <h3 class="cat-title">Immersive<br>Environments</h3>
+          <p class="cat-desc">Site-specific installations and spatial audio experiences where invisible architectural structures are mapped onto the body through sound and presence.</p>
+        </div>
+        <div class="cat-footer">
+          <div class="cat-count"><span>1</span> work</div>
+          <div class="cat-arrow">→</div>
+        </div>
+      </a>
+
+      <a href="category-architecture.html" class="category-card reveal">
+        <div>
+          <div class="cat-index">// CATEGORY 04</div>
+          <h3 class="cat-title">Architecture</h3>
+          <p class="cat-desc">Undergraduate architectural projects, video essays, and research work examining space, movement, and the built environment.</p>
+        </div>
+        <div class="cat-footer">
+          <div class="cat-count"><span>—</span> works</div>
+          <div class="cat-arrow">→</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header reveal">
+      <span class="section-num">// 003</span>
+      <h2 class="section-title">PERSONNEL PROFILE</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="about-layout">
+      <div class="about-file reveal">
+        <div class="file-row">
+          <span class="file-key">Subject ID</span>
+          <span class="file-val">[Jiaying Li / Gaga]</span>
+        </div>
+        <div class="file-row">
+          <span class="file-key">Designation</span>
+          <span class="file-val red">Digital Architect &amp; Worldbuilder</span>
+        </div>
+        <div class="file-row">
+          <span class="file-key">Institution</span>
+          <span class="file-val">University College London — Bartlett</span>
+        </div>
+        <div class="file-row">
+          <span class="file-key">Programme</span>
+          <span class="file-val">MArch CVA</span>
+        </div>
+        <div class="file-row">
+          <span class="file-key">Expected Graduation</span>
+          <span class="file-val">Sep 2026</span>
+        </div>
+        <div class="file-row">
+          <span class="file-key">Location</span>
+          <span class="file-val">London, UK → Shenzhen, China</span>
+        </div>
+        <div class="file-row">
+          <span class="file-key">Languages</span>
+          <span class="file-val">Chinese, English</span>
+        </div>
+        <div class="file-row">
+          <span class="file-key">Clearance</span>
+          <span class="file-val red">UNRESTRICTED</span>
+        </div>
+
+        <div class="skills-grid" style="margin-top:24px;">
+          <div class="skill-item">3D MODELLING</div>
+          <div class="skill-item">Rhino · Blender · Houdini</div>
+          <div class="skill-item">NARRATIVE DESIGN</div>
+          <div class="skill-item">Scriptwriting · Storyboarding</div>
+          <div class="skill-item">GAME DEVELOPMENT</div>
+          <div class="skill-item">Unreal Engine 5</div>
+          <div class="skill-item">IMMERSIVE MEDIA</div>
+          <div class="skill-item">Photoshop · Premiere Pro · After Effects · Audition</div>
+        </div>
+      </div>
+
+      <div class="about-text reveal">
+        <p>
+          <strong>I am a Digital Architect and Worldbuilder</strong> working at the intersection of architecture, game design, and interactive media.
+        </p>
+        <p>
+          My practice focuses on <strong>architectural storytelling, narrative environments, and immersive experiences</strong>. Using Unreal Engine, 3D production workflows, and narrative design methodologies, I create spaces that function not only as environments but as systems for storytelling and player engagement.
+        </p>
+        <p>
+          At The Bartlett's Cinematic & Videogame Architecture programme, I have developed projects across <strong>video games, immersive animation, film, and spatial audio</strong>. Across these disciplines, I am interested in <strong>how architecture can shape perception and player agency, and how spaces can become responsive narrative systems rather than passive backdrops.</strong>
+        </p>
+        <p>
+          Currently completing my MArch degree at The Bartlett, UCL, I am open to opportunities in game design, narrative environment design, worldbuilding, immersive experiences, and interactive media.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header reveal">
+      <span class="section-num">// 004</span>
+      <h2 class="section-title">ESTABLISH CONTACT</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="contact-layout">
+      <div class="reveal">
+        <p class="contact-message">
+          Available for collaborations, commissions, and conversations about space, games, film, and whatever lives in between. Response time: usually within 48 hours.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:liiigaga@163.com" class="contact-link">
+            <span>liiigaga@163.com</span>
+            <span class="arrow">→</span>
+          </a>
+          <a href="https://linkedin.com/in/jiaying-li-125aa83b7" target="_blank" class="contact-link">
+            <span>LinkedIn</span>
+            <span class="arrow">→</span>
+          </a>
+          <a href="https://vimeo.com/liiigaga" target="_blank" class="contact-link">
+            <span>Vimeo</span>
+            <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-availability reveal">
+        <div class="status-row">
+          <span>Availability</span>
+          <span class="status-green">● Open to Work</span>
+        </div>
+        <div class="status-row">
+          <span>Location</span>
+          <span>London, UK → Shenzhen, China</span>
+        </div>
+        <div class="status-row">
+          <span>Remote</span>
+          <span style="color:var(--white-dim)">Accepted</span>
+        </div>
+        <div class="status-row">
+          <span>Freelance</span>
+          <span style="color:var(--white-dim)">Accepted</span>
+        </div>
+        <div class="status-row">
+          <span>Full-time</span>
+          <span style="color:var(--white-dim)">Accepted</span>
+        </div>
+        <div class="status-row">
+          <span>CV / Portfolio PDF</span>
+          <span style="color:var(--red)">On Request →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>ARCHIVE SYSTEM // [SUBJECT_01] // 2025</span>
+    <span>ALL FILES PROPERTY OF SUBJECT — UNAUTHORIZED USE MONITORED</span>
+  </footer>
+
+</main>
+
+<script>
+  // BOOT SEQUENCE
+  setTimeout(() => {
+    const boot = document.getElementById('boot');
+    boot.classList.add('hidden');
+    setTimeout(() => {
+      boot.style.display = 'none';
+      document.getElementById('main').classList.add('visible');
+    }, 800);
+  }, 3200);
+
+  // CURSOR CROSSHAIR
+  const ch = document.getElementById('ch');
+  const cv = document.getElementById('cv');
+  document.addEventListener('mousemove', e => {
+    ch.style.top = e.clientY + 'px';
+    cv.style.left = e.clientX + 'px';
+  });
+
+  // SCROLL REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

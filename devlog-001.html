@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARCHIVE // DEVLOG 001</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #E3000F; --red-dim: #7A0008;
+    --white: #F0EDE8; --white-dim: #888880;
+    --bg: #080808; --bg2: #111111; --bg3: #1A1A1A;
+    --border: #2A2A2A;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Space Grotesk', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--white); font-family: var(--mono); font-size: 13px; line-height: 1.6; overflow-x: hidden; cursor: crosshair; }
+  body::before { content: ''; position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px); pointer-events: none; z-index: 9999; }
+
+  .hud-corner { position: fixed; z-index: 100; font-size: 11px; color: var(--white-dim); letter-spacing: 0.05em; pointer-events: none; font-family: var(--mono); }
+  .hud-tl { top: 20px; left: 24px; display: flex; align-items: center; gap: 10px; }
+  .hud-tr { top: 20px; right: 24px; }
+  .hud-bl { bottom: 20px; left: 24px; }
+  .hud-br { bottom: 20px; right: 24px; }
+  .rec-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); display: inline-block; animation: blink 1.4s ease-in-out infinite; }
+  .hud-box { border: 1px solid var(--border); width: 14px; height: 14px; display: inline-block; vertical-align: middle; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  .crosshair-h, .crosshair-v { position: fixed; background: rgba(227,0,15,0.15); pointer-events: none; z-index: 200; opacity: 0; transition: opacity 0.3s; }
+  .crosshair-h { height: 1px; left: 0; right: 0; }
+  .crosshair-v { width: 1px; top: 0; bottom: 0; }
+  body:hover .crosshair-h, body:hover .crosshair-v { opacity: 1; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; height: 56px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 80px; background: rgba(8,8,8,0.92); backdrop-filter: blur(8px); z-index: 500; justify-content: space-between; }
+  .nav-back { color: var(--white-dim); text-decoration: none; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-back:hover { color: var(--red); }
+  .nav-id { font-size: 11px; color: var(--red); letter-spacing: 0.12em; text-transform: uppercase; }
+
+  /* HERO */
+  .log-hero { padding: 120px 80px 48px; border-bottom: 1px solid var(--border); max-width: 900px; }
+  .log-meta-top { display: flex; gap: 24px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+  .log-project { font-size: 11px; color: var(--white-dim); letter-spacing: 0.1em; text-transform: uppercase; }
+  .log-project a { color: var(--white-dim); text-decoration: none; transition: color 0.2s; }
+  .log-project a:hover { color: var(--red); }
+  .log-num { font-size: 11px; color: var(--red); letter-spacing: 0.12em; }
+  .log-date { font-size: 11px; color: var(--white-dim); letter-spacing: 0.08em; }
+  .log-title { font-family: var(--sans); font-size: clamp(32px, 5vw, 56px); font-weight: 700; line-height: 1.0; letter-spacing: -0.02em; color: var(--white); margin-bottom: 20px; }
+  .log-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag { font-size: 10px; color: var(--white-dim); border: 1px solid var(--border); padding: 2px 8px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .tag.active { border-color: var(--red-dim); color: var(--red); }
+
+  /* BODY */
+  .log-body { padding: 64px 80px; max-width: 900px; }
+
+  /* TEXT BLOCK */
+  .log-text { margin-bottom: 48px; }
+  .log-text p { font-size: 14px; color: var(--white-dim); line-height: 1.95; margin-bottom: 20px; max-width: 680px; }
+  .log-text p:last-child { margin-bottom: 0; }
+  .log-text strong { color: var(--white); font-weight: 500; }
+  .log-text h3 { font-family: var(--sans); font-size: 18px; font-weight: 600; color: var(--white); margin-bottom: 12px; margin-top: 32px; }
+
+  /* SECTION LABEL */
+  .log-section-label { font-size: 11px; color: var(--red); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; }
+
+  /* IMAGE GRID */
+  .image-grid { display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 48px; }
+  .image-grid.cols-1 { grid-template-columns: 1fr; }
+  .image-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+  .image-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .image-slot { aspect-ratio: 16/10; background: var(--bg2); overflow: hidden; }
+  .image-slot img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+  .image-slot:hover img { transform: scale(1.02); }
+  .image-slot.wide { grid-column: span 2; aspect-ratio: 21/9; }
+  .image-caption { font-size: 11px; color: var(--white-dim); letter-spacing: 0.04em; margin-top: -40px; margin-bottom: 48px; padding: 8px 0; border-top: 1px solid var(--border); }
+
+  /* VIDEO */
+  .video-wrap { width: 100%; aspect-ratio: 16/9; background: var(--bg2); border: 1px solid var(--border); overflow: hidden; margin-bottom: 48px; }
+  .video-wrap iframe { width: 100%; height: 100%; border: none; }
+
+  /* HIGHLIGHT BOX */
+  .log-highlight { border-left: 2px solid var(--red); padding: 16px 20px; background: var(--bg2); margin-bottom: 48px; }
+  .log-highlight p { font-size: 13px; color: var(--white); line-height: 1.8; margin: 0; }
+
+  /* PREV / NEXT */
+  .log-nav { padding: 40px 80px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); }
+  .log-nav-link { color: var(--white-dim); text-decoration: none; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; display: flex; flex-direction: column; gap: 4px; }
+  .log-nav-link:hover { color: var(--white); }
+  .log-nav-link .arrow { color: var(--red); font-size: 16px; }
+  .log-nav-link .nav-title { font-family: var(--sans); font-size: 15px; font-weight: 600; color: var(--white); }
+  .log-nav-link.right { text-align: right; }
+
+  footer { padding: 24px 80px; display: flex; justify-content: space-between; font-size: 11px; color: var(--white-dim); letter-spacing: 0.06em; border-top: 1px solid var(--border); }
+
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    nav, .log-hero, .log-body, .log-nav, footer { padding-left: 20px; padding-right: 20px; }
+    .image-grid.cols-2, .image-grid.cols-3 { grid-template-columns: 1fr; }
+    .image-slot.wide { grid-column: span 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="crosshair-h" id="ch"></div>
+<div class="crosshair-v" id="cv"></div>
+<div class="hud-corner hud-tl"><div class="hud-box"></div><span class="rec-dot"></span><span>REC</span></div>
+<div class="hud-corner hud-tr">[2026]</div>
+<div class="hud-corner hud-bl">[Currently Available Info]</div>
+<div class="hud-corner hud-br">[CVA]</div>
+
+<nav>
+  <a href="project-006.html" class="nav-back">← Back to Osaider</a>
+  <div class="nav-id">DEVLOG // LOG_001</div>
+</nav>
+
+<!-- ═══ 改这里：标题、日期、标签 ═══ -->
+<div class="log-hero reveal">
+  <div class="log-meta-top">
+    <span class="log-num">// LOG_001</span>
+    <span class="log-date">2026.06.11</span>
+    <span class="log-project"><a href="project-006.html">← Osaider</a></span>
+  </div>
+  <h1 class="log-title">Entry Title Here</h1>
+  <div class="log-tags">
+    <span class="tag active">Modelling</span>
+    <span class="tag">Blender</span>
+    <span class="tag">Environment</span>
+  </div>
+</div>
+
+<!-- ═══ 正文内容从这里开始 ═══ -->
+<div class="log-body">
+
+  <!-- 文字段落 -->
+  <div class="log-text reveal">
+    <p>
+      <strong>用一两句话概括这次更新做了什么。</strong> 比如：这周完成了主场景的建模，解决了光照穿模的问题，并开始测试第一版角色移动逻辑。
+    </p>
+    <p>
+      更详细的内容放这里。遇到了什么问题，怎么解决的，做了哪些决定，为什么这样做。这部分是给招聘方看思维过程的，写得具体一些比较好。
+    </p>
+  </div>
+
+  <!-- 高亮引用框（可选，删掉也行） -->
+  <div class="log-highlight reveal">
+    <p>关键发现或重要决策放这里 — 比如一句话总结这次更新最重要的insight。</p>
+  </div>
+
+  <!-- 图片区域 -->
+  <div class="log-section-label reveal">// Screenshots</div>
+  <div class="image-grid cols-2 reveal">
+    <div class="image-slot">
+      <img src="images/devlog-001-01.jpg" alt="Screenshot 01">
+    </div>
+    <div class="image-slot">
+      <img src="images/devlog-001-02.jpg" alt="Screenshot 02">
+    </div>
+    <div class="image-slot wide">
+      <img src="images/devlog-001-03.jpg" alt="Screenshot 03 wide">
+    </div>
+  </div>
+
+  <!-- 继续写文字（可选） -->
+  <div class="log-text reveal">
+    <h3>Next Steps</h3>
+    <p>
+      下一步计划放这里 — 比如：下周开始做 UI 系统，需要解决角色与环境的碰撞检测问题。
+    </p>
+  </div>
+
+  <!-- 视频（可选，不需要就删掉） -->
+  <!--
+  <div class="log-section-label reveal">// Clip</div>
+  <div class="video-wrap reveal">
+    <iframe src="https://player.vimeo.com/video/VIDEO_ID?color=e3000f&title=0&byline=0&portrait=0"
+            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+  </div>
+  -->
+
+</div>
+
+<!-- ═══ 上一篇 / 下一篇导航 ═══ -->
+<div class="log-nav">
+  <a href="project-006.html" class="log-nav-link">
+    <span class="arrow">←</span>
+    <span style="font-size:10px;color:var(--white-dim)">Back to Project</span>
+  </a>
+  <!-- 有下一篇时取消注释 -->
+  <!--
+  <a href="devlog-002.html" class="log-nav-link right">
+    <span style="font-size:10px;color:var(--white-dim)">Next Log</span>
+    <span class="nav-title">Log 002 Title</span>
+    <span class="arrow" style="align-self:flex-end">→</span>
+  </a>
+  -->
+</div>
+
+<footer>
+  <span>ARCHIVE // OSAIDER // DEVLOG_001</span>
+  <a href="project-006.html" style="color:var(--white-dim);text-decoration:none;">← Return to Project</a>
+</footer>
+
+<script>
+  const ch = document.getElementById('ch');
+  const cv = document.getElementById('cv');
+  document.addEventListener('mousemove', e => { ch.style.top = e.clientY+'px'; cv.style.left = e.clientX+'px'; });
+  const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

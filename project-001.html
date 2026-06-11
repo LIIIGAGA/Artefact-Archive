@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARCHIVE // COLLECTION 001</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #E3000F;
+    --red-dim: #7A0008;
+    --white: #F0EDE8;
+    --white-dim: #888880;
+    --bg: #080808;
+    --bg2: #111111;
+    --bg3: #1A1A1A;
+    --border: #2A2A2A;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Space Grotesk', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* HUD */
+  .hud-corner {
+    position: fixed;
+    z-index: 100;
+    font-size: 11px;
+    color: var(--white-dim);
+    letter-spacing: 0.05em;
+    pointer-events: none;
+    font-family: var(--mono);
+  }
+  .hud-tl { top: 20px; left: 24px; display: flex; align-items: center; gap: 10px; }
+  .hud-tr { top: 20px; right: 24px; }
+  .hud-bl { bottom: 20px; left: 24px; }
+  .hud-br { bottom: 20px; right: 24px; }
+  .rec-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--red); display: inline-block;
+    animation: blink 1.4s ease-in-out infinite;
+  }
+  .hud-box { border: 1px solid var(--border); width: 14px; height: 14px; display: inline-block; vertical-align: middle; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  /* CURSOR */
+  .crosshair-h, .crosshair-v {
+    position: fixed;
+    background: rgba(227,0,15,0.15);
+    pointer-events: none;
+    z-index: 200;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .crosshair-h { height: 1px; left: 0; right: 0; }
+  .crosshair-v { width: 1px; top: 0; bottom: 0; }
+  body:hover .crosshair-h, body:hover .crosshair-v { opacity: 1; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 56px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 80px;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(8px);
+    z-index: 500;
+    justify-content: space-between;
+  }
+  .nav-back {
+    color: var(--white-dim);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-back:hover { color: var(--red); }
+  .nav-id { font-size: 11px; color: var(--red); letter-spacing: 0.12em; text-transform: uppercase; }
+
+  /* HERO */
+  .project-hero {
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 80px 80px 48px;
+    padding-top: 120px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .project-collection {
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .project-hero-title {
+    font-family: var(--sans);
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+
+  .project-hero-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label { font-size: 10px; color: var(--white-dim); letter-spacing: 0.12em; text-transform: uppercase; }
+  .meta-value { font-size: 12px; color: var(--white); }
+
+  /* CONTENT SECTIONS */
+  .content-block {
+    padding: 64px 80px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .block-label {
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-top: 4px;
+  }
+
+  .block-content p {
+    font-size: 14px;
+    color: var(--white-dim);
+    line-height: 1.9;
+    margin-bottom: 16px;
+    max-width: 680px;
+  }
+  .block-content p:last-child { margin-bottom: 0; }
+  .block-content strong { color: var(--white); font-weight: 500; }
+
+  /* VIDEO EMBED */
+  .video-wrap {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    position: relative;
+  }
+  .video-wrap iframe {
+    width: 100%; height: 100%;
+    border: none;
+  }
+  .video-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--white-dim);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+  .video-placeholder .play-icon {
+    width: 48px; height: 48px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--red);
+    font-size: 18px;
+  }
+
+  /* IMAGE GRID */
+  .image-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .image-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+  .image-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .image-grid.cols-1 { grid-template-columns: 1fr; }
+
+  .image-slot {
+    aspect-ratio: 16/10;
+    background: var(--bg2);
+    overflow: hidden;
+    position: relative;
+  }
+  .image-slot img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .image-slot:hover img { transform: scale(1.03); }
+
+  .image-slot.tall { aspect-ratio: 4/5; }
+  .image-slot.wide { grid-column: span 2; aspect-ratio: 21/9; }
+
+  /* IMAGE CAPTION */
+  .img-caption {
+    padding: 10px 14px;
+    font-size: 11px;
+    color: var(--white-dim);
+    letter-spacing: 0.04em;
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+  }
+
+  /* TAGS */
+  .tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 24px;
+  }
+  .tag {
+    font-size: 10px;
+    color: var(--white-dim);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .tag.active { border-color: var(--red-dim); color: var(--red); }
+
+  /* EXTERNAL LINK */
+  .ext-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    padding: 12px 20px;
+    border: 1px solid var(--border);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .ext-link:hover { background: var(--bg2); border-color: var(--red-dim); }
+  .ext-link .arrow { color: var(--red); }
+
+  /* NEXT / PREV */
+  .project-nav {
+    padding: 40px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .proj-nav-link {
+    color: var(--white-dim);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .proj-nav-link:hover { color: var(--white); }
+  .proj-nav-link .nav-arrow { color: var(--red); font-size: 16px; }
+  .proj-nav-link .nav-title { font-family: var(--sans); font-size: 16px; font-weight: 600; color: var(--white); }
+  .proj-nav-link.right { text-align: right; }
+
+  footer {
+    padding: 24px 80px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--white-dim);
+    letter-spacing: 0.06em;
+  }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    nav, .project-hero, .content-block, .project-nav, footer { padding-left: 20px; padding-right: 20px; }
+    .content-block { grid-template-columns: 1fr; gap: 16px; }
+    .image-grid.cols-3 { grid-template-columns: 1fr 1fr; }
+    .image-slot.wide { grid-column: span 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="crosshair-h" id="ch"></div>
+<div class="crosshair-v" id="cv"></div>
+
+<div class="hud-corner hud-tl">
+  <div class="hud-box"></div>
+  <span class="rec-dot"></span>
+  <span>REC</span>
+</div>
+<div class="hud-corner hud-tr">[2025]</div>
+<div class="hud-corner hud-bl">[Currently Available Info]</div>
+<div class="hud-corner hud-br">[CVA]</div>
+
+<nav>
+  <a href="index.html" class="nav-back">← Back to Archive</a>
+  <div class="nav-id">COLLECTION / 001</div>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     PROJECT HERO — 改这里的标题、类型、年份等
+     ═══════════════════════════════════════════ -->
+<div class="project-hero">
+  <div class="project-collection">// COLLECTION 001 — FILM / MOTION</div>
+  <h1 class="project-hero-title">Music Video<br>Exodus</h1>
+  <div class="project-hero-meta">
+    <div class="meta-item">
+      <span class="meta-label">Year</span>
+      <span class="meta-value">2025</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Type</span>
+      <span class="meta-value">Film / Motion</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Duration</span>
+      <span class="meta-value">2:52</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Status</span>
+      <span class="meta-value" style="color:var(--red)">Complete</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     VIDEO — 两种方式二选一：
+     方式A：嵌入 Vimeo（推荐）
+     把下面的 VIDEO_ID 换成你的 Vimeo 视频ID
+     方式B：用占位符（先不放视频时用）
+     ═══════════════════════════════════════════ -->
+<div class="content-block reveal">
+  <div class="block-label">// Video</div>
+  <div class="block-content">
+
+    <!-- 方式A：Vimeo 嵌入（把 VIDEO_ID 换成实际ID，比如 123456789） -->
+    <div class="video-wrap">
+      <iframe src="https://player.vimeo.com/video/1200154402?color=e3000f&title=0&byline=0&portrait=0"
+              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <!-- 方式B：YouTube 嵌入（把 VIDEO_ID 换成实际ID） -->
+    <!-- <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/VIDEO_ID"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+              allowfullscreen></iframe>
+    </div> -->
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PROJECT DESCRIPTION — 改这里的文字介绍
+     ═══════════════════════════════════════════ -->
+<div class="content-block reveal">
+  <div class="block-label">// Overview</div>
+  <div class="block-content">
+    <p>
+      <strong>Exodus — The Voluntary Prisoners of Architecture</strong> 
+    </p>
+    <p>
+      Inspired by the Berlin Wall, Rem Koolhaas imagined a linear structure — "the Strip" — slicing through London. Outside lies a decaying city; inside, a rational order constructs its ideal homeland. We reframe this utopia as satire: every individual who enters the Strip is reduced to an identical cube, and the towering walls are built from countless cubes that have lost their will. But suppression inevitably breaks — chaos seeps inward, cubes revolt, and the Strip collapses into a playground. The cubes appear to reclaim the world, yet whether this is freedom or another trap remains unresolved.
+
+Produced in Blender with geometry-driven, music-synchronized animation, lighting as a narrative tool, and integrated 2D hand-drawn elements. 
+    </p>
+    <div class="tags-row">
+      <span class="tag active">Music video</span>
+      <span class="tag">Blender</span>
+      <span class="tag">3D Animation</span>
+      <span class="tag">2D Collage</span>
+      <span class="tag">Adobe Premiere Pro</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     IMAGES — 改这里的图片
+     把 src="images/001-01.jpg" 换成你的图片路径
+     图片放在同一文件夹下的 images/ 子文件夹里
+     ═══════════════════════════════════════════ -->
+<div class="content-block reveal">
+  <div class="block-label">// Stills</div>
+  <div class="block-content">
+    <div class="image-grid cols-2">
+      <div class="image-slot">
+        <img src="images/Exodus01.png" alt="Project still 01">
+      </div>
+      <div class="image-slot">
+        <img src="images/Exodus02.png" alt="Project still 02">
+      </div>
+      <div class="image-slot wide">
+        <img src="images/Exodus03.png" alt="Project still 03 — wide">
+      </div>
+      <div class="image-slot">
+        <img src="images/Exodus07.png" alt="Project still 04">
+      </div>
+      <div class="image-slot">
+        <img src="images/Exodus05.png" alt="Project still 05">
+      </div>
+    </div>
+    <p style="margin-top:12px; font-size:11px; color:var(--white-dim);">
+      // Frame captures — [Exodus] · 2025
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PROCESS — 可选，展示草图/过程图
+     不需要就把这整个 content-block 删掉
+     ═══════════════════════════════════════════ -->
+<div class="content-block reveal">
+  <div class="block-label">// Process</div>
+  <div class="block-content">
+    <p>
+      简要描述制作过程，比如：从手绘草图出发，在 Blender 中建立空间模型，最终与实拍素材合成。
+    </p>
+    <div class="image-grid cols-3" style="margin-top:16px;">
+      <div class="image-slot">
+        <img src="images/001-process-01.jpg" alt="Process sketch 01">
+      </div>
+      <div class="image-slot">
+        <img src="images/001-process-02.jpg" alt="Process sketch 02">
+      </div>
+      <div class="image-slot">
+        <img src="images/001-process-03.jpg" alt="Process sketch 03">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     EXTERNAL LINK — 可选，链接到外部平台
+     不需要就删掉这个 content-block
+     ═══════════════════════════════════════════ -->
+<div class="content-block reveal">
+  <div class="block-label">// Links</div>
+  <div class="block-content">
+    <a href="https://vimeo.com/1200154402?share=copy&fl=sv&fe=ci" target="_blank" class="ext-link">
+      Watch on Vimeo <span class="arrow">→</span>
+    </a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PREV / NEXT 导航 — 改链接和标题
+     ═══════════════════════════════════════════ -->
+<div class="project-nav">
+  <a href="index.html" class="proj-nav-link">
+    <span class="nav-arrow">←</span>
+    <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--white-dim)">Back to Archive</span>
+  </a>
+  <a href="project-002.html" class="proj-nav-link right">
+    <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--white-dim)">Next Project</span>
+    <span class="nav-title">Game Demo I</span>
+    <span class="nav-arrow" style="align-self:flex-end">→</span>
+  </a>
+</div>
+
+<footer>
+  <span>ARCHIVE SYSTEM // COLLECTION_001 // 2025</span>
+  <span><a href="index.html" style="color:var(--white-dim);text-decoration:none;">← Return to Archive</a></span>
+</footer>
+
+<script>
+  const ch = document.getElementById('ch');
+  const cv = document.getElementById('cv');
+  document.addEventListener('mousemove', e => {
+    ch.style.top = e.clientY + 'px';
+    cv.style.left = e.clientX + 'px';
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

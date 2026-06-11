@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARCHIVE // GAMES</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --red: #E3000F; --red-dim: #7A0008; --white: #F0EDE8; --white-dim: #888880; --bg: #080808; --bg2: #111111; --bg3: #1A1A1A; --border: #2A2A2A; --mono: 'JetBrains Mono', monospace; --sans: 'Space Grotesk', sans-serif; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--white); font-family: var(--mono); font-size: 13px; line-height: 1.6; overflow-x: hidden; cursor: crosshair; }
+  body::before { content: ''; position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px); pointer-events: none; z-index: 9999; }
+  .hud-corner { position: fixed; z-index: 100; font-size: 11px; color: var(--white-dim); letter-spacing: 0.05em; pointer-events: none; font-family: var(--mono); }
+  .hud-tl { top: 20px; left: 24px; display: flex; align-items: center; gap: 10px; }
+  .hud-tr { top: 20px; right: 24px; }
+  .hud-bl { bottom: 20px; left: 24px; }
+  .hud-br { bottom: 20px; right: 24px; }
+  .rec-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); display: inline-block; animation: blink 1.4s ease-in-out infinite; }
+  .hud-box { border: 1px solid var(--border); width: 14px; height: 14px; display: inline-block; vertical-align: middle; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+  .crosshair-h, .crosshair-v { position: fixed; background: rgba(227,0,15,0.15); pointer-events: none; z-index: 200; opacity: 0; transition: opacity 0.3s; }
+  .crosshair-h { height: 1px; left: 0; right: 0; }
+  .crosshair-v { width: 1px; top: 0; bottom: 0; }
+  body:hover .crosshair-h, body:hover .crosshair-v { opacity: 1; }
+  nav { position: fixed; top: 0; left: 0; right: 0; height: 56px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 80px; background: rgba(8,8,8,0.92); backdrop-filter: blur(8px); z-index: 500; justify-content: space-between; }
+  .nav-back { color: var(--white-dim); text-decoration: none; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-back:hover { color: var(--red); }
+  .nav-id { font-size: 11px; color: var(--red); letter-spacing: 0.12em; text-transform: uppercase; }
+  .cat-hero { padding: 120px 80px 64px; border-bottom: 1px solid var(--border); }
+  .cat-hero-label { font-size: 11px; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 20px; }
+  .cat-hero-title { font-family: var(--sans); font-size: clamp(48px, 8vw, 88px); font-weight: 700; line-height: 0.92; letter-spacing: -0.03em; color: var(--white); margin-bottom: 20px; }
+  .cat-hero-desc { font-size: 13px; color: var(--white-dim); max-width: 560px; line-height: 1.9; }
+  .projects-list { padding: 0 80px; }
+  .project-row { display: grid; grid-template-columns: 80px 1fr auto; gap: 40px; align-items: center; padding: 32px 0; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; transition: background 0.2s; position: relative; }
+  .project-row::before { content: ''; position: absolute; left: -80px; right: -80px; top: 0; bottom: 0; background: var(--bg2); opacity: 0; transition: opacity 0.2s; z-index: 0; }
+  .project-row:hover::before { opacity: 1; }
+  .project-row > * { position: relative; z-index: 1; }
+  .row-num { font-size: 11px; color: var(--white-dim); letter-spacing: 0.1em; }
+  .project-row:hover .row-num { color: var(--red); }
+  .row-main { display: flex; flex-direction: column; gap: 6px; }
+  .row-title { font-family: var(--sans); font-size: 22px; font-weight: 600; color: var(--white); letter-spacing: -0.01em; }
+  .row-type { font-size: 11px; color: var(--red); letter-spacing: 0.1em; text-transform: uppercase; }
+  .row-desc { font-size: 12px; color: var(--white-dim); line-height: 1.6; max-width: 560px; margin-top: 4px; }
+  .row-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .tag { font-size: 10px; color: var(--white-dim); border: 1px solid var(--border); padding: 2px 8px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .tag.active { border-color: var(--red-dim); color: var(--red); }
+  .row-arrow { font-size: 18px; color: var(--red); opacity: 0; transition: opacity 0.2s, transform 0.2s; }
+  .project-row:hover .row-arrow { opacity: 1; transform: translateX(4px); }
+  .row-status { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .status-complete { color: #3A7A3A; }
+  .status-wip { color: var(--red); }
+  .status-wip::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--red); margin-right: 5px; animation: blink 1.2s infinite; }
+  footer { padding: 24px 80px; display: flex; justify-content: space-between; font-size: 11px; color: var(--white-dim); letter-spacing: 0.06em; border-top: 1px solid var(--border); }
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  @media (max-width: 768px) { nav, .cat-hero, .projects-list, footer { padding-left: 20px; padding-right: 20px; } .project-row { grid-template-columns: 48px 1fr; } .project-row::before { left: -20px; right: -20px; } .row-arrow { display: none; } }
+</style>
+</head>
+<body>
+<div class="crosshair-h" id="ch"></div>
+<div class="crosshair-v" id="cv"></div>
+<div class="hud-corner hud-tl"><div class="hud-box"></div><span class="rec-dot"></span><span>REC</span></div>
+<div class="hud-corner hud-tr">[2025]</div>
+<div class="hud-corner hud-bl">[Currently Available Info]</div>
+<div class="hud-corner hud-br">[CVA]</div>
+<nav>
+  <a href="index.html" class="nav-back">← Archive</a>
+  <div class="nav-id">CATEGORY 02 // GAMES</div>
+</nav>
+
+<div class="cat-hero reveal">
+  <div class="cat-hero-label">// CATEGORY 02 — GAMES</div>
+  <h1 class="cat-hero-title">Games</h1>
+  <p class="cat-hero-desc">Playable environments where architecture becomes the narrative medium — interactive spaces built for player agency and spatial storytelling.</p>
+</div>
+
+<div class="projects-list">
+
+  <a href="project-002.html" class="project-row reveal">
+    <div class="row-num">001</div>
+    <div class="row-main">
+      <div class="row-status status-complete">COMPLETE</div>
+      <div class="row-title">FeatherLand</div>
+      <div class="row-type">Interactive / Game</div>
+      <div class="row-desc">A playable environment where architecture becomes the narrative medium — space as story.</div>
+      <div class="row-tags">
+        <span class="tag active">Game</span>
+        <span class="tag">Unity</span>
+        <span class="tag">3D</span>
+        <span class="tag">Narrative</span>
+      </div>
+    </div>
+    <div class="row-arrow">→</div>
+  </a>
+
+  <a href="project-003.html" class="project-row reveal">
+    <div class="row-num">002</div>
+    <div class="row-main">
+      <div class="row-status status-complete">COMPLETE</div>
+      <div class="row-title">Bubble Night</div>
+      <div class="row-type">Interactive / Game</div>
+      <div class="row-desc">Continuation of spatial game research — [your concept here].</div>
+      <div class="row-tags">
+        <span class="tag active">Game</span>
+        <span class="tag">Unreal</span>
+        <span class="tag">Environment</span>
+      </div>
+    </div>
+    <div class="row-arrow">→</div>
+  </a>
+
+  <a href="project-006.html" class="project-row reveal">
+    <div class="row-num">???</div>
+    <div class="row-main">
+      <div class="row-status status-wip">IN DEVELOPMENT</div>
+      <div class="row-title">Osaider</div>
+      <div class="row-type">Game / In Development</div>
+      <div class="row-desc">A full game in active development. Further files are restricted pending completion. Clearance pending.</div>
+      <div class="row-tags">
+        <span class="tag active">Game</span>
+        <span class="tag">TBD</span>
+        <span class="tag">Ongoing</span>
+      </div>
+    </div>
+    <div class="row-arrow">→</div>
+  </a>
+
+</div>
+
+<footer>
+  <span>ARCHIVE // CATEGORY_02 // GAMES</span>
+  <a href="index.html" style="color:var(--white-dim);text-decoration:none;">← Return to Archive</a>
+</footer>
+
+<script>
+  const ch = document.getElementById('ch'); const cv = document.getElementById('cv');
+  document.addEventListener('mousemove', e => { ch.style.top = e.clientY+'px'; cv.style.left = e.clientX+'px'; });
+  const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
