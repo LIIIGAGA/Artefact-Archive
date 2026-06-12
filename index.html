@@ -543,7 +543,41 @@
   body:hover .crosshair-h,
   body:hover .crosshair-v { opacity: 1; }
 
-  @media (max-width: 768px) {
+  /* LANGUAGE TOGGLE */
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .lang-btn {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    background: transparent;
+    color: var(--white-dim);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .lang-btn.active {
+    background: var(--red);
+    color: var(--white);
+  }
+  .lang-btn:hover:not(.active) { color: var(--white); }
+
+  .lang-zh { display: none; }
+  .lang-en { display: block; }
+  body.zh .lang-zh { display: block; }
+  body.zh .lang-en { display: none; }
+
+  /* inline spans need inline not block */
+  span.lang-zh { display: none; }
+  span.lang-en { display: inline; }
+  body.zh span.lang-zh { display: inline; }
+  body.zh span.lang-en { display: none; }
     nav { padding: 0 20px; }
     #hero, section { padding-left: 20px; padding-right: 20px; }
     .about-layout, .contact-layout { grid-template-columns: 1fr; gap: 32px; }
@@ -591,6 +625,12 @@
       <li><a href="#projects">Projects</a></li>
       <li><a href="#about">Profile</a></li>
       <li><a href="#contact">Contact</a></li>
+      <li>
+        <div class="lang-toggle">
+          <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+          <button class="lang-btn" id="btn-zh" onclick="setLang('zh')">中文</button>
+        </div>
+      </li>
     </ul>
   </nav>
 
@@ -600,8 +640,10 @@
     <div class="hero-label">// FILE_001 — PERSONNEL RECORD ACCESSED</div>
     <h1 class="hero-name">LIIIGAGA<br><span>Jiaying</span><br>Li</h1>
     <p class="hero-title">
-      Cinematic &amp; Videogame Architecture · The Bartlett, UCL<br>
-      Working at the intersection of architectural storytelling, immersive environments, and narrative game design.
+      <span class="lang-en">Cinematic &amp; Videogame Architecture · The Bartlett, UCL<br>
+      Working at the intersection of architectural storytelling, immersive environments, and narrative game design.</span>
+      <span class="lang-zh">电影与游戏建筑学 · 伦敦大学学院巴特莱特建筑学院<br>
+      专注于建筑叙事、沉浸式环境与叙事游戏设计的交叉领域。</span>
     </p>
     <div class="hero-meta">
       <div class="hero-meta-item">
@@ -627,7 +669,10 @@
   <section id="projects">
     <div class="section-header reveal">
       <span class="section-num">// 002</span>
-      <h2 class="section-title">COLLECTED WORKS</h2>
+      <h2 class="section-title">
+        <span class="lang-en">COLLECTED WORKS</span>
+        <span class="lang-zh">作品集</span>
+      </h2>
       <div class="section-line"></div>
     </div>
 
@@ -636,9 +681,12 @@
       <a href="category-films.html" class="category-card reveal">
         <div>
           <div class="cat-index">// CATEGORY 01</div>
-          <h3 class="cat-title">Films | 影片</h3>
-          <p class="cat-desc">Experimental animations and films, VFX composites, and moving image works exploring spatial disorientation, architectural memory, and cinematic environments.</p>
-          <p class="cat-desc">实验动画与影像、视觉特效合成，探索空间迷失、建筑记忆与电影化环境的互动影像创作。</p>
+          <h3 class="cat-title">
+            <span class="lang-en">Films</span>
+            <span class="lang-zh">影片</span>
+          </h3>
+          <p class="cat-desc lang-en">Experimental animations and films, VFX composites, and moving image works exploring spatial disorientation, architectural memory, and cinematic environments.</p>
+          <p class="cat-desc lang-zh">实验动画与影像、视觉特效合成，探索空间迷失、建筑记忆与电影化环境的互动影像创作。</p>
         </div>
         <div class="cat-footer">
           <div class="cat-count"><span>2</span> works</div>
@@ -649,12 +697,15 @@
       <a href="category-games.html" class="category-card reveal">
         <div>
           <div class="cat-index">// CATEGORY 02</div>
-          <h3 class="cat-title">Games | 游戏</h3>
-          <p class="cat-desc">Game design centered on environmental storytelling, exploring the interactive territory of player immersion, agency, and traversal-based spatial narrative.</p>
-          <p class="cat-desc">以环境叙事为核心的游戏设计，探索玩家沉浸感、自主权和遍历性空间叙事的互动领域。</p>
+          <h3 class="cat-title">
+            <span class="lang-en">Games</span>
+            <span class="lang-zh">游戏</span>
+          </h3>
+          <p class="cat-desc lang-en">Game design centered on environmental storytelling, exploring the interactive territory of player immersion, agency, and traversal-based spatial narrative.</p>
+          <p class="cat-desc lang-zh">以环境叙事为核心的游戏设计，探索玩家沉浸感、自主权和遍历性空间叙事的互动领域。</p>
         </div>
         <div class="cat-footer">
-          <div class="cat-count"><span>2</span> works · <span class="cat-wip-dot"></span><span style="color:var(--red)">1 in development</span></div>
+          <div class="cat-count"><span>2</span> <span class="lang-en">works</span><span class="lang-zh">件作品</span> · <span class="cat-wip-dot"></span><span style="color:var(--red)"><span class="lang-en">1 in development</span><span class="lang-zh">1 件开发中</span></span></div>
           <div class="cat-arrow">→</div>
         </div>
       </a>
@@ -662,12 +713,15 @@
       <a href="category-immersive.html" class="category-card reveal">
         <div>
           <div class="cat-index">// CATEGORY 03</div>
-          <h3 class="cat-title">Immersive<br>Environments | 沉浸式环境</h3>
-          <p class="cat-desc">Installations and spatial audio works in which invisible architectural structures provoke embodied imagination through multi-sensory immersive experience.Installations and spatial audio works in which invisible architectural structures provoke embodied imagination through multi-sensory immersive experience.</p>
-          <p class="cat-desc">装置与空间音频，无形的建筑结构通过多感官的沉浸式体验激发具身性想象。</p>
+          <h3 class="cat-title">
+            <span class="lang-en">Immersive<br>Environments</span>
+            <span class="lang-zh">沉浸式环境</span>
+          </h3>
+          <p class="cat-desc lang-en">Installations and spatial audio works in which invisible architectural structures provoke embodied imagination through multi-sensory immersive experience.</p>
+          <p class="cat-desc lang-zh">装置与空间音频，无形的建筑结构通过多感官的沉浸式体验激发具身性想象。</p>
         </div>
         <div class="cat-footer">
-          <div class="cat-count"><span>1</span> work</div>
+          <div class="cat-count"><span>1</span> <span class="lang-en">work</span><span class="lang-zh">件作品</span></div>
           <div class="cat-arrow">→</div>
         </div>
       </a>
@@ -675,12 +729,15 @@
       <a href="category-architecture.html" class="category-card reveal">
         <div>
           <div class="cat-index">// CATEGORY 04</div>
-          <h3 class="cat-title">Architecture | 建筑</h3>
-          <p class="cat-desc">A selection of undergraduate architectural projects and research work examining space, perception, and the built environment.</p>
-          <p class="cat-desc">本科建筑项目及研究工作精选，探讨空间、感知与建成环境。</p>
+          <h3 class="cat-title">
+            <span class="lang-en">Architecture</span>
+            <span class="lang-zh">建筑</span>
+          </h3>
+          <p class="cat-desc lang-en">A selection of undergraduate architectural projects and research work examining space, perception, and the built environment.</p>
+          <p class="cat-desc lang-zh">本科建筑项目及研究工作精选，探讨空间、感知与建成环境。</p>
         </div>
         <div class="cat-footer">
-          <div class="cat-count"><span>—</span> works</div>
+          <div class="cat-count"><span>—</span> <span class="lang-en">works</span><span class="lang-zh">件作品</span></div>
           <div class="cat-arrow">→</div>
         </div>
       </a>
@@ -692,7 +749,10 @@
   <section id="about">
     <div class="section-header reveal">
       <span class="section-num">// 003</span>
-      <h2 class="section-title">PERSONNEL PROFILE</h2>
+      <h2 class="section-title">
+        <span class="lang-en">PERSONNEL PROFILE</span>
+        <span class="lang-zh">人员档案</span>
+      </h2>
       <div class="section-line"></div>
     </div>
 
@@ -704,7 +764,10 @@
         </div>
         <div class="file-row">
           <span class="file-key">Designation</span>
-          <span class="file-val red">Digital Architect &amp; Worldbuilder</span>
+          <span class="file-val red">
+            <span class="lang-en">Digital Architect &amp; Worldbuilder</span>
+            <span class="lang-zh">数字建筑师 &amp; 世界构建者</span>
+          </span>
         </div>
         <div class="file-row">
           <span class="file-key">Institution</span>
@@ -715,7 +778,7 @@
           <span class="file-val">MArch CVA</span>
         </div>
         <div class="file-row">
-          <span class="file-key">Expected Graduation</span>
+          <span class="file-key"><span class="lang-en">Expected Graduation</span><span class="lang-zh">预计毕业</span></span>
           <span class="file-val">Sep 2026</span>
         </div>
         <div class="file-row">
@@ -744,18 +807,18 @@
       </div>
 
       <div class="about-text reveal">
-        <p>
-          <strong>I am a Digital Architect and Worldbuilder</strong> working at the intersection of architecture, game design, and interactive media.
-        </p>
-        <p>
-          My practice focuses on <strong>architectural storytelling, narrative environments, and immersive experiences</strong>. Using Unreal Engine, 3D production workflows, and narrative design methodologies, I create spaces that function not only as environments but as systems for storytelling and player engagement.
-        </p>
-        <p>
-          At The Bartlett's Cinematic & Videogame Architecture programme, I have developed projects across <strong>video games, immersive animation, film, and spatial audio</strong>. Across these disciplines, I am interested in <strong>how architecture can shape perception and player agency, and how spaces can become responsive narrative systems rather than passive backdrops.</strong>
-        </p>
-        <p>
-          Currently completing my MArch degree at The Bartlett, UCL, I am open to opportunities in game design, narrative environment design, worldbuilding, immersive experiences, and interactive media.
-        </p>
+        <div class="lang-en">
+          <p><strong>I am a Digital Architect and Worldbuilder</strong> working at the intersection of architecture, game design, and interactive media.</p>
+          <p>My practice focuses on <strong>architectural storytelling, narrative environments, and immersive experiences</strong>. Using Unreal Engine, 3D production workflows, and narrative design methodologies, I create spaces that function not only as environments but as systems for storytelling and player engagement.</p>
+          <p>At The Bartlett's Cinematic & Videogame Architecture programme, I have developed projects across <strong>video games, immersive animation, film, and spatial audio</strong>. Across these disciplines, I am interested in <strong>how architecture can shape perception and player agency, and how spaces can become responsive narrative systems rather than passive backdrops.</strong></p>
+          <p>Currently completing my MArch degree at The Bartlett, UCL, I am open to opportunities in game design, narrative environment design, worldbuilding, immersive experiences, and interactive media.</p>
+        </div>
+        <div class="lang-zh">
+          <p><strong>我是一名数字建筑师与世界构建者</strong>，在建筑、游戏设计与互动媒体的交叉领域从事创作。</p>
+          <p>我的实践聚焦于<strong>建筑叙事、叙事性环境与沉浸式体验</strong>。借助虚幻引擎、3D制作流程与叙事设计方法论，我创造的空间不仅是环境本身，更是叙事系统与玩家互动的载体。</p>
+          <p>在巴特莱特的电影与游戏建筑学项目中，我跨越<strong>游戏、沉浸式动画、影像与空间音频</strong>等多个领域进行创作。我持续探索<strong>建筑如何塑造感知与玩家自主性，以及空间如何成为响应式叙事系统，而非被动的背景。</strong></p>
+          <p>目前正在完成巴特莱特建筑学院的建筑学硕士学位，欢迎游戏设计、叙事环境设计、世界构建、沉浸式体验及互动媒体等方向的合作机会。</p>
+        </div>
       </div>
     </div>
   </section>
@@ -764,14 +827,18 @@
   <section id="contact">
     <div class="section-header reveal">
       <span class="section-num">// 004</span>
-      <h2 class="section-title">ESTABLISH CONTACT</h2>
+      <h2 class="section-title">
+        <span class="lang-en">ESTABLISH CONTACT</span>
+        <span class="lang-zh">联系方式</span>
+      </h2>
       <div class="section-line"></div>
     </div>
 
     <div class="contact-layout">
       <div class="reveal">
         <p class="contact-message">
-          Available for collaborations, commissions, and conversations about space, games, film, and whatever lives in between. Response time: usually within 48 hours.
+          <span class="lang-en">Available for collaborations, commissions, and conversations about space, games, film, and whatever lives in between. Response time: usually within 48 hours.</span>
+          <span class="lang-zh">欢迎关于空间、游戏、影像及一切交叉地带的合作与委托。通常在48小时内回复。</span>
         </p>
         <div class="contact-links">
           <a href="mailto:liiigaga@163.com" class="contact-link">
@@ -791,28 +858,28 @@
 
       <div class="contact-availability reveal">
         <div class="status-row">
-          <span>Availability</span>
-          <span class="status-green">● Open to Work</span>
+          <span><span class="lang-en">Availability</span><span class="lang-zh">求职状态</span></span>
+          <span class="status-green">● <span class="lang-en">Open to Work</span><span class="lang-zh">开放求职中</span></span>
         </div>
         <div class="status-row">
           <span>Location</span>
           <span>London, UK → Shenzhen, China</span>
         </div>
         <div class="status-row">
-          <span>Remote</span>
-          <span style="color:var(--white-dim)">Accepted</span>
+          <span><span class="lang-en">Remote</span><span class="lang-zh">远程办公</span></span>
+          <span style="color:var(--white-dim)"><span class="lang-en">Accepted</span><span class="lang-zh">接受</span></span>
         </div>
         <div class="status-row">
-          <span>Freelance</span>
-          <span style="color:var(--white-dim)">Accepted</span>
+          <span><span class="lang-en">Freelance</span><span class="lang-zh">自由职业</span></span>
+          <span style="color:var(--white-dim)"><span class="lang-en">Accepted</span><span class="lang-zh">接受</span></span>
         </div>
         <div class="status-row">
-          <span>Full-time</span>
-          <span style="color:var(--white-dim)">Accepted</span>
+          <span><span class="lang-en">Full-time</span><span class="lang-zh">全职</span></span>
+          <span style="color:var(--white-dim)"><span class="lang-en">Accepted</span><span class="lang-zh">接受</span></span>
         </div>
         <div class="status-row">
-          <span>CV / Portfolio PDF</span>
-          <span style="color:var(--red)">On Request →</span>
+          <span><span class="lang-en">CV / Portfolio PDF</span><span class="lang-zh">简历 / 作品集 PDF</span></span>
+          <span style="color:var(--red)"><span class="lang-en">On Request →</span><span class="lang-zh">可提供 →</span></span>
         </div>
       </div>
     </div>
@@ -826,6 +893,18 @@
 </main>
 
 <script>
+  // LANGUAGE TOGGLE
+  function setLang(lang) {
+    document.body.classList.remove('en', 'zh');
+    document.body.classList.add(lang);
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    localStorage.setItem('lang', lang);
+  }
+  // restore saved language
+  const savedLang = localStorage.getItem('lang') || 'en';
+  setLang(savedLang);
+
   // BOOT SEQUENCE
   setTimeout(() => {
     const boot = document.getElementById('boot');
