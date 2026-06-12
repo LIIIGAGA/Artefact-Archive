@@ -365,10 +365,6 @@
       <span class="meta-value">Audio Visualization / Immersive Environment</span>
     </div>
     <div class="meta-item">
-      <span class="meta-label">Duration</span>
-      <span class="meta-value">3:42</span>
-    </div>
-    <div class="meta-item">
       <span class="meta-label">Status</span>
       <span class="meta-value" style="color:var(--red)">Complete</span>
     </div>
@@ -385,18 +381,11 @@
   <div class="block-label">// Video</div>
   <div class="block-content">
 
-    <!-- 方式A：Vimeo 嵌入（把 VIDEO_ID 换成实际ID，比如 123456789） -->
+    <!-- Bilibili 嵌入 -->
     <div class="video-wrap">
-      <iframe src="https://player.vimeo.com/video/1200353174?color=e3000f&title=0&byline=0&portrait=0"
-              allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=116736053548083&bvid=BV13EEC6REU5&cid=39058539582&p=1&autoplay=0&danmaku=0"
+              scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
     </div>
-
-    <!-- 方式B：YouTube 嵌入（把 VIDEO_ID 换成实际ID） -->
-    <!-- <div class="video-wrap">
-      <iframe src="https://www.youtube.com/embed/VIDEO_ID"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
-              allowfullscreen></iframe>
-    </div> -->
 
   </div>
 </div>
@@ -407,18 +396,35 @@
 <div class="content-block reveal">
   <div class="block-label">// Overview</div>
   <div class="block-content">
-    <p>
-      <strong>用一两句话说清楚这个项目是什么。</strong> 比如：这是一个关于空间记忆与建筑消解的音乐MV，配合艺术家 [名字] 的同名曲目创作。
-    </p>
-    <p>
-      更详细的背景介绍放这里。这个项目的出发点是什么，探索了哪些概念，制作过程中有什么有趣的决策。招聘方看这里会判断你的思维方式。
-    </p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px;">
+      <div>
+        <p style="font-size:11px; color:var(--red); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">EN</p>
+        <p>LEVEL UP is an immersive audiovisual experience exploring the assimilation of the human body into living architecture. Inspired by Michael Webb's <em>Sin Centre</em>, the work guides the audience through three phases — Initiating, Adrenaline &amp; Attachment, and Assimilation — using 5.1 surround sound and abstract visuals to dissolve the boundary between self and machine.</p>
+        <p>The project integrates Unreal Engine particle effects, TouchDesigner animation, Arduino-driven LED lighting, and multi-layer sound design to construct a complete sensory environment.</p>
+        <p style="color:var(--white-dim); font-style:italic; line-height:2;">
+          [ A process of being assimilated by a living architecture. ]<br>
+          [ A sense of mechanical fetishism. ]<br>
+          [ The evolution of the body toward the machine. ]
+        </p>
+      </div>
+      <div>
+        <p style="font-size:11px; color:var(--red); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">中文</p>
+        <p>LEVEL UP 是一个沉浸式视听体验作品，探索人体被活体建筑同化的过程。以 Michael Webb 的 <em>Sin Centre</em> 为灵感，通过三个阶段——启动、激情与同化——借助 5.1 环绕声与抽象影像，逐步消解自我与机器之间的边界。</p>
+        <p>项目综合运用 Unreal Engine 粒子特效、TouchDesigner 动态动画、Arduino 声控 LED 灯光及多层次声音设计，从而营造令人身临其境的感官环境。</p>
+        <p style="color:var(--white-dim); font-style:italic; line-height:2;">
+          【被活体建筑吞噬的过程】<br>
+          【机械恋物的感官体验】<br>
+          【身体向机器的演化】
+        </p>
+      </div>
+    </div>
     <div class="tags-row">
-      <span class="tag active">Audio</span>
-      <span class="tag">Blender</span>
-      <span class="tag">Motion Design</span>
+      <span class="tag active">Immersive Installation</span>
       <span class="tag">Spatial Audio</span>
-      <span class="tag">After Effects</span>
+      <span class="tag">Unreal Engine</span>
+      <span class="tag">TouchDesigner</span>
+      <span class="tag">Arduino</span>
+      <span class="tag">5.1 Surround Sound</span>
     </div>
   </div>
 </div>
