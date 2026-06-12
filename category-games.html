@@ -57,6 +57,21 @@
   .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .reveal.visible { opacity: 1; transform: none; }
   @media (max-width: 768px) { nav, .cat-hero, .projects-list, footer { padding-left: 20px; padding-right: 20px; } .project-row { grid-template-columns: 48px 1fr; } .project-row::before { left: -20px; right: -20px; } .row-arrow { display: none; } }
+
+  /* LANGUAGE TOGGLE */
+  .lang-toggle { display: flex; align-items: center; border: 1px solid var(--border); overflow: hidden; }
+  .lang-btn { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; padding: 4px 10px; background: transparent; color: var(--white-dim); border: none; cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .lang-btn.active { background: var(--red); color: var(--white); }
+  .lang-btn:hover:not(.active) { color: var(--white); }
+  .lang-zh { display: none; }
+  .lang-en { display: block; }
+  body.zh .lang-zh { display: block; }
+  body.zh .lang-en { display: none; }
+  span.lang-zh { display: none; }
+  span.lang-en { display: inline; }
+  body.zh span.lang-zh { display: inline; }
+  body.zh span.lang-en { display: none; }
+
 </style>
 </head>
 <body>
@@ -67,14 +82,15 @@
 <div class="hud-corner hud-bl">[Currently Available Info]</div>
 <div class="hud-corner hud-br">[CVA]</div>
 <nav>
-  <a href="index.html" class="nav-back">← Archive</a>
-  <div class="nav-id">CATEGORY 02 // GAMES</div>
+  <a href="index.html" class="nav-back"><span class="lang-en">← Archive</span><span class="lang-zh">← 返回档案库</span></a>
+  <div class="nav-id"><span class="lang-en">CATEGORY 02 // GAMES</span><span class="lang-zh">分类 02 // 游戏</span></div>
 </nav>
 
 <div class="cat-hero reveal">
-  <div class="cat-hero-label">// CATEGORY 02 — GAMES</div>
-  <h1 class="cat-hero-title">Games</h1>
-  <p class="cat-hero-desc">Playable environments where architecture becomes the narrative medium — interactive spaces built for player agency and spatial storytelling.</p>
+  <div class="cat-hero-label"><span class="lang-en">// CATEGORY 02 — GAMES</span><span class="lang-zh">// 分类 02 — 游戏</span></div>
+  <h1 class="cat-hero-title"><span class="lang-en">Games</span><span class="lang-zh">游戏</span></h1>
+  <p class="cat-hero-desc lang-en">Playable environments where architecture becomes the narrative medium — interactive spaces built for player agency and spatial storytelling.</p>
+  <p class="cat-hero-desc lang-zh">以环境叙事为核心的游戏设计，探索玩家沉浸感、自主权和遍历性空间叙事的互动领域。</p>
 </div>
 
 <div class="projects-list">
@@ -84,7 +100,7 @@
     <div class="row-main">
       <div class="row-status status-complete">COMPLETE</div>
       <div class="row-title">FeatherLand | 羽渡</div>
-      <div class="row-type">Game / Interactive</div>
+      <div class="row-type"><span class="lang-en">Game / Interactive</span><span class="lang-zh">游戏 / 互动</span></div>
       <div class="row-desc">A emotion-driven Metroidvania where a girl's dream world transforms as she confronts the monsters within.</div>
       <div class="row-desc">一款情感驱动的类银河恶魔城游戏，少女在梦境中击败内心怪物，世界随之蜕变。</div>
       <div class="row-tags">
@@ -102,7 +118,7 @@
     <div class="row-main">
       <div class="row-status status-complete">COMPLETE</div>
       <div class="row-title">Bubble Night | 浮梦夜</div>
-      <div class="row-type">Game / Interactive</div>
+      <div class="row-type"><span class="lang-en">Game / Interactive</span><span class="lang-zh">游戏 / 互动</span></div>
       <div class="row-desc">A surreal dive into liminal childhood, built in UE5.</div>
       <div class="row-desc">UE5可交互游戏场景，探索童年记忆与超现实之间的阈限空间。</div>
       <div class="row-tags">
@@ -119,7 +135,7 @@
     <div class="row-main">
       <div class="row-status status-wip">IN DEVELOPMENT</div>
       <div class="row-title">Osaider | 奥赛德</div>
-      <div class="row-type">Game / In Development</div>
+      <div class="row-type"><span class="lang-en">Game / In Development</span><span class="lang-zh">游戏 / 开发中</span></div>
       <div class="row-desc">An Architectural Interactive Fiction: If a lie is to protect you, are you willing to serve it?</div>
       <div class="row-desc">建筑互动小说：如果谎言是为了保护你，你愿意为它服务吗？</div>
       <div class="row-tags">
@@ -136,7 +152,7 @@
 </div>
 
 <footer>
-  <span>ARCHIVE // CATEGORY_02 // GAMES</span>
+  <span><span class="lang-en">ARCHIVE // CATEGORY_02 // GAMES</span><span class="lang-zh">档案库 // 分类_02 // 游戏</span></span>
   <a href="index.html" style="color:var(--white-dim);text-decoration:none;">← Return to Archive</a>
 </footer>
 
@@ -145,6 +161,17 @@
   document.addEventListener('mousemove', e => { ch.style.top = e.clientY+'px'; cv.style.left = e.clientX+'px'; });
   const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  function setLang(lang) {
+    document.body.classList.remove('en', 'zh');
+    document.body.classList.add(lang);
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    localStorage.setItem('lang', lang);
+  }
+  const savedLang = localStorage.getItem('lang') || 'en';
+  setLang(savedLang);
+
 </script>
 </body>
 </html>

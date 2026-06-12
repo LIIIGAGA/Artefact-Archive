@@ -55,6 +55,21 @@
   .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .reveal.visible { opacity: 1; transform: none; }
   @media (max-width: 768px) { nav, .cat-hero, .projects-list, footer { padding-left: 20px; padding-right: 20px; } .project-row { grid-template-columns: 48px 1fr; } .project-row::before { left: -20px; right: -20px; } .row-arrow { display: none; } }
+
+  /* LANGUAGE TOGGLE */
+  .lang-toggle { display: flex; align-items: center; border: 1px solid var(--border); overflow: hidden; }
+  .lang-btn { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; padding: 4px 10px; background: transparent; color: var(--white-dim); border: none; cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .lang-btn.active { background: var(--red); color: var(--white); }
+  .lang-btn:hover:not(.active) { color: var(--white); }
+  .lang-zh { display: none; }
+  .lang-en { display: block; }
+  body.zh .lang-zh { display: block; }
+  body.zh .lang-en { display: none; }
+  span.lang-zh { display: none; }
+  span.lang-en { display: inline; }
+  body.zh span.lang-zh { display: inline; }
+  body.zh span.lang-en { display: none; }
+
 </style>
 </head>
 <body>
@@ -65,14 +80,15 @@
 <div class="hud-corner hud-bl">[Currently Available Info]</div>
 <div class="hud-corner hud-br">[CVA]</div>
 <nav>
-  <a href="index.html" class="nav-back">← Archive</a>
-  <div class="nav-id">CATEGORY 03 // IMMERSIVE ENVIRONMENTS</div>
+  <a href="index.html" class="nav-back"><span class="lang-en">← Archive</span><span class="lang-zh">← 返回档案库</span></a>
+  <div class="nav-id"><span class="lang-en">CATEGORY 03 // IMMERSIVE ENVIRONMENTS</span><span class="lang-zh">分类 03 // 沉浸式环境</span></div>
 </nav>
 
 <div class="cat-hero reveal">
-  <div class="cat-hero-label">// CATEGORY 03 — IMMERSIVE ENVIRONMENTS</div>
-  <h1 class="cat-hero-title">Immersive<br>Environments</h1>
-  <p class="cat-hero-desc">Site-specific installations and spatial audio experiences where invisible architectural structures are mapped onto the body through sound and presence.</p>
+  <div class="cat-hero-label"><span class="lang-en">// CATEGORY 03 — IMMERSIVE ENVIRONMENTS</span><span class="lang-zh">// 分类 03 — 沉浸式环境</span></div>
+  <h1 class="cat-hero-title"><span class="lang-en">Immersive<br>Environments</span><span class="lang-zh">沉浸式环境</span></h1>
+  <p class="cat-hero-desc lang-en">Site-specific installations and spatial audio experiences where invisible architectural structures are mapped onto the body through sound and presence.</p>
+  <p class="cat-hero-desc lang-zh">装置与空间音频，无形的建筑结构通过多感官的沉浸式体验激发具身性想象。</p>
 </div>
 
 <div class="projects-list">
@@ -81,9 +97,10 @@
     <div class="row-num">001</div>
     <div class="row-main">
       <div class="row-status status-complete">COMPLETE</div>
-      <div class="row-title">Immersive Sound Environment</div>
-      <div class="row-type">Installation / Spatial Audio</div>
-      <div class="row-desc">A site-specific immersive audio experience where spatial sound maps invisible architectural structures onto the body.</div>
+      <div class="row-title"><span class="lang-en">Immersive Sound Environment</span><span class="lang-zh">LEVEL UP — 沉浸式声音装置</span></div>
+      <div class="row-type"><span class="lang-en">Installation / Spatial Audio</span><span class="lang-zh">装置 / 空间音频</span></div>
+      <div class="row-desc lang-en">A site-specific immersive audio experience where spatial sound maps invisible architectural structures onto the body.</div>
+      <div class="row-desc lang-zh">无形的建筑结构通过空间音频与多感官沉浸式体验映射于身体之上。</div>
       <div class="row-tags">
         <span class="tag active">Installation</span>
         <span class="tag">Spatial Audio</span>
@@ -96,7 +113,7 @@
 </div>
 
 <footer>
-  <span>ARCHIVE // CATEGORY_03 // IMMERSIVE ENVIRONMENTS</span>
+  <span><span class="lang-en">ARCHIVE // CATEGORY_03 // IMMERSIVE ENVIRONMENTS</span><span class="lang-zh">档案库 // 分类_03 // 沉浸式环境</span></span>
   <a href="index.html" style="color:var(--white-dim);text-decoration:none;">← Return to Archive</a>
 </footer>
 
@@ -105,6 +122,17 @@
   document.addEventListener('mousemove', e => { ch.style.top = e.clientY+'px'; cv.style.left = e.clientX+'px'; });
   const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  function setLang(lang) {
+    document.body.classList.remove('en', 'zh');
+    document.body.classList.add(lang);
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    localStorage.setItem('lang', lang);
+  }
+  const savedLang = localStorage.getItem('lang') || 'en';
+  setLang(savedLang);
+
 </script>
 </body>
 </html>

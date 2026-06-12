@@ -67,6 +67,21 @@
     .project-row::before { left: -20px; right: -20px; }
     .row-arrow { display: none; }
   }
+
+  /* LANGUAGE TOGGLE */
+  .lang-toggle { display: flex; align-items: center; border: 1px solid var(--border); overflow: hidden; }
+  .lang-btn { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; padding: 4px 10px; background: transparent; color: var(--white-dim); border: none; cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .lang-btn.active { background: var(--red); color: var(--white); }
+  .lang-btn:hover:not(.active) { color: var(--white); }
+  .lang-zh { display: none; }
+  .lang-en { display: block; }
+  body.zh .lang-zh { display: block; }
+  body.zh .lang-en { display: none; }
+  span.lang-zh { display: none; }
+  span.lang-en { display: inline; }
+  body.zh span.lang-zh { display: inline; }
+  body.zh span.lang-en { display: none; }
+
 </style>
 </head>
 <body>
@@ -77,14 +92,15 @@
 <div class="hud-corner hud-bl">[Currently Available Info]</div>
 <div class="hud-corner hud-br">[CVA]</div>
 <nav>
-  <a href="index.html" class="nav-back">← Archive</a>
-  <div class="nav-id">CATEGORY 01 // FILMS</div>
+  <a href="index.html" class="nav-back"><span class="lang-en">← Archive</span><span class="lang-zh">← 返回档案库</span></a>
+  <div class="nav-id"><span class="lang-en">CATEGORY 01 // FILMS</span><span class="lang-zh">分类 01 // 影片</span></div>
 </nav>
 
 <div class="cat-hero reveal">
-  <div class="cat-hero-label">// CATEGORY 01 — FILMS</div>
-  <h1 class="cat-hero-title">Films</h1>
-  <p class="cat-hero-desc">Music videos, VFX composites, and moving image works exploring spatial disorientation, architectural memory, and cinematic environments.</p>
+  <div class="cat-hero-label"><span class="lang-en">// CATEGORY 01 — FILMS</span><span class="lang-zh">// 分类 01 — 影片</span></div>
+  <h1 class="cat-hero-title"><span class="lang-en">Films</span><span class="lang-zh">影片</span></h1>
+  <p class="cat-hero-desc lang-en">Music videos, VFX composites, and moving image works exploring spatial disorientation, architectural memory, and cinematic environments.</p>
+  <p class="cat-hero-desc lang-zh">实验动画与影像、视觉特效合成，探索空间迷失、建筑记忆与电影化环境的互动影像创作。</p>
 </div>
 
 <div class="projects-list">
@@ -96,8 +112,9 @@
     <div class="row-main">
       <div class="row-status status-complete">COMPLETE</div>
       <div class="row-title">Exodus | 出埃及记</div>
-      <div class="row-type">Film / Motion</div>
-      <div class="row-desc">An Experimental Animation Inspired by Rem Koolhaas's Exodus Drawings.</div>
+      <div class="row-type"><span class="lang-en">Film / Motion</span><span class="lang-zh">影片 / 动画</span></div>
+      <div class="row-desc lang-en">An Experimental Animation Inspired by Rem Koolhaas's Exodus Drawings.</div>
+      <div class="row-desc lang-zh">以雷姆·库哈斯建筑绘画《出埃及记》为灵感的实验动画短片。</div>
       <div class="row-tags">
         <span class="tag active">Music video</span>
         <span class="tag">Blender</span>
@@ -114,8 +131,9 @@
     <div class="row-main">
       <div class="row-status status-complete">COMPLETE</div>
       <div class="row-title">Marshgate Threshold | 马什盖特阈值</div>
-      <div class="row-type">Film / Live Action + CG</div>
-      <div class="row-desc">Live-action footage composited with Blender-rendered architectural interventions.</div>
+      <div class="row-type"><span class="lang-en">Film / Live Action + CG</span><span class="lang-zh">影片 / 实拍 + CG</span></div>
+      <div class="row-desc lang-en">Live-action footage composited with Blender-rendered architectural interventions.</div>
+      <div class="row-desc lang-zh">实拍素材与 Blender 渲染建筑元素的合成影像作品。</div>
       <div class="row-tags">
         <span class="tag active">Film</span>
         <span class="tag active">VFX</span>
@@ -129,7 +147,7 @@
 </div>
 
 <footer>
-  <span>ARCHIVE // CATEGORY_01 // FILMS</span>
+  <span><span class="lang-en">ARCHIVE // CATEGORY_01 // FILMS</span><span class="lang-zh">档案库 // 分类_01 // 影片</span></span>
   <a href="index.html" style="color:var(--white-dim);text-decoration:none;">← Return to Archive</a>
 </footer>
 
@@ -139,6 +157,17 @@
   document.addEventListener('mousemove', e => { ch.style.top = e.clientY+'px'; cv.style.left = e.clientX+'px'; });
   const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  function setLang(lang) {
+    document.body.classList.remove('en', 'zh');
+    document.body.classList.add(lang);
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    localStorage.setItem('lang', lang);
+  }
+  const savedLang = localStorage.getItem('lang') || 'en';
+  setLang(savedLang);
+
 </script>
 </body>
 </html>

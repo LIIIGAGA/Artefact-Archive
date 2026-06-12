@@ -418,6 +418,21 @@
     .image-grid.cols-3 { grid-template-columns: 1fr 1fr; }
     .image-slot.wide { grid-column: span 1; }
   }
+
+  /* LANGUAGE TOGGLE */
+  .lang-toggle { display: flex; align-items: center; border: 1px solid var(--border); overflow: hidden; }
+  .lang-btn { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; padding: 4px 10px; background: transparent; color: var(--white-dim); border: none; cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .lang-btn.active { background: var(--red); color: var(--white); }
+  .lang-btn:hover:not(.active) { color: var(--white); }
+  .lang-zh { display: none; }
+  .lang-en { display: block; }
+  body.zh .lang-zh { display: block; }
+  body.zh .lang-en { display: none; }
+  span.lang-zh { display: none; }
+  span.lang-en { display: inline; }
+  body.zh span.lang-zh { display: inline; }
+  body.zh span.lang-en { display: none; }
+
 </style>
 </head>
 <body>
@@ -447,16 +462,16 @@
   <h1 class="project-hero-title">Architectural Narrative Game<br>Osaider</h1>
   <div class="project-hero-meta">
     <div class="meta-item">
-      <span class="meta-label">Year</span>
+      <span class="meta-label"><span class="lang-en">Year</span><span class="lang-zh">年份</span></span>
       <span class="meta-value">2026</span>
     </div>
     <div class="meta-item">
-      <span class="meta-label">Type</span>
+      <span class="meta-label"><span class="lang-en">Type</span><span class="lang-zh">类型</span></span>
       <span class="meta-value">Game / Interactive</span>
     </div>
     <div class="meta-item">
-      <span class="meta-label">Status</span>
-      <span class="meta-value" style="color:var(--red)">In Development</span>
+      <span class="meta-label"><span class="lang-en">Status</span><span class="lang-zh">状态</span></span>
+      <span class="meta-value" style="color:var(--red)"><span class="lang-en">In Development</span><span class="lang-zh">开发中</span></span>
     </div>
   </div>
 </div>
@@ -468,7 +483,7 @@
      方式B：用占位符（先不放视频时用）
      ═══════════════════════════════════════════ -->
 <div class="content-block reveal">
-  <div class="block-label">// Video</div>
+  <div class="block-label"><span class="lang-en">// Video</span><span class="lang-zh">// 视频</span></div>
   <div class="block-content">
 
     <!-- Bilibili 嵌入 -->
@@ -484,7 +499,7 @@
      PROJECT DESCRIPTION — 改这里的文字介绍
      ═══════════════════════════════════════════ -->
 <div class="content-block reveal">
-  <div class="block-label">// Overview</div>
+  <div class="block-label"><span class="lang-en">// Overview</span><span class="lang-zh">// 简介</span></div>
   <div class="block-content">
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px;">
       <div>
@@ -517,7 +532,7 @@
      图片放在同一文件夹下的 images/ 子文件夹里
      ═══════════════════════════════════════════ -->
 <div class="content-block reveal">
-  <div class="block-label">// Blender</div>
+  <div class="block-label"><span class="lang-en">// Blender</span><span class="lang-zh">// Blender 渲染</span></div>
   <div class="block-content">
     <div class="image-slot" style="aspect-ratio: 16/9; margin-bottom: 1px;">
       <img src="images/OsaiderGIF.gif" alt="Preview animation">
@@ -555,7 +570,7 @@
 </div>
 
 <div class="content-block reveal">
-  <div class="block-label">// Unreal Engine</div>
+  <div class="block-label"><span class="lang-en">// Unreal Engine</span><span class="lang-zh">// 虚幻引擎</span></div>
   <div class="block-content">
     <div class="image-grid cols-2" style="margin-top: 1px;">
       <div class="image-slot">
@@ -583,43 +598,12 @@
   </div>
 </div>
 
-<!-- DEVLOG -->
-<div class="content-block reveal">
-  <div class="block-label">// Devlog</div>
-  <div class="block-content">
-    <div class="devlog-grid">
 
-      <!-- ═══ 每次更新复制一个 devlog-card ═══ -->
 
-      <a href="devlog-001.html" class="devlog-card">
-        <div class="devlog-thumb">
-          <img src="images/devlog-001-thumb.jpg" alt="Devlog 001">
-        </div>
-        <div class="devlog-date">// LOG_001 · 2026.06.11</div>
-        <div class="devlog-title">First Entry Title Here</div>
-        <div class="devlog-excerpt">Brief summary of what was worked on — a sentence or two describing progress, decisions made, or problems solved.</div>
-        <div class="devlog-footer">
-          <div class="devlog-tags">
-            <span class="tag">Modelling</span>
-          </div>
-          <div class="devlog-arrow">→</div>
-        </div>
-      </a>
-
-      <!-- 没有更多条目时显示的占位卡片 -->
-      <div class="devlog-card" style="cursor:default; border: 1px dashed var(--border); background: transparent;">
-        <div class="devlog-date" style="color:var(--white-dim)">// MORE ENTRIES INCOMING</div>
-        <div class="devlog-title" style="color:var(--white-dim)">Updates in progress...</div>
-        <div class="devlog-excerpt">Development is ongoing. New logs will be added as the project evolves.</div>
-      </div>
-
-    </div>
-  </div>
-</div>
 
 
 <div class="content-block reveal">
-  <div class="block-label">// Links</div>
+  <div class="block-label"><span class="lang-en">// Links</span><span class="lang-zh">// 链接</span></div>
   <div class="block-content">
     <a href="https://vimeo.com/1200477462?share=copy&fl=sv&fe=ci" target="_blank" class="ext-link">
       Watch on Vimeo <span class="arrow">→</span>
@@ -636,7 +620,7 @@
     <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--white-dim)">Back to Archive</span>
   </a>
   <a href="project-002.html" class="proj-nav-link right">
-    <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--white-dim)">Next Project</span>
+    <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--white-dim)"><span class="lang-en">Next Project</span><span class="lang-zh">下一个项目</span></span>
     <span class="nav-title">Game Demo I</span>
     <span class="nav-arrow" style="align-self:flex-end">→</span>
   </a>
@@ -644,7 +628,7 @@
 
 <footer>
   <span>ARCHIVE SYSTEM // COLLECTION_001 // 2025</span>
-  <span><a href="index.html" style="color:var(--white-dim);text-decoration:none;">← Return to Archive</a></span>
+  <span><a href="index.html" style="color:var(--white-dim);text-decoration:none;"><span class="lang-en">← Return to Archive</span><span class="lang-zh">← 返回档案库</span></a></span>
 </footer>
 
 <script>
@@ -660,6 +644,17 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.08 });
   reveals.forEach(el => observer.observe(el));
+
+  function setLang(lang) {
+    document.body.classList.remove('en', 'zh');
+    document.body.classList.add(lang);
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    localStorage.setItem('lang', lang);
+  }
+  const savedLang = localStorage.getItem('lang') || 'en';
+  setLang(savedLang);
+
 </script>
 </body>
 </html>
