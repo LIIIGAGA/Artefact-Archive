@@ -578,13 +578,23 @@
   span.lang-en { display: inline; }
   body.zh span.lang-zh { display: inline; }
   body.zh span.lang-en { display: none; }
+
+  /* CONTACT */
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  @media (max-width: 768px) {
     nav { padding: 0 20px; }
     #hero, section { padding-left: 20px; padding-right: 20px; }
     .about-layout, .contact-layout { grid-template-columns: 1fr; gap: 32px; }
     .hero-grid-bg { display: none; }
     footer { padding: 24px 20px; flex-direction: column; gap: 8px; }
     .nav-links { gap: 16px; }
-  
+  }
 </style>
 </head>
 <body>
@@ -760,7 +770,10 @@
       <div class="about-file reveal">
         <div class="file-row">
           <span class="file-key"><span class="lang-en">Subject ID</span><span class="lang-zh">姓名</span></span>
-          <span class="file-val">李佳颖</span>
+          <span class="file-val">
+            <span class="lang-en">Jiaying Li / Gaga</span>
+            <span class="lang-zh">李佳颖</span>
+          </span>
         </div>
         <div class="file-row">
           <span class="file-key"><span class="lang-en">Designation</span><span class="lang-zh">身份</span></span>
