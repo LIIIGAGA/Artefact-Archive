@@ -322,12 +322,19 @@
   .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .reveal.visible { opacity: 1; transform: none; }
 
-  @media (max-width: 768px) {
-    nav, .project-hero, .content-block, .project-nav, footer { padding-left: 20px; padding-right: 20px; }
-    .content-block { grid-template-columns: 1fr; gap: 16px; }
-    .image-grid.cols-3 { grid-template-columns: 1fr 1fr; }
-    .image-slot.wide { grid-column: span 1; }
-  }
+  /* LANGUAGE TOGGLE */
+  .lang-toggle { display: flex; align-items: center; border: 1px solid var(--border); overflow: hidden; }
+  .lang-btn { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; padding: 4px 10px; background: transparent; color: var(--white-dim); border: none; cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .lang-btn.active { background: var(--red); color: var(--white); }
+  .lang-btn:hover:not(.active) { color: var(--white); }
+  .lang-zh { display: none; }
+  .lang-en { display: block; }
+  body.zh .lang-zh { display: block; }
+  body.zh .lang-en { display: none; }
+  span.lang-zh { display: none; }
+  span.lang-en { display: inline; }
+  body.zh span.lang-zh { display: inline; }
+  body.zh span.lang-en { display: none; }
 </style>
 </head>
 <body>
@@ -345,12 +352,12 @@
 <div class="hud-corner hud-br">[CVA]</div>
 
 <nav>
-  <a href="index.html" class="nav-back">← Back to Archive</a>
-  <div class="nav-id">COLLECTION / 001</div>
+  <a href="index.html" class="nav-back"><span class="lang-en">← Back to Archive</span><span class="lang-zh">← 返回档案库</span></a>
+  <div class="nav-id"><span class="lang-en">COLLECTION / 001</span><span class="lang-zh">收录 / 001</span></div>
   <div class="lang-toggle">
-      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" id="btn-zh" onclick="setLang('zh')">中文</button>
-    </div>
+    <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" id="btn-zh" onclick="setLang('zh')">中文</button>
+  </div>
 </nav>
 
 <!-- ═══════════════════════════════════════════
@@ -386,7 +393,7 @@
      方式B：用占位符（先不放视频时用）
      ═══════════════════════════════════════════ -->
 <div class="content-block reveal">
-  <div class="block-label">// Video</div>
+  <div class="block-label"><span class="lang-en">// Video</span><span class="lang-zh">// 视频</span></div>
   <div class="block-content">
 
     <!-- Bilibili 嵌入 -->
@@ -402,7 +409,7 @@
      PROJECT DESCRIPTION — 改这里的文字介绍
      ═══════════════════════════════════════════ -->
 <div class="content-block reveal">
-  <div class="block-label">// Overview</div>
+  <div class="block-label"><span class="lang-en">// Overview</span><span class="lang-zh">// 简介</span></div>
   <div class="block-content">
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px;">
       <div>
@@ -525,6 +532,16 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.08 });
   reveals.forEach(el => observer.observe(el));
+
+  function setLang(lang) {
+    document.body.classList.remove('en', 'zh');
+    document.body.classList.add(lang);
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    localStorage.setItem('lang', lang);
+  }
+  const savedLang = localStorage.getItem('lang') || 'en';
+  setLang(savedLang);
 </script>
 </body>
 </html>
