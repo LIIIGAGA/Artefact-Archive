@@ -262,6 +262,19 @@
     letter-spacing: -0.01em;
   }
 
+  .chapter-section {
+    margin-top: 48px;
+  }
+
+  .subsection-title {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--red);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 28px 0 12px;
+  }
+
   .sub-title {
     font-family: var(--mono);
     font-size: 12px;
@@ -1010,6 +1023,48 @@
         <span>Figures 15–16 — Spatial configuration of multiple Spatial Storylet modules</span>
       </div>
       <div class="figure-caption">Positional relationships between adjacent modules — causation, contrast, irony, parallelism — constitute the operative mechanism of the grammatical layer.</div>
+    </div>
+
+    <div class="chapter-section">
+      <h3 class="section-title"><span class="lang-en">4.1 The Conceptual Origin</span><span class="lang-zh">4.1 概念起源</span></h3>
+
+      <p><span class="lang-en">The spatial archetype at the centre of this design is the Palace of the Soviets — a monument that was never built. In the 1930s, the Soviet Union planned to construct the Palace of the Soviets in Moscow — a super-structure intended to become the symbol of its age. As envisioned, it would have been the tallest building in the world, crowned with a colossal statue of Lenin. Yet this ambitious project, once begun, was never completed. Times changed, governments shifted, and an open-air swimming pool was built on the original foundations; the Palace of the Soviets, along with the dream of shared glory, receded from the stage of history. Yet its vitality survived in another form — it was continually reproduced as propaganda posters, appeared in films, textbooks, and art exhibitions, and even on product packaging, stamps, and postcards. The narrative tension it carried far exceeded that of any realised building, making it an enduring cultural symbol: a red spectre haunting the collective memory of post-Soviet nations.</span><span class="lang-zh">本设计的空间原型是苏维埃宫——一座从未建成的纪念碑。20世纪30年代，苏联计划在莫斯科建造苏维埃宫——一座足以成为时代象征的超级建筑。按照设想，它将成为世界最高建筑，顶端矗立着巨大的列宁雕像。然而，这项雄心勃勃的工程在开工后却始终没能建成。时代变迁，政府更迭，原本的地基上修建起了一座露天游泳池，苏维埃宫和共荣梦想一同退出了历史舞台。然而它的生命力却以另一种方式留存下来——它不断被制作成宣传画、出现在电影、教科书、艺术展览会，甚至商品包装、邮票明信片上。它所携带的叙事张力远超任何已建成建筑，让它成为了一个恒久的文化符号：一个游荡在后苏联国家集体记忆中的红色幽灵。</span></p>
+
+      <p><span class="lang-en">This dissertation's game design, <em>OSAIDER</em>, takes the Palace of the Soviets as its point of departure. An unbuilt palace represents an unrealised ideal — and simultaneously, a machine for ideological production. It is a space that exists only in imagination and representation, never bodily traversed. This is precisely what makes it the ideal vehicle for a Spatial Storylet system: a space whose meaning is inseparable from its narrative, and whose narrative can never be separated from the space that never was.</span><span class="lang-zh">本文的游戏设计<em>OSAIDER</em>以苏维埃宫为出发点。一座从未建成的宫殿代表着一个从未实现的理想，同时也是一台意识形态生产机器。它是一个只存在于想象与表征中、从未被身体穿越的空间。正是这一点，使它成为空间叙事单元系统的理想载体：一个意义与叙事不可分离的空间，而其叙事又永远无法脱离那座从未存在过的空间。</span></p>
+    </div>
+
+    <div class="chapter-section">
+      <h3 class="section-title"><span class="lang-en">4.2 The Three-Layer Model in Practice</span><span class="lang-zh">4.2 三层模型的设计实现</span></h3>
+
+      <h4 class="subsection-title"><span class="lang-en">The Lexical Layer: Text-Only Prototype</span><span class="lang-zh">单词层：纯文字原型</span></h4>
+
+      <p><span class="lang-en">The lexical layer is realised as a text-only interactive prototype, built in Figma. Each narrative module consists of a discrete textual block — a fixed narrative unit whose content remains unchanged across all traversals. The text-only prototype presents this layer in isolation: the player receives only textual information, and must rely on imagination to fill the narrative gaps as they traverse the complete text. This prototype establishes the baseline — the raw narrative material that spatial form will subsequently transform.</span><span class="lang-zh">单词层以纯文字交互原型的形式实现，使用Figma制作。每个叙事模块由一个离散的文本块构成——一个在所有遍历过程中内容保持不变的固定叙事单元。纯文字原型将这一层单独呈现：玩家只能获得文字信息，必须依靠想象填补叙事的空白，穿越整个文本。这个原型建立了基准——空间形态将在此基础上对其进行转化的叙事原材料。</span></p>
+
+      <h4 class="subsection-title"><span class="lang-en">The Contextual Layer: Spatial Modules</span><span class="lang-zh">语境层：空间模块</span></h4>
+
+      <p><span class="lang-en">A corresponding three-dimensional spatial module is designed for each textual block. As the player traverses the module, they listen to audio narration while simultaneously manipulating the space to obtain special objects embedded with narrative clues. The scale, form, colour, and material of each module, together with its specific interaction affordances and the objects the player obtains, collectively constitute the interpretive context through which the textual content is understood. The same passage of text, encountered within a different spatial form, produces a different reading. The player then makes choices based on their own understanding, advancing the narrative. This is the operative mechanism of the contextual layer: space as the condition of meaning, not merely its backdrop.</span><span class="lang-zh">为每个文本块设计一个对应的三维空间模块。玩家在穿越模块的过程中，一边聆听音频叙事，一边操作空间以获得嵌入叙事线索的特殊物品。每个模块的尺度、形态、颜色、材质，以及特定的交互方式，连同玩家所获得的物品，共同构成理解文本内容的解读语境。同一段文字，在不同的空间形态中遭遇，会产生不同的解读。玩家随后根据自己的理解做出选择，推进叙事。这正是语境层的运作机制：空间作为意义的条件，而非仅仅是意义的背景。</span></p>
+
+      <h4 class="subsection-title"><span class="lang-en">The Grammatical Layer: The Palace as System</span><span class="lang-zh">语法层：作为系统的宫殿</span></h4>
+
+      <p><span class="lang-en">The palace as a whole is assembled from modules both visible and invisible. The player selects three objects obtained through spatial exploration, triggering a Dice Check; the system then generates the next module. With each traversal, the palace appears in a different configuration. Over the course of multiple traversals, the player begins to grasp the logic underlying the module generation. In other words, they begin to understand the grammatical rules by which this particular "Tower of Babel" is constructed. The palace does not pre-exist; it is produced by the act of traversal.</span><span class="lang-zh">宫殿整体由可见与不可见的模块拼凑而成。玩家选择通过空间探索获得的三件物品，触发骰子检定；系统随即生成下一个模块。每一次遍历，宫殿都以不同的面貌出现。在多次遍历的过程中，玩家开始逐渐理解模块生成背后的逻辑。换句话说，开始理解建造这座"巴别塔"的"语法"规则。宫殿不是预先存在的，它是被遍历行为所生产的。</span></p>
+    </div>
+
+    <div class="chapter-section">
+      <h3 class="section-title"><span class="lang-en">4.3 Comparative Analysis: Text-Only Prototype vs. Full Spatial Prototype</span><span class="lang-zh">4.3 对比分析：纯文字原型与完整空间原型</span></h3>
+
+      <p><span class="lang-en">The two prototype versions make the contribution of spatial form directly legible through comparison. In the text-only prototype, the player possesses only textual information; the narrative is traversable, but its spatial grammar is absent. Meaning must be imaginatively reconstructed from language alone. In the full spatial prototype, the player encounters the story through three-dimensional space — through a non-textual, embodied experience of manipulating form, scale, and material to obtain objects and clues. Space introduces what text alone cannot supply: an experiential, traversable dimension upon which the contextual and grammatical layers depend.</span><span class="lang-zh">两个版本的原型，使空间形态的贡献通过对比得以直接显现。在纯文字原型中，玩家只拥有文字信息；叙事可以被遍历，但其空间语法缺席。意义必须单纯从语言中被想象性地重建。在完整空间原型中，玩家通过三维空间遭遇故事——通过操作形态、尺度与材质以获得物品和线索的非文字，具身性体验。空间引入了文字单独无法提供的东西：一个语境层和语法层所依赖的、体验性的、可遍历的维度。</span></p>
+
+      <p><span class="lang-en">This embodied dimension calls to mind Rossi's concept of the <em>architectural type</em> — the idea that certain spatial forms recur across different cultures and histories, gradually accumulating layers of history and collective memory, and in doing so come to transcend their specific era and function. When the word "palace" is invoked, people automatically activate a set of associations around power, ritual, and monumentality. This ineffable human experience is transmitted in secret, in the form of a collective unconscious.</span><span class="lang-zh">这种具身性维度让我想起Rossi的"建筑原型"（architectural type）概念中，某些空间形态在不同文化和历史中反复出现，逐渐沉积了历史和集体记忆，便开始超越具体时代和功能。当提起"宫殿"，人们便会自动激发关于权力、仪式、纪念性的联想。这种无法被言说的人类经验以集体潜意识的形式隐秘地传承。</span></p>
+    </div>
+
+    <div class="chapter-section">
+      <h3 class="section-title"><span class="lang-en">4.4 Evaluation: Spatial Morphology and Current Limitations</span><span class="lang-zh">4.4 评估：空间形态与当前局限</span></h3>
+
+      <p><span class="lang-en">Applying the eighth variable proposed in this dissertation, <em>OSAIDER</em> represents an exploratory attempt at the constitutive level of spatial morphology — a design in which spatial configuration is not a backdrop for narrative but its necessary condition. Whether this attempt has truly realised the constitutive level is a question this dissertation cannot yet definitively answer; the project remains experimental and unfinished.</span><span class="lang-zh">运用本文提出的第八变量进行分析，<em>OSAIDER</em>代表着对空间形态构成性层级的一次探索性尝试——在这个设计中，空间构型不是叙事的背景，而是叙事的必要条件。这次尝试是否真正实现了构成性层级，本文目前尚无法给出确定的答案；这个项目仍然是实验性的、未竟的。</span></p>
+
+      <p><span class="lang-en">Yet the author believes that the constitutive level is a reachable direction, not merely a theoretical proposition. The Dice Check mechanism, the object-based spatial interaction, and the dynamic module generation together constitute a system in which the player's traversal of space genuinely produces the narrative, rather than simply encountering it.</span><span class="lang-zh">但笔者相信：构成性层级是一个可以抵达的方向，而不仅仅是一个理论命题。骰子检定机制、基于物品的空间交互，以及动态模块生成，共同构成了一个系统——在这个系统中，玩家对空间的遍历真正地生产了叙事，而非只是遭遇叙事。</span></p>
+
+      <p><span class="lang-en">At the same time, the author wishes to honestly identify the limitations of the current design. The connection between spatial recombination logic and narrative meaning remains subject to significant interpretive barriers. The design of spatial configurations is subjective, and semantic coherence has not been verified. That is to say, narrative spatial grammar functions in this design practice as an exploratory pathway — one that has received encouraging feedback in player testing — but as a methodology it has not yet reached a transferable, general-purpose level. This is the central unresolved problem, and the most productive direction for future development.</span><span class="lang-zh">同时，笔者也想要诚实地指出当前设计的局限性。空间重组逻辑与叙事意义之间的联系仍有极大的理解障碍。空间构型的设计是主观的，语义连贯并未得到验证。也就是说，叙事语法在本设计实践中作为一个路径尝试，在玩家测试中收到了较好的反馈，但作为方法论还未达到可移植的通用级别，这是核心的未解问题，也是未来发展最具潜力的方向。</span></p>
     </div>
   </div>
 
