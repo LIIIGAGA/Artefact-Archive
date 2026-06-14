@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spatial Storylets — Jiaying Li</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #E3000F; --red-dim: #7A0008;
+    --white: #F0EDE8; --white-dim: #888880;
+    --bg: #080808; --bg2: #111111; --bg3: #1A1A1A;
+    --border: #2A2A2A;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Space Grotesk', sans-serif;
+    --reading-max: 720px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.025) 2px, rgba(0,0,0,0.025) 4px);
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* HUD */
+  .hud-corner { position: fixed; z-index: 100; font-size: 11px; color: var(--white-dim); letter-spacing: 0.05em; pointer-events: none; font-family: var(--mono); }
+  .hud-tl { top: 20px; left: 24px; display: flex; align-items: center; gap: 10px; }
+  .hud-tr { top: 20px; right: 24px; }
+  .hud-bl { bottom: 20px; left: 24px; }
+  .hud-br { bottom: 20px; right: 24px; }
+  .rec-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); display: inline-block; animation: blink 1.4s ease-in-out infinite; }
+  .hud-box { border: 1px solid var(--border); width: 14px; height: 14px; display: inline-block; vertical-align: middle; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 56px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 80px;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(8px);
+    z-index: 500;
+    justify-content: space-between;
+  }
+  .nav-back {
+    color: var(--white-dim);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: var(--mono);
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--red); }
+  .nav-id { font-size: 11px; color: var(--red); letter-spacing: 0.12em; text-transform: uppercase; font-family: var(--mono); }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    position: fixed;
+    top: 56px; left: 0;
+    height: 2px;
+    background: var(--red);
+    width: 0%;
+    z-index: 499;
+    transition: width 0.1s linear;
+  }
+
+  /* TOC SIDEBAR */
+  .toc {
+    position: fixed;
+    left: 0; top: 56px; bottom: 0;
+    width: 220px;
+    padding: 40px 24px;
+    overflow-y: auto;
+    border-right: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+  .toc-label {
+    color: var(--red);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-size: 10px;
+  }
+  .toc-item {
+    display: block;
+    color: var(--white-dim);
+    text-decoration: none;
+    padding: 6px 0;
+    border-left: 2px solid transparent;
+    padding-left: 12px;
+    margin-left: -12px;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+    transition: color 0.2s, border-color 0.2s;
+    font-size: 11px;
+  }
+  .toc-item:hover { color: var(--white); }
+  .toc-item.active { color: var(--white); border-left-color: var(--red); }
+  .toc-item.sub { padding-left: 24px; margin-left: -12px; font-size: 10px; color: #555; }
+  .toc-item.sub.active { color: var(--white-dim); }
+
+  /* MAIN CONTENT */
+  main {
+    margin-left: 220px;
+    padding: 80px 80px 120px;
+  }
+
+  /* ESSAY HEADER */
+  .essay-header {
+    max-width: var(--reading-max);
+    margin: 0 auto 80px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-meta-top {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .essay-title {
+    font-family: var(--sans);
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .essay-subtitle {
+    font-family: var(--sans);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--white-dim);
+    margin-bottom: 32px;
+    line-height: 1.4;
+  }
+  .essay-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    font-family: var(--mono);
+  }
+  .info-cell {
+    background: var(--bg2);
+    padding: 12px 16px;
+  }
+  .info-key { font-size: 10px; color: var(--white-dim); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+  .info-val { font-size: 12px; color: var(--white); }
+
+  /* ABSTRACT BOX */
+  .abstract-box {
+    max-width: var(--reading-max);
+    margin: 0 auto 64px;
+    border-left: 2px solid var(--red);
+    padding: 24px 28px;
+    background: var(--bg2);
+  }
+  .abstract-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .abstract-box p {
+    font-size: 15px;
+    color: var(--white-dim);
+    line-height: 1.85;
+  }
+  .abstract-box p + p { margin-top: 12px; }
+
+  /* RESEARCH QUESTION BOX */
+  .rq-box {
+    max-width: var(--reading-max);
+    margin: 0 auto 64px;
+    border: 1px solid var(--border);
+    padding: 28px;
+    background: var(--bg3);
+    position: relative;
+  }
+  .rq-box::before {
+    content: '// RESEARCH QUESTION';
+    position: absolute;
+    top: -1px; left: 20px;
+    background: var(--bg3);
+    padding: 0 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    transform: translateY(-50%);
+  }
+  .rq-box p {
+    font-size: 16px;
+    color: var(--white);
+    line-height: 1.8;
+    font-style: italic;
+  }
+  .rq-box p + p { margin-top: 12px; }
+
+  /* CHAPTER SECTIONS */
+  .chapter {
+    max-width: var(--reading-max);
+    margin: 0 auto 80px;
+  }
+
+  .chapter-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .chapter-title {
+    font-family: var(--sans);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-title {
+    font-family: var(--sans);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--white);
+    margin: 40px 0 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .sub-title {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--red);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 28px 0 12px;
+  }
+
+  p {
+    color: var(--white-dim);
+    font-size: 16px;
+    line-height: 1.85;
+    margin-bottom: 20px;
+  }
+  p strong { color: var(--white); font-weight: 600; }
+  p em { color: var(--white); font-style: italic; }
+
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left: 2px solid var(--red);
+    padding: 16px 24px;
+    margin: 32px 0;
+    background: var(--bg2);
+  }
+  .pull-quote p {
+    font-size: 17px;
+    color: var(--white);
+    font-style: italic;
+    margin: 0;
+    line-height: 1.7;
+  }
+  .pull-quote cite {
+    display: block;
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--white-dim);
+    letter-spacing: 0.06em;
+    font-style: normal;
+  }
+
+  /* CONCEPT BOX */
+  .concept-box {
+    border: 1px solid var(--border);
+    padding: 28px;
+    margin: 32px 0;
+    background: var(--bg2);
+    position: relative;
+  }
+  .concept-box-label {
+    position: absolute;
+    top: -1px; left: 16px;
+    background: var(--bg2);
+    padding: 0 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transform: translateY(-50%);
+  }
+  .concept-box p { margin: 0; color: var(--white); }
+  .concept-box p + p { margin-top: 12px; color: var(--white-dim); }
+
+  /* VARIABLE TABLE */
+  .var-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  .var-table th {
+    text-align: left;
+    padding: 10px 14px;
+    background: var(--bg3);
+    color: var(--red);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .var-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--white-dim);
+    vertical-align: top;
+  }
+  .var-table tr:hover td { background: var(--bg2); color: var(--white); }
+  .var-table td:first-child { color: var(--white); font-weight: 500; }
+
+  /* TAXONOMY */
+  .taxonomy {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 24px 0;
+  }
+  .tax-item {
+    background: var(--bg2);
+    padding: 20px;
+  }
+  .tax-level {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .tax-name {
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .tax-desc { font-size: 12px; color: var(--white-dim); line-height: 1.6; margin: 0; }
+
+  /* CASE STUDY */
+  .case-study {
+    border: 1px solid var(--border);
+    margin: 32px 0;
+    overflow: hidden;
+  }
+  .case-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+  }
+  .case-name {
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--white);
+  }
+  .case-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 3px 10px;
+    border: 1px solid var(--red-dim);
+    color: var(--red);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .case-body { padding: 20px; }
+  .case-body p { margin: 0 0 12px; font-size: 14px; }
+  .case-body p:last-child { margin: 0; }
+
+  /* THREE LAYERS */
+  .layers {
+    margin: 32px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .layer-item {
+    background: var(--bg2);
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  .layer-name {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding-top: 2px;
+  }
+  .layer-desc { font-size: 14px; color: var(--white-dim); line-height: 1.7; margin: 0; }
+  .layer-desc strong { color: var(--white); }
+
+  /* FIGURE PLACEHOLDER */
+  .figure {
+    margin: 32px 0;
+    border: 1px solid var(--border);
+    background: var(--bg2);
+  }
+  .figure-placeholder {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white-dim);
+    font-family: var(--mono);
+    font-size: 12px;
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    gap: 8px;
+  }
+  .figure-placeholder .fig-icon { font-size: 24px; opacity: 0.3; }
+  .figure-caption {
+    padding: 12px 16px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--white-dim);
+    line-height: 1.5;
+  }
+
+  /* FOOTNOTE */
+  .footnote {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--white-dim);
+    border-top: 1px solid var(--border);
+    padding-top: 4px;
+    margin-top: 2px;
+    line-height: 1.6;
+    vertical-align: super;
+  }
+  sup {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+    cursor: pointer;
+  }
+
+  /* BIBLIOGRAPHY */
+  .bib-section { margin-bottom: 32px; }
+  .bib-section-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .bib-item {
+    font-size: 14px;
+    color: var(--white-dim);
+    line-height: 1.7;
+    margin-bottom: 12px;
+    padding-left: 20px;
+    text-indent: -20px;
+  }
+  .bib-item em { color: var(--white); }
+  .bib-item a { color: var(--red); text-decoration: none; }
+  .bib-item a:hover { text-decoration: underline; }
+
+  /* DIVIDER */
+  .divider {
+    max-width: var(--reading-max);
+    margin: 0 auto 48px;
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  footer {
+    margin-left: 220px;
+    padding: 24px 80px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--white-dim);
+    letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 900px) {
+    .toc { display: none; }
+    main, footer { margin-left: 0; padding-left: 24px; padding-right: 24px; }
+    nav { padding: 0 24px; }
+    .essay-info { grid-template-columns: 1fr; }
+    .taxonomy { grid-template-columns: 1fr; }
+    .layer-item { grid-template-columns: 1fr; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hud-corner hud-tl"><div class="hud-box"></div><span class="rec-dot"></span><span>REC</span></div>
+<div class="hud-corner hud-tr">[2025]</div>
+<div class="hud-corner hud-bl">[Currently Available Info]</div>
+<div class="hud-corner hud-br">[CVA]</div>
+
+<div class="progress-bar" id="progress"></div>
+
+<nav>
+  <a href="index.html" class="nav-back">← Archive</a>
+  <div class="nav-id">// ESSAY — DISSERTATION DRAFT</div>
+</nav>
+
+<!-- TOC -->
+<aside class="toc" id="toc">
+  <div class="toc-label">// Contents</div>
+  <a href="#research-question" class="toc-item">Research Question</a>
+  <a href="#abstract" class="toc-item">Abstract</a>
+  <a href="#ch1" class="toc-item">Ch.1 Introduction</a>
+  <a href="#ch2" class="toc-item">Ch.2 Theoretical Framework</a>
+  <a href="#ch2-1" class="toc-item sub">2.1 Linearity</a>
+  <a href="#ch2-2" class="toc-item sub">2.2 Ergodic Theory</a>
+  <a href="#ch2-3" class="toc-item sub">2.3 Eighth Variable</a>
+  <a href="#ch2-4" class="toc-item sub">2.4 Storylet Theory</a>
+  <a href="#ch2-5" class="toc-item sub">2.5 Spatial Storylet</a>
+  <a href="#ch3" class="toc-item">Ch.3 Case Analysis</a>
+  <a href="#ch4" class="toc-item">Ch.4 Design Practice</a>
+  <a href="#bibliography" class="toc-item">Bibliography</a>
+</aside>
+
+<main>
+
+  <!-- HEADER -->
+  <div class="essay-header reveal">
+    <div class="essay-meta-top">// UCL Bartlett · MArch CVA · BARC0201_25-26</div>
+    <h1 class="essay-title">Spatial Storylets</h1>
+    <p class="essay-subtitle">Extending Ergodic Narrative into Three-Dimensional Space</p>
+    <div class="essay-info">
+      <div class="info-cell">
+        <div class="info-key">Author</div>
+        <div class="info-val">Jiaying Li</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-key">Tutor</div>
+        <div class="info-val">Claude Dutson</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-key">Status</div>
+        <div class="info-val" style="color:var(--red)">● Draft</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESEARCH QUESTION -->
+  <div id="research-question" class="chapter reveal">
+    <div class="rq-box">
+      <p>How can the design of a <strong>Spatial Storylet</strong> system transfer narrative grammar from temporal sequence into <strong>three-dimensional space</strong>?</p>
+      <p>Can this transfer enable fragmented narrative to achieve coherence without temporal sequence, and produce measurable effects on players' narrative meaning-making and <strong>emotional engagement</strong>?</p>
+    </div>
+  </div>
+
+  <!-- ABSTRACT -->
+  <div id="abstract" class="chapter reveal">
+    <div class="chapter-label">// Abstract</div>
+    <div class="abstract-box">
+      <div class="abstract-label">Summary</div>
+      <p>In Espen Aarseth's conception of cybertext, "text" is understood broadly as a dynamic system encompassing content, rules, mechanisms, and user interaction, rather than merely as a static written sequence. Yet existing models of interactive narrative — including linear, branching, and ergodic models — continue to treat text as a product of temporal sequence.</p>
+      <p>This dissertation proposes an eighth variable — <em>spatial morphology</em> — to address the gap Aarseth's taxonomy leaves in the spatial dimension. Building on the storylets model, it introduces the concept of the <strong>Spatial Storylet</strong>: a narrative unit in which a text fragment is embedded within a designed spatial module, operating across three levels — the lexical layer, contextual layer, and grammatical layer.</p>
+      <p>A player's traversal of three-dimensional space is simultaneously an act of reading and an act of spatial production. Story is not stored in any single module; it emerges from the relational whole of the spatial configuration.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- CHAPTER 1 -->
+  <div id="ch1" class="chapter reveal">
+    <div class="chapter-label">// Chapter 1</div>
+    <h2 class="chapter-title">Introduction</h2>
+
+    <p>In the design practice of narrative video games, there has long existed a <strong>disconnect between space and text</strong>: the environment is neither shaped by the narrative content, nor does it shape the player's understanding of it. Players traverse carefully designed virtual spaces, yet they are often merely moving, not reading.</p>
+
+    <p>Stories unfold through dialogue boxes and cutscenes, while space functions only as their backdrop. This disconnect is not a failure of individual designers, but a consequence of existing narrative models — when narrative coherence is understood as a product of temporal sequence, space can only serve as a container for time-based storytelling rather than as a source of meaning itself.</p>
+
+    <div class="pull-quote">
+      <p>"The non-linearity of so-called non-linear narrative in text-based games is in fact an illusion. Even when no necessary causal relationship exists between events, the way in which each passage of text is perceived remains sequential."</p>
+    </div>
+
+    <p>In many ergodic text adventure games, space tends to exist only as a metaphorical element. In <em>80 Days</em>, the narrative is structured as a complex, interwoven graph — but this topology remains too abstract, at the level of a two-dimensional diagram. The textual content is obviously more direct, naturally attracting more of the player's attention.</p>
+
+    <p>To achieve genuine non-linearity, we must turn to a medium of meaning that does not depend on temporal sequence — <strong>space. And space cannot be fully described. It can only be experienced.</strong></p>
+
+    <p>A reliable solution is to use <strong>text to guarantee the volume and precision of narrative</strong>, and <strong>space to supply its grammar and structure</strong> — neither can be dispensed with. This tension leads directly to the central question:</p>
+
+    <div class="concept-box">
+      <div class="concept-box-label">Central Problem</div>
+      <p><em>How can spatial elements become an irreplaceable condition for the story to be understood, rather than an optional backdrop?</em></p>
+      <p><em>In the process of integrating textual and spatial narrative, how can narrative coherence be made to depend on spatial relations rather than temporal sequence?</em></p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- CHAPTER 2 -->
+  <div id="ch2" class="chapter reveal">
+    <div class="chapter-label">// Chapter 2</div>
+    <h2 class="chapter-title">Theoretical Framework</h2>
+
+    <div id="ch2-1">
+      <h3 class="section-title">2.1 Linearity in Narrative Games</h3>
+
+      <p>The main existing forms of interactive narrative structure — linear, branching, and ergodic — despite their significant differences in the degree of player autonomy, share a crucial common ground: <strong>story ultimately solidifies in the player's mind into a descriptive format, transitioning from a dynamic system into stable knowledge, and the way players perceive or reflect on it is essentially linear in nature.</strong></p>
+
+      <p>Aarseth describes the "linearity" of hypertext as a topological concept: in a linear text, all nodes can only be accessed in a single fixed sequence, whereas a non-linear text contains forks and admits more than one possible path. However, the sense of "linear" discussed in this dissertation is more concerned with its <strong>two-dimensional character</strong> in contrast to three-dimensional spatiality — both interpretations can be summarised as flat diagrammatic representations rather than as spaces that can be traversed by a body.</p>
+
+      <div class="figure">
+        <div class="figure-placeholder">
+          <span class="fig-icon">◻</span>
+          <span>Figure 1 — Hypertext narrative structures and the IDN system framework</span>
+        </div>
+        <div class="figure-caption">Illustrating the transition from traditional hypertext to sculptural hypertext as a basis for the Spatial Storylet model. Diagram by author.</div>
+      </div>
+    </div>
+
+    <div id="ch2-2">
+      <h3 class="section-title">2.2 Aarseth's Ergodic Theory and the Seven-Variable Framework</h3>
+
+      <h4 class="sub-title">2.2.1 Text & Cybertext</h4>
+
+      <p>In <em>Cybertext</em>, Aarseth poses the question: in what sense are hypertext, adventure games, and similar forms to be considered text at all? The reader of a cybertext is placed in an insecure position: every choice made represents a possible path that refuses to be traversed.</p>
+
+      <div class="pull-quote">
+        <p>"The reader's subjective effort is engaged in generating the world itself, rather than merely introducing a personal interpretive perspective onto a text whose existence proceeds undisturbed. The reader's struggle is to obtain 'the story as mine', which is essentially a form of personal improvisation."</p>
+        <cite>— Aarseth, Cybertext (1997), p.4</cite>
+      </div>
+
+      <h4 class="sub-title">2.2.2 The Seven-Variable Framework</h4>
+
+      <p>Central to Aarseth's framework is the distinction between textons and scriptons, mediated by the traversal function. To systematise the analysis of ergodic texts, Aarseth proposes seven variables:</p>
+
+      <table class="var-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Variable</th>
+            <th>Levels</th>
+            <th>What it describes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Dynamics</td><td>Static / IDT / TDT</td><td>Whether textual content changes</td></tr>
+          <tr><td>2</td><td>Determinability</td><td>Determinate / Indeterminate</td><td>Whether traversal function yields consistent outputs</td></tr>
+          <tr><td>3</td><td>Transiency</td><td>Transient / Intransient</td><td>Whether content advances automatically with time</td></tr>
+          <tr><td>4</td><td>Perspective</td><td>Personal / Impersonal</td><td>Whether user has a role within the world</td></tr>
+          <tr><td>5</td><td>Access</td><td>Random / Controlled</td><td>Whether all content is reachable at any time</td></tr>
+          <tr><td>6</td><td>Linking</td><td>Explicit / Conditional / None</td><td>How connections between nodes operate</td></tr>
+          <tr><td>7</td><td>User Function</td><td>Interpretive / Explorative / Configurative / Textonic</td><td>What the user can do beyond interpreting</td></tr>
+        </tbody>
+      </table>
+
+      <p>We can observe that "spatiality" appears twice among these seven variables, yet in both instances only as an abstract condition. In the <strong>Access</strong> variable, location operates merely as a logical label. In the <strong>Linking</strong> variable, "adjacency" remains adjacency in the topological sense, not in terms of actual spatial coordinates. Aarseth's seven-variable framework therefore describes the logical and procedural dimensions of ergodic texts with considerable precision — yet in the ergodic texts he examines, space is invariably logical and representational.</p>
+    </div>
+
+    <div id="ch2-3">
+      <h3 class="section-title">2.3 The Eighth Variable: Spatial Morphology</h3>
+
+      <p>This dissertation proposes an eighth variable — <strong>spatial morphology</strong> — to extend Aarseth's classificatory system from the abstract two-dimensional domain into three-dimensional space. Spatial morphology is divided into three levels:</p>
+
+      <div class="taxonomy">
+        <div class="tax-item">
+          <div class="tax-level">Level 01</div>
+          <div class="tax-name">Decorative</div>
+          <p class="tax-desc">Spatial form is present but exerts no structural influence on narrative meaning. Space functions only as visual backdrop. A player may entirely disregard spatial form without any loss of comprehension.</p>
+        </div>
+        <div class="tax-item">
+          <div class="tax-level">Level 02</div>
+          <div class="tax-name">Contextual</div>
+          <p class="tax-desc">Spatial form modifies and inflects the interpretation of narrative content, but is not a necessary condition for understanding the story. Space functions as an enhancer of narrative, not as its grammar.</p>
+        </div>
+        <div class="tax-item">
+          <div class="tax-level">Level 03</div>
+          <div class="tax-name">Constitutive</div>
+          <p class="tax-desc">Spatial form is a necessary condition for narrative meaning. Without spatial configuration, the story does not cohere — textual fragments cannot be integrated, and meaning cannot emerge.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="ch2-4">
+      <h3 class="section-title">2.4 Storylet Theory</h3>
+
+      <p>The term <em>storylet</em> originated in the game <em>Fallen London</em>, developed by Failbetter Games. Emily Short defines it as "a way of organizing narrative content with more flexibility than the typical branching narrative." Each storylet consists of three elements: narrative content; a set of preconditions; and a set of effects.</p>
+
+      <p>Yet in the classificatory framework of Kreminski and Wardrip-Fruin, space appears in only an extremely limited capacity, serving merely as one type of precondition. Location functions solely as a logical switch: the player arrives at a specific place, the spatial condition is satisfied, and narrative content is triggered. Two spaces both tagged as "library" will trigger identical storylets regardless of how great the formal differences between them may be.</p>
+    </div>
+
+    <div id="ch2-5">
+      <h3 class="section-title">2.5 Spatial Storylet: Definition and Three-Layer Model</h3>
+
+      <p>This dissertation proposes the <strong>Spatial Storylet</strong> model, which introduces a fourth element — the <strong>spatial module</strong> — alongside the three basic components of the storylet. The same passage of text, when embedded within spatial modules of different forms, produces different narrative meanings.</p>
+
+      <div class="concept-box">
+        <div class="concept-box-label">Example</div>
+        <p>Take a passage about "waiting." If embedded within a broad, open hall, the expansiveness inflects "waiting" as solitude or abandonment; if the same text is embedded within a narrow, enclosed corridor, the oppressiveness inflects "waiting" as anxiety or entrapment.</p>
+      </div>
+
+      <p>The production of narrative meaning operates across three levels:</p>
+
+      <div class="layers">
+        <div class="layer-item">
+          <div class="layer-name">Lexical Layer</div>
+          <p class="layer-desc">The <strong>fixed textual fragments</strong> contained within each module. Their wording does not change regardless of how the player traverses the system. Precisely because the text is stable, any variation in meaning must arise from the spatial and relational context in which it is situated.</p>
+        </div>
+        <div class="layer-item">
+          <div class="layer-name">Contextual Layer</div>
+          <p class="layer-desc">The <strong>modification of text by spatial form</strong> — encompassing scale, enclosure, orientation, material, and the module's relationships to adjacent spaces. A unified design language and the recurrence of spatial motifs enable semantic intertextuality between modules.</p>
+        </div>
+        <div class="layer-item">
+          <div class="layer-name">Grammatical Layer</div>
+          <p class="layer-desc">The <strong>rules governing spatial connection</strong> between modules: which modules are adjacent, in what sequence they may be traversed, and the logic by which overall configuration changes in response to player action. Spatial relationships realise a kind of narrative spatial grammar.</p>
+        </div>
+      </div>
+
+      <div class="pull-quote">
+        <p>"A cybertext is a machine for the production of variety of expression — in the present model, spatial configuration is precisely the variety of expression the text produces."</p>
+        <cite>— Aarseth, Cybertext (1997), p.3</cite>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- CHAPTER 3 -->
+  <div id="ch3" class="chapter reveal">
+    <div class="chapter-label">// Chapter 3</div>
+    <h2 class="chapter-title">Case Analysis</h2>
+
+    <p>This chapter applies the analytical framework developed in the preceding chapters to three existing narrative games, with particular attention to the degree to which each realises a relationship between spatial morphology and narrative meaning.</p>
+
+    <div class="case-study">
+      <div class="case-header">
+        <div class="case-name">Disco Elysium — ZA/UM, 2019</div>
+        <div class="case-tag">Decorative → Contextual</div>
+      </div>
+      <div class="case-body">
+        <p>Can be understood as a form of visual novel: the core gameplay experience is the reading of text, structured around dice-check mechanics. The environment is a two-dimensional illustration disguised as three-dimensional space, owing to the fixed top-down camera perspective.</p>
+        <p>In most scenes, such traversal function is logical in nature, not spatial — demonstrating purely <strong>decorative spatial morphology</strong>. However, in certain sequences where text is tied to specific objects rather than providing global environmental information, the environment shifts toward <strong>contextual spatial morphology</strong>: non-textual narrative cues connect fragmentary textual information into a coherent, intelligible whole.</p>
+      </div>
+    </div>
+
+    <div class="case-study">
+      <div class="case-header">
+        <div class="case-name">Citizen Sleeper — Jump Over the Age, 2022</div>
+        <div class="case-tag">Contextual</div>
+      </div>
+      <div class="case-body">
+        <p>The player takes on the role of a "Sleeper" stranded on an abandoned space station. The various zones are not merely narrative backdrops — they are functional. Each zone simultaneously carries narrative content, a resource system, and a network of character relationships.</p>
+        <p>Yet the spatial configuration remains predetermined and fixed. The player will still wake in the same place, still obtain supplies in the same locations. Space begins to carry narrative units — but the narrative can stand independently of spatial form.</p>
+      </div>
+    </div>
+
+    <div class="case-study">
+      <div class="case-header">
+        <div class="case-name">Blue Prince — Dogubomb, 2025</div>
+        <div class="case-tag">Constitutive Attempt — Disconnected</div>
+      </div>
+      <div class="case-body">
+        <p>The spatial configuration changes according to the player's choices, with procedural generation enabling dynamic reconfiguration. Yet a disconnection of gameplay from narrative becomes apparent: once the player has fully mastered the system, the rooms become purely instrumental. <strong>The recombination logic bears no relationship to narrative meaning.</strong></p>
+        <p>Although the spatial configuration is recombined with each traversal — achieving a very high degree of freedom — the game mechanics do not serve the narrative in any productive way.</p>
+      </div>
+    </div>
+
+    <div class="figure">
+      <div class="figure-placeholder">
+        <span class="fig-icon">◻</span>
+        <span>Figure 3 — Correspondence analysis of ergodic texts across Aarseth's seven variables</span>
+      </div>
+      <div class="figure-caption">Mapping the distribution of electronic and paper texts. Source: Aarseth, Cybertext (1997), figures 3.2–3.4.</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- CHAPTER 4 -->
+  <div id="ch4" class="chapter reveal">
+    <div class="chapter-label">// Chapter 4</div>
+    <h2 class="chapter-title">Design Practice</h2>
+
+    <p>This chapter presents an original game design — <strong>Osaider</strong>, a modular palace whose spatial configuration dynamically reconfigures in response to player input — as a practical exploration of the Spatial Storylet system.</p>
+
+    <p>Two prototype versions are developed for comparative study: a <strong>text-only narrative prototype</strong> and a <strong>full spatial prototype</strong>. Player experience data from both versions will be used to evaluate whether narrative spatial grammar produces effective meaning-making and heightened emotional engagement.</p>
+
+    <div class="figure">
+      <div class="figure-placeholder">
+        <span class="fig-icon">◻</span>
+        <span>Figure 4 — Spatial Storylet System Diagram</span>
+      </div>
+      <div class="figure-caption">Illustrating the relationship between spatial modules, world state, and narrative trajectory generation. Diagram by author.</div>
+    </div>
+
+    <div class="figure">
+      <div class="figure-placeholder">
+        <span class="fig-icon">◻</span>
+        <span>Figure 5 — Core Gameplay Loop of The Palace</span>
+      </div>
+      <div class="figure-caption">Diagram by author.</div>
+    </div>
+
+    <p>Each module possesses a distinct spatial morphology, varying in scale, enclosure, materiality, and orientation — it is precisely these differences that constitute the contextual layer: spatial form functions as the interpretive context for the fixed text fragment embedded within it, such that the same passage of text produces different narrative meanings when situated within different modules.</p>
+
+    <div class="figure">
+      <div class="figure-placeholder" style="height:160px;">
+        <span class="fig-icon">◻</span>
+        <span>Figures 6–7 — Text-only narrative prototype</span>
+      </div>
+      <div class="figure-caption">Archivist-Sanatorium module (left) and Whalemen-Dining Hall module (right), Phase 01 — Daily Life. Screenshots by author.</div>
+    </div>
+
+    <div class="figure">
+      <div class="figure-placeholder" style="height:160px;">
+        <span class="fig-icon">◻</span>
+        <span>Figures 8–14 — Individual Spatial Storylet modules</span>
+      </div>
+      <div class="figure-caption">Each module varies in scale, enclosure, materiality, and orientation to constitute the contextual layer.</div>
+    </div>
+
+    <div class="figure">
+      <div class="figure-placeholder" style="height:160px;">
+        <span class="fig-icon">◻</span>
+        <span>Figures 15–16 — Spatial configuration of multiple modules</span>
+      </div>
+      <div class="figure-caption">Positional relationships between adjacent modules — causation, contrast, irony, parallelism — constitute the operative mechanism of the grammatical layer.</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- BIBLIOGRAPHY -->
+  <div id="bibliography" class="chapter reveal">
+    <div class="chapter-label">// Bibliography</div>
+    <h2 class="chapter-title">References</h2>
+
+    <div class="bib-section">
+      <div class="bib-section-title">Books and Book Chapters</div>
+      <p class="bib-item">Aarseth, Espen J. <em>Cybertext: Perspectives on Ergodic Literature</em>. Baltimore: Johns Hopkins University Press, 1997.</p>
+      <p class="bib-item">Costikyan, Greg. <em>Uncertainty in Games</em>. Cambridge, MA: MIT Press, 2013.</p>
+      <p class="bib-item">Eco, Umberto. <em>Semiotics and the Philosophy of Language</em>. Bloomington: Indiana University Press, 1984.</p>
+      <p class="bib-item">Fullerton, Tracy, and Matthew Farber. <em>The Well-Read Game: On Playing Thoughtfully</em>. Cambridge, MA: The MIT Press, 2025.</p>
+      <p class="bib-item">Ryan, Marie-Laure. <em>Narrative as Virtual Reality 2: Revisiting Immersion and Interactivity in Literature and Electronic Media</em>. Baltimore: Johns Hopkins University Press, 2015.</p>
+    </div>
+
+    <div class="bib-section">
+      <div class="bib-section-title">Journal Articles</div>
+      <p class="bib-item">Carvalhais, Miguel, and Pedro Cardoso. "Narrative Games in Ergodic Media." <em>Estudos em Comunicação</em> 27, no. 2 (2018): 55–65.</p>
+      <p class="bib-item">Kreminski, Max, and Noah Wardrip-Fruin. "Sketching a Map of the Storylets Design Space." In <em>Interactive Storytelling</em>, edited by Rebecca Rouse, Felix Koenitz, and Mads Haahr, 160–64. Cham: Springer, 2018.</p>
+    </div>
+
+    <div class="bib-section">
+      <div class="bib-section-title">Blog Posts</div>
+      <p class="bib-item">Short, Emily. "Storylets: You Want Them." <em>Emily Short's Interactive Storytelling</em> (blog). November 29, 2019. <a href="https://emshort.blog/2019/11/29/storylets-you-want-them/" target="_blank">emshort.blog</a></p>
+    </div>
+
+    <div class="bib-section">
+      <div class="bib-section-title">Games</div>
+      <p class="bib-item">Dogubomb. <em>Blue Prince</em>. Raw Fury, 2025.</p>
+      <p class="bib-item">Failbetter Games. <em>Fallen London</em>. Failbetter Games, 2009.</p>
+      <p class="bib-item">Inkle Studios. <em>80 Days</em>. Inkle Studios, 2014.</p>
+      <p class="bib-item">Jump Over the Age. <em>Citizen Sleeper</em>. Fellow Traveller, 2022.</p>
+      <p class="bib-item">ZA/UM. <em>Disco Elysium</em>. ZA/UM, 2019.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <span>ARCHIVE // ESSAY // SPATIAL STORYLETS // 2025</span>
+  <a href="index.html" style="color:var(--white-dim);text-decoration:none;">← Return to Archive</a>
+</footer>
+
+<script>
+  // PROGRESS BAR
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = (window.scrollY / total * 100) + '%';
+  });
+
+  // TOC ACTIVE STATE
+  const sections = document.querySelectorAll('[id]');
+  const tocItems = document.querySelectorAll('.toc-item');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        tocItems.forEach(t => t.classList.remove('active'));
+        const active = document.querySelector(`.toc-item[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -80% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.05 });
+  reveals.forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>
