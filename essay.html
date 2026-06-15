@@ -577,6 +577,40 @@
   span.lang-en { display: inline; }
   body.zh span.lang-zh { display: inline; }
   body.zh span.lang-en { display: none; }
+  /* ── Lightbox ── */
+  .lightbox-trigger { cursor: zoom-in; display: block; }
+  .lightbox-trigger:hover { opacity: 0.92; }
+  #lightbox-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 9999;
+    cursor: zoom-out;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  #lightbox-overlay.active { display: flex; }
+  #lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100vh;
+    object-fit: contain;
+    border: 0.5px solid #2A2A2A;
+  }
+  #lightbox-close {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: #E3000F;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+  }
 </style>
 </head>
 <body>
@@ -1112,7 +1146,7 @@
       <h3 class="section-title"><span class="lang-en">4.4 Evaluation: The Eight-Variable Analysis of OSAIDER</span><span class="lang-zh">4.4 评估：以八变量框架分析OSAIDER</span></h3>
 
       <div class="figure" style="margin:24px 0 32px;">
-        <img src="images/mca_osaider_website_style_Bold.png" alt="Correspondence analysis of ergodic texts — OSAIDER plotted across eight variables" style="width:100%;display:block;">
+        <img src="images/mca_osaider_website_style_Bold.png" alt="Correspondence analysis of ergodic texts — OSAIDER plotted across eight variables" style="width:100%;display:block;" class="lightbox-trigger" onclick="document.getElementById('lightbox-overlay').classList.add('active');document.getElementById('lightbox-img').src=this.src;">
         <div class="figure-caption"><span class="lang-en">Figure — Correspondence analysis of ergodic texts across seven variables (after Aarseth 1997). OSAIDER (●) plotted using confirmed variable values. Source: author.</span><span class="lang-zh">图 — 遍历文本在七个变量上的对应分析（据Aarseth 1997）。OSAIDER（●）依据确认的变量取值绘制。来源：作者。</span></div>
       </div>
 
@@ -1284,5 +1318,10 @@
   }, { threshold: 0.05 });
   reveals.forEach(el => revealObserver.observe(el));
 </script>
+<div id="lightbox-overlay" onclick="this.classList.remove('active')">
+  <button id="lightbox-close" onclick="document.getElementById('lightbox-overlay').classList.remove('active')">// CLOSE ✕</button>
+  <img id="lightbox-img" src="" alt="Enlarged figure">
+</div>
+
 </body>
 </html>
