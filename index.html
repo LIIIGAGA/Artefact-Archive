@@ -237,20 +237,57 @@
     color: var(--white);
   }
 
-  .hero-grid-bg {
+  .hero-photo-frame {
     position: absolute;
     right: 80px;
     top: 50%;
     transform: translateY(-50%);
     width: 320px;
     height: 320px;
+    border: 1px solid var(--red);
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
     opacity: 0.06;
     background-image:
       linear-gradient(var(--red) 1px, transparent 1px),
       linear-gradient(90deg, var(--red) 1px, transparent 1px);
     background-size: 32px 32px;
     pointer-events: none;
+    transition: opacity 0.4s ease;
   }
+
+  .hero-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    filter: grayscale(55%) contrast(1.1) brightness(0.9);
+    transition: opacity 0.5s ease, filter 0.5s ease;
+    pointer-events: none;
+  }
+
+  .hero-photo-label {
+    position: absolute;
+    bottom: 10px;
+    left: 12px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--red);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  .hero-photo-frame:hover .hero-grid-bg { opacity: 0.02; }
+  .hero-photo-frame:hover .hero-photo { opacity: 1; filter: grayscale(20%) contrast(1.05) brightness(1); }
+  .hero-photo-frame:hover .hero-photo-label { opacity: 1; }
 
   /* SECTION SHARED */
   section {
@@ -591,7 +628,7 @@
     nav { padding: 0 20px; }
     #hero, section { padding-left: 20px; padding-right: 20px; }
     .about-layout, .contact-layout { grid-template-columns: 1fr; gap: 32px; }
-    .hero-grid-bg { display: none; }
+    .hero-photo-frame { display: none; }
     footer { padding: 24px 20px; flex-direction: column; gap: 8px; }
     .nav-links { gap: 16px; }
   }
@@ -647,7 +684,11 @@
 
   <!-- HERO -->
   <section id="hero">
-    <div class="hero-grid-bg"></div>
+    <div class="hero-photo-frame">
+      <div class="hero-grid-bg"></div>
+      <img src="images/selfie.jpg" alt="Jiaying Li" class="hero-photo">
+      <div class="hero-photo-label">// IMAGE_DATA — DECLASSIFIED</div>
+    </div>
     <div class="hero-label">// FILE_001 — PERSONNEL RECORD ACCESSED</div>
     <h1 class="hero-name">LIIIGAGA<br><span>Jiaying</span><br>Li</h1>
     <p class="hero-title">
