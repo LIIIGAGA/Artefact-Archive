@@ -203,6 +203,7 @@
     letter-spacing: -0.02em;
     color: var(--white);
     margin-bottom: 16px;
+    cursor: pointer;
   }
 
   .hero-name span { color: var(--red); }
@@ -244,9 +245,15 @@
     transform: translateY(-50%);
     width: 320px;
     height: 320px;
-    border: 1px solid var(--red);
+    border: 1px solid rgba(227, 0, 15, 0.3);
     overflow: hidden;
     cursor: pointer;
+    transition: border-color 0.5s ease;
+  }
+
+  .hero-photo-frame:hover,
+  .hero-photo-frame.photo-active {
+    border-color: var(--red);
   }
 
   .hero-grid-bg {
@@ -285,9 +292,12 @@
     pointer-events: none;
   }
 
-  .hero-photo-frame:hover .hero-grid-bg { opacity: 0.02; }
-  .hero-photo-frame:hover .hero-photo { opacity: 1; filter: grayscale(20%) contrast(1.05) brightness(1); }
-  .hero-photo-frame:hover .hero-photo-label { opacity: 1; }
+  .hero-photo-frame:hover .hero-grid-bg,
+  .hero-photo-frame.photo-active .hero-grid-bg { opacity: 0.02; }
+  .hero-photo-frame:hover .hero-photo,
+  .hero-photo-frame.photo-active .hero-photo { opacity: 1; filter: grayscale(20%) contrast(1.05) brightness(1); }
+  .hero-photo-frame:hover .hero-photo-label,
+  .hero-photo-frame.photo-active .hero-photo-label { opacity: 1; }
 
   /* SECTION SHARED */
   section {
@@ -1092,6 +1102,14 @@
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(el => observer.observe(el));
+
+  // HOVER NAME -> REVEAL PHOTO
+  const heroName = document.querySelector('.hero-name');
+  const photoFrame = document.querySelector('.hero-photo-frame');
+  if (heroName && photoFrame) {
+    heroName.addEventListener('mouseenter', () => photoFrame.classList.add('photo-active'));
+    heroName.addEventListener('mouseleave', () => photoFrame.classList.remove('photo-active'));
+  }
 </script>
 </body>
 </html>
