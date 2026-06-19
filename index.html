@@ -387,6 +387,14 @@
     left: 0;
     color: var(--red);
   }
+  .tech-skill-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--white); text-decoration: none;
+    transition: color 0.2s, gap 0.2s;
+  }
+  .tech-skill-link:hover { color: var(--red); gap: 12px; }
+  .tech-skill-link .tsl-arrow { color: var(--red); font-size: 12px; opacity: 0.7; transition: opacity 0.2s; }
+  .tech-skill-link:hover .tsl-arrow { opacity: 1; }
 
   /* CATEGORY GRID */
   .category-grid {
@@ -893,8 +901,8 @@
           <p class="tech-entry-intro lang-en">Primary runtime engine for spatial prototyping, lighting, and player interaction systems.</p>
           <p class="tech-entry-intro lang-zh">用作空间原型搭建、灯光与玩家交互系统的主要运行引擎。</p>
           <div class="tech-skill-list">
-            <div class="tech-skill"><span class="lang-en">Blueprint System</span><span class="lang-zh">蓝图系统</span></div>
-            <div class="tech-skill"><span class="lang-en">Node-based Materials</span><span class="lang-zh">节点化材质</span></div>
+            <div class="tech-skill"><a href="tech-blueprint-module.html" class="tech-skill-link"><span class="lang-en">Blueprint System</span><span class="lang-zh">蓝图系统</span><span class="tsl-arrow">→</span></a></div>
+            <div class="tech-skill"><a href="tech-material-nodes.html" class="tech-skill-link"><span class="lang-en">Node-based Materials</span><span class="lang-zh">节点化材质</span><span class="tsl-arrow">→</span></a></div>
           </div>
         </div>
       </div>
@@ -908,9 +916,9 @@
           <p class="tech-entry-intro lang-en">Used for procedural geometry generation and simulation-driven visual effects.</p>
           <p class="tech-entry-intro lang-zh">用于程序化几何生成与模拟驱动的视觉特效制作。</p>
           <div class="tech-skill-list">
-            <div class="tech-skill"><span class="lang-en">Procedural Modelling</span><span class="lang-zh">程序化建模</span></div>
-            <div class="tech-skill"><span class="lang-en">HDA (Houdini Digital Asset)</span><span class="lang-zh">HDA（Houdini Digital Asset）</span></div>
-            <div class="tech-skill"><span class="lang-en">VFX</span><span class="lang-zh">动画特效</span></div>
+            <div class="tech-skill"><a href="tech-procedural-modelling.html" class="tech-skill-link"><span class="lang-en">Procedural Modelling</span><span class="lang-zh">程序化建模</span><span class="tsl-arrow">→</span></a></div>
+            <div class="tech-skill"><a href="tech-procedural-modelling.html" class="tech-skill-link"><span class="lang-en">HDA (Houdini Digital Asset)</span><span class="lang-zh">HDA（Houdini Digital Asset）</span><span class="tsl-arrow">→</span></a></div>
+            <div class="tech-skill"><a href="tech-vfx.html" class="tech-skill-link"><span class="lang-en">VFX</span><span class="lang-zh">动画特效</span><span class="tsl-arrow">→</span></a></div>
           </div>
         </div>
       </div>
