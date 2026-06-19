@@ -333,6 +333,61 @@
     margin-left: 16px;
   }
 
+  /* TECH INDEX */
+  .tech-index { border: 1px solid var(--border); }
+  .tech-entry { border-bottom: 1px solid var(--border); }
+  .tech-entry:last-child { border-bottom: none; }
+  .tech-entry-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+    user-select: none;
+  }
+  .tech-entry-header:hover { background: var(--bg2); }
+  .tech-caret {
+    color: var(--red);
+    font-size: 11px;
+    transition: transform 0.25s ease;
+    width: 12px;
+    flex-shrink: 0;
+  }
+  .tech-entry.open .tech-caret { transform: rotate(90deg); }
+  .tech-entry-name {
+    font-family: var(--sans);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: -0.01em;
+  }
+  .tech-entry-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .tech-entry.open .tech-entry-body { max-height: 600px; }
+  .tech-entry-intro {
+    padding: 0 24px 16px 48px;
+    font-size: 12px;
+    color: var(--white-dim);
+    line-height: 1.7;
+  }
+  .tech-skill-list { padding: 0 24px 20px 48px; display: flex; flex-direction: column; gap: 10px; }
+  .tech-skill {
+    font-size: 13px;
+    color: var(--white);
+    position: relative;
+    padding-left: 16px;
+  }
+  .tech-skill::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--red);
+  }
+
   /* CATEGORY GRID */
   .category-grid {
     display: grid;
@@ -680,6 +735,7 @@
     <div class="nav-id">ARCHIVE // SUBJECT_[01]</div>
     <ul class="nav-links">
       <li><a href="#projects"><span class="lang-en">Projects</span><span class="lang-zh">项目</span></a></li>
+      <li><a href="#tech-index"><span class="lang-en">Tech Index</span><span class="lang-zh">技术索引</span></a></li>
       <li><a href="#dissertation"><span class="lang-en">Dissertation</span><span class="lang-zh">论文</span></a></li>
       <li><a href="#about"><span class="lang-en">Profile</span><span class="lang-zh">档案</span></a></li>
       <li><a href="#contact"><span class="lang-en">Contact</span><span class="lang-zh">联系</span></a></li>
@@ -815,10 +871,57 @@
     </div>
   </section>
 
+  <!-- TECH INDEX -->
+  <section id="tech-index">
+    <div class="section-header reveal">
+      <span class="section-num">// 003</span>
+      <h2 class="section-title">
+        <span class="lang-en">TECH INDEX</span>
+        <span class="lang-zh">技术索引</span>
+      </h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="tech-index reveal">
+
+      <div class="tech-entry" data-open="false">
+        <div class="tech-entry-header" onclick="toggleTech(this)">
+          <span class="tech-caret">▶</span>
+          <span class="tech-entry-name">UE5</span>
+        </div>
+        <div class="tech-entry-body">
+          <p class="tech-entry-intro lang-en">Primary runtime engine for spatial prototyping, lighting, and player interaction systems.</p>
+          <p class="tech-entry-intro lang-zh">用作空间原型搭建、灯光与玩家交互系统的主要运行引擎。</p>
+          <div class="tech-skill-list">
+            <div class="tech-skill"><span class="lang-en">Blueprint System</span><span class="lang-zh">蓝图系统</span></div>
+            <div class="tech-skill"><span class="lang-en">Node-based Materials</span><span class="lang-zh">节点化材质</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tech-entry" data-open="false">
+        <div class="tech-entry-header" onclick="toggleTech(this)">
+          <span class="tech-caret">▶</span>
+          <span class="tech-entry-name">Houdini</span>
+        </div>
+        <div class="tech-entry-body">
+          <p class="tech-entry-intro lang-en">Used for procedural geometry generation and simulation-driven visual effects.</p>
+          <p class="tech-entry-intro lang-zh">用于程序化几何生成与模拟驱动的视觉特效制作。</p>
+          <div class="tech-skill-list">
+            <div class="tech-skill"><span class="lang-en">Procedural Modelling</span><span class="lang-zh">程序化建模</span></div>
+            <div class="tech-skill"><span class="lang-en">HDA (Houdini Digital Asset)</span><span class="lang-zh">HDA（Houdini Digital Asset）</span></div>
+            <div class="tech-skill"><span class="lang-en">VFX</span><span class="lang-zh">动画特效</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- DISSERTATION -->
   <section id="dissertation">
     <div class="section-header reveal">
-      <span class="section-num">// 003</span>
+      <span class="section-num">// 004</span>
       <h2 class="section-title">
         <span class="lang-en">DISSERTATION</span>
         <span class="lang-zh">毕业论文</span>
@@ -895,7 +998,7 @@
   <!-- ABOUT -->
   <section id="about">
     <div class="section-header reveal">
-      <span class="section-num">// 004</span>
+      <span class="section-num">// 005</span>
       <h2 class="section-title">
         <span class="lang-en">PERSONNEL PROFILE</span>
         <span class="lang-zh">人员档案</span>
@@ -994,7 +1097,7 @@
   <!-- CONTACT -->
   <section id="contact">
     <div class="section-header reveal">
-      <span class="section-num">// 005</span>
+      <span class="section-num">// 006</span>
       <h2 class="section-title">
         <span class="lang-en">ESTABLISH CONTACT</span>
         <span class="lang-zh">联系方式</span>
@@ -1105,6 +1208,12 @@
   if (heroName && photoFrame) {
     heroName.addEventListener('mouseenter', () => photoFrame.classList.add('photo-active'));
     heroName.addEventListener('mouseleave', () => photoFrame.classList.remove('photo-active'));
+  }
+
+  // TECH INDEX TOGGLE
+  function toggleTech(headerEl) {
+    const entry = headerEl.closest('.tech-entry');
+    entry.classList.toggle('open');
   }
 </script>
 </body>
