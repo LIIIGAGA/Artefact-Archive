@@ -182,6 +182,41 @@
   @media (max-width: 768px) {
     nav, main, footer { padding-left: 20px; padding-right: 20px; }
   }
+  /* ── Lightbox ── */
+  .module-card-fig img { cursor: zoom-in; }
+  .module-card-fig img:hover { opacity: 0.9; }
+  #lightbox-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 9999;
+    cursor: zoom-out;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  #lightbox-overlay.active { display: flex; }
+  #lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100vh;
+    object-fit: contain;
+    border: 0.5px solid #2A2A2A;
+  }
+  #lightbox-close {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--red);
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    z-index: 10000;
+  }
 </style>
 </head>
 <body>
@@ -252,8 +287,8 @@
       <div class="module-card-expand">
         <div class="module-card-expand-inner">
           <div class="module-card-figrow">
-            <div class="module-card-fig"><img src="images/1_BlueprintModule_01.png" alt="Blueprint Module 01"></div>
-            <div class="module-card-fig"><img src="images/1_BlueprintModule_02.png" alt="Blueprint Module 02"></div>
+            <div class="module-card-fig"><img src="images/1_BlueprintModule_01.png" alt="Blueprint Module 01" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/1_BlueprintModule_02.png" alt="Blueprint Module 02" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
           </div>
         </div>
       </div>
@@ -293,8 +328,8 @@
             <span class="lang-zh">在<code>BP_NoCharacterPlayerController</code>的Event Tick中：</span>
           </div>
           <div class="module-card-figrow" style="margin-bottom:16px;">
-            <div class="module-card-fig"><img src="images/1_CursorInteraction_01.png" alt="Cursor Interaction 01"></div>
-            <div class="module-card-fig"><img src="images/1_CursorInteraction_02.png" alt="Cursor Interaction 02"></div>
+            <div class="module-card-fig"><img src="images/1_CursorInteraction_01.png" alt="Cursor Interaction 01" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/1_CursorInteraction_02.png" alt="Cursor Interaction 02" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
           </div>
 
           <div class="module-card-code-context">
@@ -302,7 +337,7 @@
             <span class="lang-zh">在<code>BP_InteractionPoint</code>中：</span>
           </div>
           <div class="module-card-figrow">
-            <div class="module-card-fig"><img src="images/1_CursorInteraction_03.png" alt="Cursor Interaction 03"></div>
+            <div class="module-card-fig"><img src="images/1_CursorInteraction_03.png" alt="Cursor Interaction 03" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
           </div>
 
         </div>
@@ -320,7 +355,7 @@
       <div class="module-card-expand">
         <div class="module-card-expand-inner">
           <div class="module-card-figrow">
-            <div class="module-card-fig"><img src="images/1_CameraSpline_01.png" alt="Camera Spline Integration 01"></div>
+            <div class="module-card-fig"><img src="images/1_CameraSpline_01.png" alt="Camera Spline Integration 01" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
           </div>
         </div>
       </div>
@@ -345,7 +380,7 @@
           </p>
 
           <div class="module-card-figrow" style="margin-bottom:16px;">
-            <div class="module-card-fig"><img src="images/1_BPI_01.png" alt="Blueprint Interface 01"></div>
+            <div class="module-card-fig"><img src="images/1_BPI_01.png" alt="Blueprint Interface 01" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
           </div>
 
           <hr class="mc-divider-thin">
@@ -375,15 +410,15 @@
             <span class="mc-flow-step lang-en">Release left mouse button to call EndDrag</span><span class="mc-flow-step lang-zh">松开左键EndDrag</span>
           </div>
           <div class="module-card-figrow" style="margin-bottom:16px;">
-            <div class="module-card-fig"><img src="images/1_LMB.png" alt="LMB"></div>
-            <div class="module-card-fig"><img src="images/1_RotateWheel_EventTick.png" alt="RotateWheel Event Tick"></div>
-            <div class="module-card-fig"><img src="images/1_UpdateDragInput.png" alt="Update Drag Input"></div>
+            <div class="module-card-fig"><img src="images/1_LMB.png" alt="LMB" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/1_RotateWheel_EventTick.png" alt="RotateWheel Event Tick" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/1_UpdateDragInput.png" alt="Update Drag Input" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
           </div>
 
           <div class="mc-subhead" style="font-size:13px;">1.2 — <span class="lang-en">Module Component Tag</span><span class="lang-zh">模块组件tag</span></div>
           <p style="color:var(--white-dim);font-size:12.5px;line-height:1.7;margin-bottom:10px;"><span class="lang-en">Add the corresponding tag to the component that receives input.</span><span class="lang-zh">给用于接收输入的组件添加相应的tag</span></p>
           <div class="module-card-figrow" style="margin-bottom:16px;">
-            <div class="module-card-fig"><img src="images/1_RotateWheel_ComponentTag.png" alt="RotateWheel Component Tag"></div>
+            <div class="module-card-fig"><img src="images/1_RotateWheel_ComponentTag.png" alt="RotateWheel Component Tag" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
           </div>
 
           <div class="mc-subhead" style="font-size:13px;">1.3 — <span class="lang-en">Object Recognition</span><span class="lang-zh">对象识别</span></div>
@@ -399,13 +434,13 @@
             <span class="mc-flow-step lang-en">Drive the wheel / gear / slider</span><span class="mc-flow-step lang-zh">驱动轮盘 / 齿轮 / 滑块</span>
           </div>
           <div class="module-card-figrow" style="margin-bottom:8px;">
-            <div class="module-card-fig"><img src="images/1_StartWheelDrag.png" alt="Start Wheel Drag"></div>
-            <div class="module-card-fig"><img src="images/1_UpdateWheelDrag_01.png" alt="Update Wheel Drag 01"></div>
+            <div class="module-card-fig"><img src="images/1_StartWheelDrag.png" alt="Start Wheel Drag" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/1_UpdateWheelDrag_01.png" alt="Update Wheel Drag 01" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
           </div>
           <div class="module-card-figrow" style="margin-bottom:16px;">
-            <div class="module-card-fig"><img src="images/1_UpdateWheelDrag_02.png" alt="Update Wheel Drag 02"></div>
-            <div class="module-card-fig"><img src="images/1_UpdateWheelDrag_03.png" alt="Update Wheel Drag 03"></div>
-            <div class="module-card-fig"><img src="images/1_StopWheelDrag.png" alt="Stop Wheel Drag"></div>
+            <div class="module-card-fig"><img src="images/1_UpdateWheelDrag_02.png" alt="Update Wheel Drag 02" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/1_UpdateWheelDrag_03.png" alt="Update Wheel Drag 03" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/1_StopWheelDrag.png" alt="Stop Wheel Drag" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
           </div>
 
           <hr class="mc-divider-thin">
@@ -439,13 +474,13 @@
           <div class="mc-subhead" style="font-size:13px;">1.2 — <span class="lang-en">Interface Definition</span><span class="lang-zh">Interface 定义接口</span></div>
           <div class="mc-code-path"><code>BPI_Module_Interactable</code><span class="lang-en">:</span><span class="lang-zh">中：</span></div>
           <div class="module-card-figrow" style="margin-bottom:16px;">
-            <div class="module-card-fig"><img src="images/1_BPI_02.png" alt="Blueprint Interface 02"></div>
+            <div class="module-card-fig"><img src="images/1_BPI_02.png" alt="Blueprint Interface 02" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
           </div>
 
           <div class="mc-subhead" style="font-size:13px;">1.3 — <span class="lang-en">BPAC Component Encapsulation</span><span class="lang-zh">BPAC组件封装</span></div>
           <div class="mc-code-path"><code>BPAC_ZoomDragItem</code>：</div>
           <div class="module-card-figrow" style="margin-bottom:12px;">
-            <div class="module-card-fig"><img src="images/1_BPAC_01.png" alt="BPAC 01"></div>
+            <div class="module-card-fig"><img src="images/1_BPAC_01.png" alt="BPAC 01" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
           </div>
           <div class="mc-flow">
             <span class="mc-flow-step lang-en">Record initial position</span><span class="mc-flow-step lang-zh">记录初始位置</span>
@@ -462,14 +497,14 @@
           </div>
           <p style="color:var(--white-dim);font-size:12px;margin-bottom:8px;"><span class="lang-en">Related Blueprints:</span><span class="lang-zh">相关蓝图：</span></p>
           <div class="module-card-figrow" style="margin-bottom:16px;">
-            <div class="module-card-fig"><img src="images/1_TryStartZoomDrag.png" alt="Try Start Zoom Drag"></div>
-            <div class="module-card-fig"><img src="images/1_UpdateZoomDrag.png" alt="Update Zoom Drag"></div>
-            <div class="module-card-fig"><img src="images/1_StopZoomDrag.png" alt="Stop Zoom Drag"></div>
+            <div class="module-card-fig"><img src="images/1_TryStartZoomDrag.png" alt="Try Start Zoom Drag" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/1_UpdateZoomDrag.png" alt="Update Zoom Drag" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/1_StopZoomDrag.png" alt="Stop Zoom Drag" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
           </div>
 
           <div class="mc-subhead" style="font-size:13px;">1.4 — <span class="lang-en">Component / Tag Settings for Draggable Objects</span><span class="lang-zh">可拖拽物体的 Component / Tag 设置</span></div>
           <div class="module-card-figrow" style="margin-bottom:16px;">
-            <div class="module-card-fig"><img src="images/1_ComponentTag_DragItem.png" alt="Component Tag Drag Item"></div>
+            <div class="module-card-fig"><img src="images/1_ComponentTag_DragItem.png" alt="Component Tag Drag Item" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
           </div>
 
           <div class="mc-subhead" style="font-size:13px;">1.4 — <span class="lang-en">Item Acquisition</span><span class="lang-zh">获得物品</span></div>
@@ -485,13 +520,13 @@
             <span class="mc-flow-step lang-en">Update Inventory</span><span class="mc-flow-step lang-zh">更新 Inventory</span>
           </div>
           <div class="module-card-figrow" style="margin-bottom:16px;">
-            <div class="module-card-fig"><img src="images/1_DragItem_ObtainItem_01.png" alt="Drag Item Obtain Item 01"></div>
-            <div class="module-card-fig"><img src="images/1_DragItem_ObtainItem_02.png" alt="Drag Item Obtain Item 02"></div>
+            <div class="module-card-fig"><img src="images/1_DragItem_ObtainItem_01.png" alt="Drag Item Obtain Item 01" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/1_DragItem_ObtainItem_02.png" alt="Drag Item Obtain Item 02" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
           </div>
 
           <div class="mc-subhead" style="font-size:13px;">1.4 — <span class="lang-en">Component Returns to Original Position</span><span class="lang-zh">组件恢复原位</span></div>
           <div class="module-card-figrow">
-            <div class="module-card-fig"><img src="images/1_BPAC_EventTick.png" alt="BPAC Event Tick"></div>
+            <div class="module-card-fig"><img src="images/1_BPAC_EventTick.png" alt="BPAC Event Tick" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
           </div>
 
         </div>
@@ -738,12 +773,25 @@
     const expand = card.querySelector('.module-card-expand');
     if (!expand) return;
     card.addEventListener('mouseenter', () => {
+      if (document.getElementById('lightbox-overlay').classList.contains('active')) return;
       expand.style.maxHeight = expand.scrollHeight + 'px';
     });
     card.addEventListener('mouseleave', () => {
+      if (document.getElementById('lightbox-overlay').classList.contains('active')) return;
       expand.style.maxHeight = '0px';
     });
   });
+
+  // LIGHTBOX
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox-overlay').classList.add('active');
+  }
 </script>
+<div id="lightbox-overlay" onclick="this.classList.remove('active')">
+  <button id="lightbox-close" onclick="document.getElementById('lightbox-overlay').classList.remove('active')">// CLOSE ✕</button>
+  <img id="lightbox-img" src="" alt="Enlarged figure">
+</div>
+
 </body>
 </html>
