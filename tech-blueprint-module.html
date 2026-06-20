@@ -94,6 +94,43 @@
   .tree-item.last .tree-item-title::before { content: '└─'; }
   .tree-item-desc { color: var(--white-dim); font-size: 12.5px; line-height: 1.7; margin-left: 24px; }
 
+  /* HOVER-EXPAND CARDS */
+  .card-grid { display: flex; flex-direction: column; gap: 14px; margin: 16px 0 16px 0; }
+  .module-card {
+    border: 1px solid var(--border); background: var(--bg2);
+    overflow: hidden; transition: border-color 0.25s;
+  }
+  .module-card:hover { border-color: var(--red-dim); }
+  .module-card-head {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 18px 22px; cursor: default;
+  }
+  .module-card-num { color: var(--red); font-size: 11px; font-family: var(--mono); flex-shrink: 0; }
+  .module-card-title { font-family: var(--sans); font-weight: 600; color: var(--white); font-size: 15px; }
+  .module-card-desc { color: var(--white-dim); font-size: 12.5px; line-height: 1.7; margin-top: 4px; }
+  .module-card-expand {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.45s ease;
+    border-top: 1px solid transparent;
+  }
+  .module-card:hover .module-card-expand {
+    max-height: 600px;
+    border-top: 1px solid var(--border);
+  }
+  .module-card-expand-inner { padding: 20px 22px 24px; }
+  .module-card-figrow { display: flex; gap: 12px; flex-wrap: wrap; }
+  .module-card-fig {
+    flex: 1; min-width: 200px;
+    border: 1px solid var(--border); background: var(--bg3);
+    aspect-ratio: 16/10; display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .module-card-fig img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .module-card-empty {
+    color: var(--white-dim); font-size: 12px; font-style: italic;
+    padding: 8px 0;
+  }
+
   .highlight-box {
     border-left: 2px solid var(--red); background: var(--bg2);
     padding: 16px 20px; margin: 20px 0; font-size: 13px; color: var(--white);
@@ -165,105 +202,283 @@
 
   <h3 class="sub-title"><span class="lang-en">1. Storylet Architecture</span><span class="lang-zh">1. 空间故事模块架构（Storylet Architecture）</span></h3>
 
-  <div class="tree-block">
-    <div class="tree-item">
-      <div class="tree-item-title"><span class="lang-en">Blueprint Module</span><span class="lang-zh">蓝图模块（Blueprint Module）</span></div>
-      <div class="tree-item-desc"><span class="lang-en">Each scene unit imported from Blender modelling is encapsulated as a Blueprint.</span><span class="lang-zh">将每个Blender建模导入的场景单元都封装为蓝图。</span></div>
+  <div class="card-grid">
+
+    <div class="module-card">
+      <div class="module-card-head">
+        <span class="module-card-num">01</span>
+        <div>
+          <div class="module-card-title"><span class="lang-en">Blueprint Module</span><span class="lang-zh">蓝图模块（Blueprint Module）</span></div>
+          <div class="module-card-desc"><span class="lang-en">Each scene unit imported from Blender modelling is encapsulated as a Blueprint.</span><span class="lang-zh">将每个Blender建模导入的场景单元都封装为蓝图。</span></div>
+        </div>
+      </div>
+      <div class="module-card-expand">
+        <div class="module-card-expand-inner">
+          <div class="module-card-figrow">
+            <div class="module-card-fig"><img src="images/1_BlueprintModule_01.png" alt="Blueprint Module 01"></div>
+            <div class="module-card-fig"><img src="images/1_BlueprintModule_02.png" alt="Blueprint Module 02"></div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="tree-item">
-      <div class="tree-item-title"><span class="lang-en">Cursor Interaction Logic</span><span class="lang-zh">鼠标交互逻辑（Cursor Interaction Logic）</span></div>
-      <div class="tree-item-desc"><span class="lang-en">Mouse ray detection triggers UI or spatial interaction functions.</span><span class="lang-zh">鼠标射线检测，触发UI或空间交互功能。</span></div>
+
+    <div class="module-card">
+      <div class="module-card-head">
+        <span class="module-card-num">02</span>
+        <div>
+          <div class="module-card-title"><span class="lang-en">Cursor Interaction Logic</span><span class="lang-zh">鼠标交互逻辑（Cursor Interaction Logic）</span></div>
+          <div class="module-card-desc"><span class="lang-en">Mouse ray detection triggers UI or spatial interaction functions.</span><span class="lang-zh">鼠标射线检测，触发UI或空间交互功能。</span></div>
+        </div>
+      </div>
+      <div class="module-card-expand">
+        <div class="module-card-expand-inner">
+          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+        </div>
+      </div>
     </div>
-    <div class="tree-item">
-      <div class="tree-item-title"><span class="lang-en">Camera Spline Integration</span><span class="lang-zh">摄像机路径集成（Camera Spline Integration）</span></div>
-      <div class="tree-item-desc"><span class="lang-en">Each module contains a camera path that can be switched with the external main camera.</span><span class="lang-zh">每个模块内包含一个相机路径，可与外部主相机互相切换。</span></div>
+
+    <div class="module-card">
+      <div class="module-card-head">
+        <span class="module-card-num">03</span>
+        <div>
+          <div class="module-card-title"><span class="lang-en">Camera Spline Integration</span><span class="lang-zh">摄像机路径集成（Camera Spline Integration）</span></div>
+          <div class="module-card-desc"><span class="lang-en">Each module contains a camera path that can be switched with the external main camera.</span><span class="lang-zh">每个模块内包含一个相机路径，可与外部主相机互相切换。</span></div>
+        </div>
+      </div>
+      <div class="module-card-expand">
+        <div class="module-card-expand-inner">
+          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+        </div>
+      </div>
     </div>
-    <div class="tree-item last">
-      <div class="tree-item-title"><span class="lang-en">Component-Based Tool</span><span class="lang-zh">组件化工具（Component-Based Tool）</span></div>
-      <div class="tree-item-desc"><span class="lang-en">Attaches components to any Actor to enable scaling, dragging, item pickup, UI pop-ups, and other interactions.</span><span class="lang-zh">给任意Actor挂载组件，实现缩放、拖拽，物品获取、UI弹窗等交互。</span></div>
+
+    <div class="module-card">
+      <div class="module-card-head">
+        <span class="module-card-num">04</span>
+        <div>
+          <div class="module-card-title"><span class="lang-en">Component-Based Tool</span><span class="lang-zh">组件化工具（Component-Based Tool）</span></div>
+          <div class="module-card-desc"><span class="lang-en">Attaches components to any Actor to enable scaling, dragging, item pickup, UI pop-ups, and other interactions.</span><span class="lang-zh">给任意Actor挂载组件，实现缩放、拖拽，物品获取、UI弹窗等交互。</span></div>
+        </div>
+      </div>
+      <div class="module-card-expand">
+        <div class="module-card-expand-inner">
+          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+        </div>
+      </div>
     </div>
+
   </div>
 
   <h3 class="sub-title"><span class="lang-en">2. Narrative Evaluation System</span><span class="lang-zh">2. 叙事评估系统（Narrative Evaluation System）</span></h3>
 
-  <div class="tree-block">
-    <div class="tree-item">
-      <div class="tree-item-title"><span class="lang-en">Inventory & Submission</span><span class="lang-zh">背包与物品上缴系统（Inventory & Submission）</span></div>
-      <div class="tree-item-desc"><span class="lang-en">Items obtained through interaction with the environment enter the player's inventory; when a module needs to be generated, the player selects any 3 items and places them in the submission slots on the right.</span><span class="lang-zh">玩家与环境交互获得的物品进入背包，在需要生成模块时选择任意3件物品放置到右侧物品槽中。</span></div>
-    </div>
-    <div class="tree-item last">
-      <div class="tree-item-title"><span class="lang-en">Dice Check</span><span class="lang-zh">骰子检定系统（Dice Check）</span></div>
-      <div class="tree-item-desc">
-        <span class="lang-en">Each item carries a specific IDEO attribute value; these are summed to produce the cumulative IDEO value, representing the player's factional tendency.</span>
-        <span class="lang-zh">每件物品都有特定的IDEO属性值，叠加后得到IDEO累计值，代表玩家的阵营倾向。</span>
+  <div class="card-grid">
+
+    <div class="module-card">
+      <div class="module-card-head">
+        <span class="module-card-num">01</span>
+        <div>
+          <div class="module-card-title"><span class="lang-en">Inventory & Submission</span><span class="lang-zh">背包与物品上缴系统（Inventory & Submission）</span></div>
+          <div class="module-card-desc"><span class="lang-en">Items obtained through interaction with the environment enter the player's inventory; when a module needs to be generated, the player selects any 3 items and places them in the submission slots on the right.</span><span class="lang-zh">玩家与环境交互获得的物品进入背包，在需要生成模块时选择任意3件物品放置到右侧物品槽中。</span></div>
+        </div>
       </div>
-      <div class="highlight-box">
-        <span class="lang-en"><strong>2d6 random dice value + cumulative IDEO value = final check score.</strong> ≥7 is classified as Archivist faction; &lt;7 is classified as Whalemen faction.</span>
-        <span class="lang-zh"><strong>2d6随机骰子数值 + IDEO累计值 = 最终检定分数。</strong>≥7则判断属于Archivist阵营，＜7则判断属于Whalemen阵营。</span>
+      <div class="module-card-expand">
+        <div class="module-card-expand-inner">
+          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+        </div>
       </div>
     </div>
+
+    <div class="module-card">
+      <div class="module-card-head">
+        <span class="module-card-num">02</span>
+        <div>
+          <div class="module-card-title"><span class="lang-en">Dice Check</span><span class="lang-zh">骰子检定系统（Dice Check）</span></div>
+          <div class="module-card-desc">
+            <span class="lang-en">Each item carries a specific IDEO attribute value; these are summed to produce the cumulative IDEO value, representing the player's factional tendency.</span>
+            <span class="lang-zh">每件物品都有特定的IDEO属性值，叠加后得到IDEO累计值，代表玩家的阵营倾向。</span>
+          </div>
+          <div class="highlight-box" style="margin-top:10px;">
+            <span class="lang-en"><strong>2d6 random dice value + cumulative IDEO value = final check score.</strong> ≥7 is classified as Archivist faction; &lt;7 is classified as Whalemen faction.</span>
+            <span class="lang-zh"><strong>2d6随机骰子数值 + IDEO累计值 = 最终检定分数。</strong>≥7则判断属于Archivist阵营，＜7则判断属于Whalemen阵营。</span>
+          </div>
+        </div>
+      </div>
+      <div class="module-card-expand">
+        <div class="module-card-expand-inner">
+          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <h3 class="sub-title"><span class="lang-en">3. Data Content Management</span><span class="lang-zh">3. 数据管理系统（Data Content Management）</span></h3>
 
-  <div class="tree-block">
-    <div class="tree-item">
-      <div class="tree-item-title"><span class="lang-en">Actor Tag Framework</span><span class="lang-zh">标签框架（Actor Tag Framework）</span></div>
-      <div class="tree-item-desc">
-        <span class="lang-en">Every future module is pre-placed in the scene but hidden by default. The jump relationships between modules are not fixed, but are managed through Actor Tags.</span>
-        <span class="lang-zh">每个未来模块在场景中提前放置，但默认隐藏。模块之间的跳转关系不固定，而是由Actor Tag进行管理。</span>
+  <div class="card-grid">
+
+    <div class="module-card">
+      <div class="module-card-head">
+        <span class="module-card-num">01</span>
+        <div>
+          <div class="module-card-title"><span class="lang-en">Actor Tag Framework</span><span class="lang-zh">标签框架（Actor Tag Framework）</span></div>
+          <div class="module-card-desc">
+            <span class="lang-en">Every future module is pre-placed in the scene but hidden by default. The jump relationships between modules are not fixed, but are managed through Actor Tags.</span>
+            <span class="lang-zh">每个未来模块在场景中提前放置，但默认隐藏。模块之间的跳转关系不固定，而是由Actor Tag进行管理。</span>
+          </div>
+          <div class="highlight-box" style="margin-top:10px;">
+            <span class="lang-en"><strong>This is the key to the system's scalability.</strong> When adding a new module, the developer only needs to configure the corresponding tag for the new narrative module to be automatically integrated into the system.</span>
+            <span class="lang-zh"><strong>这是整个系统实现可扩展性的关键。</strong>新增模块时，开发者只需配置对应标签，即可将新的叙事模块自动接入系统。</span>
+          </div>
+        </div>
       </div>
-      <div class="highlight-box">
-        <span class="lang-en"><strong>This is the key to the system's scalability.</strong> When adding a new module, the developer only needs to configure the corresponding tag for the new narrative module to be automatically integrated into the system.</span>
-        <span class="lang-zh"><strong>这是整个系统实现可扩展性的关键。</strong>新增模块时，开发者只需配置对应标签，即可将新的叙事模块自动接入系统。</span>
+      <div class="module-card-expand">
+        <div class="module-card-expand-inner">
+          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+        </div>
       </div>
     </div>
-    <div class="tree-item">
-      <div class="tree-item-title"><span class="lang-en">Item Information Management</span><span class="lang-zh">物品信息管理（Item Information Management）</span></div>
-      <div class="tree-item-desc"><span class="lang-en">Items obtained in each module have individual tags, IDEO attribute values, icons, and other information, managed through a Blueprint Structure.</span><span class="lang-zh">每个模块中获得的物品有单独的标签、IDEO属性值、图标等信息，通过Blueprint Structure进行管理。</span></div>
+
+    <div class="module-card">
+      <div class="module-card-head">
+        <span class="module-card-num">02</span>
+        <div>
+          <div class="module-card-title"><span class="lang-en">Item Information Management</span><span class="lang-zh">物品信息管理（Item Information Management）</span></div>
+          <div class="module-card-desc"><span class="lang-en">Items obtained in each module have individual tags, IDEO attribute values, icons, and other information, managed through a Blueprint Structure.</span><span class="lang-zh">每个模块中获得的物品有单独的标签、IDEO属性值、图标等信息，通过Blueprint Structure进行管理。</span></div>
+        </div>
+      </div>
+      <div class="module-card-expand">
+        <div class="module-card-expand-inner">
+          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+        </div>
+      </div>
     </div>
-    <div class="tree-item">
-      <div class="tree-item-title"><span class="lang-en">Dialogue Information Management & Decision Branching</span><span class="lang-zh">对话信息管理及决策分支（Dialogue Information Management & Decision Branching）</span></div>
-      <div class="tree-item-desc"><span class="lang-en">The dialogue information, options, voice assets, and branching logic corresponding to each module are managed centrally through a Blueprint Structure, enabling data-driven dialogue configuration and scalable narrative branching.</span><span class="lang-zh">每个模块对应的对话信息、选项、语音资源和分支逻辑通过Blueprint Structure进行统一管理，实现数据驱动的对话配置与可扩展的叙事分支。</span></div>
+
+    <div class="module-card">
+      <div class="module-card-head">
+        <span class="module-card-num">03</span>
+        <div>
+          <div class="module-card-title"><span class="lang-en">Dialogue Information Management & Decision Branching</span><span class="lang-zh">对话信息管理及决策分支（Dialogue Information Management & Decision Branching）</span></div>
+          <div class="module-card-desc"><span class="lang-en">The dialogue information, options, voice assets, and branching logic corresponding to each module are managed centrally through a Blueprint Structure, enabling data-driven dialogue configuration and scalable narrative branching.</span><span class="lang-zh">每个模块对应的对话信息、选项、语音资源和分支逻辑通过Blueprint Structure进行统一管理，实现数据驱动的对话配置与可扩展的叙事分支。</span></div>
+        </div>
+      </div>
+      <div class="module-card-expand">
+        <div class="module-card-expand-inner">
+          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+        </div>
+      </div>
     </div>
-    <div class="tree-item last">
-      <div class="tree-item-title"><span class="lang-en">UI Framework</span><span class="lang-zh">UI框架（UI Framework）</span></div>
-      <div class="tree-item-desc"><span class="lang-en">Dialogue boxes, item inventory bars, submission slot bars, and other UI interfaces.</span><span class="lang-zh">对话框、物品背包栏、上缴物品栏等UI界面。</span></div>
+
+    <div class="module-card">
+      <div class="module-card-head">
+        <span class="module-card-num">04</span>
+        <div>
+          <div class="module-card-title"><span class="lang-en">UI Framework</span><span class="lang-zh">UI框架（UI Framework）</span></div>
+          <div class="module-card-desc"><span class="lang-en">Dialogue boxes, item inventory bars, submission slot bars, and other UI interfaces.</span><span class="lang-zh">对话框、物品背包栏、上缴物品栏等UI界面。</span></div>
+        </div>
+      </div>
+      <div class="module-card-expand">
+        <div class="module-card-expand-inner">
+          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+        </div>
+      </div>
     </div>
+
   </div>
 
   <h3 class="sub-title"><span class="lang-en">4. Dynamic Storylet Generation</span><span class="lang-zh">4. 动态模块生成系统（Dynamic Storylet Generation）</span></h3>
 
-  <div class="tree-block">
-    <div class="tree-item">
-      <div class="tree-item-title"><span class="lang-en">Controlled Randomization</span><span class="lang-zh">受控随机生成（Controlled Randomization）</span></div>
-      <div class="tree-item-desc"><span class="lang-en">Content is randomly drawn from a pool of modules matching the current faction and phase conditions, improving replayability while preserving narrative coherence.</span><span class="lang-zh">从符合当前阵营和阶段条件的模块池中随机抽取内容，在保证叙事逻辑一致性的同时提升可重复游玩性。</span></div>
-    </div>
-    <div class="tree-item">
-      <div class="tree-item-title"><span class="lang-en">Faction Alignment Branching</span><span class="lang-zh">阵营倾向分支逻辑（Faction Alignment Branching）</span></div>
-      <div class="tree-item-desc">
-        <span class="lang-en">This is the core logic that determines narrative direction. Every item carries a hidden ideology value. The system calculates the total value of the items submitted by the player, adds it to a random 2d6 dice value, and determines faction allegiance based on the resulting total.</span>
-        <span class="lang-zh">这是决定叙事走向的核心逻辑。每个物品都带有隐藏的意识形态数值。系统会计算玩家提交物品的总值，和2d6骰子的随机值累加，获得总值，以最终数值决定阵营归属。</span>
+  <div class="card-grid">
+
+    <div class="module-card">
+      <div class="module-card-head">
+        <span class="module-card-num">01</span>
+        <div>
+          <div class="module-card-title"><span class="lang-en">Controlled Randomization</span><span class="lang-zh">受控随机生成（Controlled Randomization）</span></div>
+          <div class="module-card-desc"><span class="lang-en">Content is randomly drawn from a pool of modules matching the current faction and phase conditions, improving replayability while preserving narrative coherence.</span><span class="lang-zh">从符合当前阵营和阶段条件的模块池中随机抽取内容，在保证叙事逻辑一致性的同时提升可重复游玩性。</span></div>
+        </div>
+      </div>
+      <div class="module-card-expand">
+        <div class="module-card-expand-inner">
+          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+        </div>
       </div>
     </div>
-    <div class="tree-item last">
-      <div class="tree-item-title"><span class="lang-en">Phase State Management</span><span class="lang-zh">阶段状态管理（Phase State Management）</span></div>
-      <div class="tree-item-desc"><span class="lang-en">Manages the phase states of the entire narrative framework, recording player progress, factional tendency, and content already triggered. <em>(In development)</em></span><span class="lang-zh">管理整个叙事框架的阶段状态，记录玩家进度、阵营倾向以及已触发内容。<em>（开发中）</em></span></div>
+
+    <div class="module-card">
+      <div class="module-card-head">
+        <span class="module-card-num">02</span>
+        <div>
+          <div class="module-card-title"><span class="lang-en">Faction Alignment Branching</span><span class="lang-zh">阵营倾向分支逻辑（Faction Alignment Branching）</span></div>
+          <div class="module-card-desc">
+            <span class="lang-en">This is the core logic that determines narrative direction. Every item carries a hidden ideology value. The system calculates the total value of the items submitted by the player, adds it to a random 2d6 dice value, and determines faction allegiance based on the resulting total.</span>
+            <span class="lang-zh">这是决定叙事走向的核心逻辑。每个物品都带有隐藏的意识形态数值。系统会计算玩家提交物品的总值，和2d6骰子的随机值累加，获得总值，以最终数值决定阵营归属。</span>
+          </div>
+        </div>
+      </div>
+      <div class="module-card-expand">
+        <div class="module-card-expand-inner">
+          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+        </div>
+      </div>
     </div>
+
+    <div class="module-card">
+      <div class="module-card-head">
+        <span class="module-card-num">03</span>
+        <div>
+          <div class="module-card-title"><span class="lang-en">Phase State Management</span><span class="lang-zh">阶段状态管理（Phase State Management）</span></div>
+          <div class="module-card-desc"><span class="lang-en">Manages the phase states of the entire narrative framework, recording player progress, factional tendency, and content already triggered. <em>(In development)</em></span><span class="lang-zh">管理整个叙事框架的阶段状态，记录玩家进度、阵营倾向以及已触发内容。<em>（开发中）</em></span></div>
+        </div>
+      </div>
+      <div class="module-card-expand">
+        <div class="module-card-expand-inner">
+          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <h3 class="sub-title"><span class="lang-en">5. Camera & Navigation System</span><span class="lang-zh">5. 摄像机与导航系统（Camera & Navigation System）</span></h3>
 
-  <div class="tree-block">
-    <div class="tree-item">
-      <div class="tree-item-title"><span class="lang-en">Camera Movement in Module</span><span class="lang-zh">模块内相机运动（Camera Movement in Module）</span></div>
+  <div class="card-grid">
+
+    <div class="module-card">
+      <div class="module-card-head">
+        <span class="module-card-num">01</span>
+        <div class="module-card-title"><span class="lang-en">Camera Movement in Module</span><span class="lang-zh">模块内相机运动（Camera Movement in Module）</span></div>
+      </div>
+      <div class="module-card-expand">
+        <div class="module-card-expand-inner">
+          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+        </div>
+      </div>
     </div>
-    <div class="tree-item">
-      <div class="tree-item-title"><span class="lang-en">Global Space Rotation</span><span class="lang-zh">全局空间旋转（Global Space Rotation）</span></div>
+
+    <div class="module-card">
+      <div class="module-card-head">
+        <span class="module-card-num">02</span>
+        <div class="module-card-title"><span class="lang-en">Global Space Rotation</span><span class="lang-zh">全局空间旋转（Global Space Rotation）</span></div>
+      </div>
+      <div class="module-card-expand">
+        <div class="module-card-expand-inner">
+          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+        </div>
+      </div>
     </div>
-    <div class="tree-item last">
-      <div class="tree-item-title"><span class="lang-en">Spotlight Navigation</span><span class="lang-zh">手电筒导航（Spotlight Navigation）</span></div>
+
+    <div class="module-card">
+      <div class="module-card-head">
+        <span class="module-card-num">03</span>
+        <div class="module-card-title"><span class="lang-en">Spotlight Navigation</span><span class="lang-zh">手电筒导航（Spotlight Navigation）</span></div>
+      </div>
+      <div class="module-card-expand">
+        <div class="module-card-expand-inner">
+          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+        </div>
+      </div>
     </div>
+
   </div>
 
 </main>
