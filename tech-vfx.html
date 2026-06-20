@@ -55,6 +55,42 @@
   .pending-msg { font-family: var(--sans); font-size: 18px; font-weight: 600; color: var(--white-dim); margin-bottom: 10px; }
   .pending-sub { font-size: 12px; color: var(--white-dim); line-height: 1.7; max-width: 420px; margin: 0 auto; }
 
+  .section-title {
+    font-family: var(--sans); font-size: 18px; font-weight: 600;
+    color: var(--white); margin: 48px 0 16px; letter-spacing: -0.01em;
+  }
+  .sub-title {
+    font-family: var(--mono); font-size: 12px; color: var(--red);
+    letter-spacing: 0.08em; text-transform: uppercase; margin: 28px 0 12px;
+  }
+  p.body-text { color: var(--white-dim); line-height: 1.85; margin-bottom: 16px; font-size: 13.5px; }
+
+  .figure { margin: 28px 0; }
+  .figure-figrow { display: flex; gap: 12px; flex-wrap: wrap; }
+  .figure-fig {
+    flex: 1; min-width: 240px;
+    border: 1px solid var(--border); background: var(--bg2);
+    aspect-ratio: 16/10; display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .figure-fig video { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; }
+  .figure-caption { font-size: 11px; color: var(--white-dim); padding: 10px 4px 0; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+  /* ── Lightbox ── */
+  #lightbox-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.92); z-index: 9999; cursor: zoom-out;
+    align-items: center; justify-content: center; padding: 24px;
+  }
+  #lightbox-overlay.active { display: flex; }
+  #lightbox-overlay video { max-width: 100%; max-height: 100vh; object-fit: contain; border: 0.5px solid #2A2A2A; }
+  #lightbox-close {
+    position: fixed; top: 20px; right: 24px; font-family: var(--mono); font-size: 12px;
+    color: var(--red); letter-spacing: 0.1em; cursor: pointer; background: none; border: none; padding: 0; z-index: 10000;
+  }
+
   footer { padding: 24px 80px; display: flex; justify-content: space-between; font-size: 11px; color: var(--white-dim); letter-spacing: 0.06em; border-top: 1px solid var(--border); }
 
   @media (max-width: 768px) { nav, main, footer { padding-left: 20px; padding-right: 20px; } }
@@ -81,13 +117,139 @@
   <div class="page-label"><span class="lang-en">// Houdini — VFX</span><span class="lang-zh">// Houdini — 动画特效</span></div>
   <h1 class="page-title"><span class="lang-en">VFX</span><span class="lang-zh">动画特效</span></h1>
 
-  <div class="pending-box">
-    <div class="pending-code">// CONTENT PENDING</div>
-    <div class="pending-msg"><span class="lang-en">This page is awaiting content.</span><span class="lang-zh">本页面内容尚未上传。</span></div>
-    <div class="pending-sub lang-en">Documentation for this technical category will be added here.</div>
-    <div class="pending-sub lang-zh">该技术分类的相关说明将在此处补充。</div>
+  <h2 class="section-title"><span class="lang-en">Point Cloud–Based VFX</span><span class="lang-zh">基于点云的动画特效</span></h2>
+  <div class="figure">
+    <div class="figure-figrow">
+      <div class="figure-fig">
+        <video autoplay loop muted playsinline class="lightbox-trigger" onclick="openLightbox(this.querySelector('source').src)">
+          <source src="videos/PointCloud_01.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
   </div>
+
+  <hr class="divider">
+
+  <h2 class="section-title"><span class="lang-en">Object Disintegration 01</span><span class="lang-zh">物体消散01</span></h2>
+  <div class="figure">
+    <div class="figure-figrow">
+      <div class="figure-fig">
+        <video autoplay loop muted playsinline class="lightbox-trigger" onclick="openLightbox(this.querySelector('source').src)">
+          <source src="videos/Animation_01.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="figure-fig">
+        <video autoplay loop muted playsinline class="lightbox-trigger" onclick="openLightbox(this.querySelector('source').src)">
+          <source src="videos/Animation_02.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub-title"><span class="lang-en">Imported into UE5</span><span class="lang-zh">导入UE5</span></h3>
+  <div class="figure">
+    <div class="figure-figrow">
+      <div class="figure-fig">
+        <video autoplay loop muted playsinline class="lightbox-trigger" onclick="openLightbox(this.querySelector('source').src)">
+          <source src="videos/Houdini_Cache01.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="figure-fig">
+        <video autoplay loop muted playsinline class="lightbox-trigger" onclick="openLightbox(this.querySelector('source').src)">
+          <source src="videos/AnimationUE_01.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h2 class="section-title"><span class="lang-en">Object Disintegration 02</span><span class="lang-zh">物体消散02</span></h2>
+  <div class="figure">
+    <div class="figure-figrow">
+      <div class="figure-fig">
+        <video autoplay loop muted playsinline class="lightbox-trigger" onclick="openLightbox(this.querySelector('source').src)">
+          <source src="videos/Disintegration_01.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="figure-fig">
+        <video autoplay loop muted playsinline class="lightbox-trigger" onclick="openLightbox(this.querySelector('source').src)">
+          <source src="videos/Disintegration_02.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub-title"><span class="lang-en">Imported into UE5</span><span class="lang-zh">导入UE5</span></h3>
+  <div class="figure">
+    <div class="figure-figrow">
+      <div class="figure-fig">
+        <video autoplay loop muted playsinline class="lightbox-trigger" onclick="openLightbox(this.querySelector('source').src)">
+          <source src="videos/Disintegration_UE.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h2 class="section-title"><span class="lang-en">Morphing Animation 01</span><span class="lang-zh">形态转换动画01</span></h2>
+  <div class="figure">
+    <div class="figure-figrow">
+      <div class="figure-fig">
+        <video autoplay loop muted playsinline class="lightbox-trigger" onclick="openLightbox(this.querySelector('source').src)">
+          <source src="videos/Morphing_01.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub-title"><span class="lang-en">Imported into UE5</span><span class="lang-zh">导入UE5</span></h3>
+  <div class="figure">
+    <div class="figure-figrow">
+      <div class="figure-fig">
+        <video autoplay loop muted playsinline class="lightbox-trigger" onclick="openLightbox(this.querySelector('source').src)">
+          <source src="videos/Morphing_UE_01.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h2 class="section-title"><span class="lang-en">Morphing Animation 02</span><span class="lang-zh">形态转换动画02</span></h2>
+  <div class="figure">
+    <div class="figure-figrow">
+      <div class="figure-fig">
+        <video autoplay loop muted playsinline class="lightbox-trigger" onclick="openLightbox(this.querySelector('source').src)">
+          <source src="videos/MorphAnimation_01.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="figure-fig">
+        <video autoplay loop muted playsinline class="lightbox-trigger" onclick="openLightbox(this.querySelector('source').src)">
+          <source src="videos/MorphAnimation_02.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub-title"><span class="lang-en">Imported into UE5</span><span class="lang-zh">导入UE5</span></h3>
+  <div class="figure">
+    <div class="figure-figrow">
+      <div class="figure-fig">
+        <video autoplay loop muted playsinline class="lightbox-trigger" onclick="openLightbox(this.querySelector('source').src)">
+          <source src="videos/MorphAnimation_UE_01.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+
 </main>
+
+<div id="lightbox-overlay" onclick="this.classList.remove('active')">
+  <button id="lightbox-close" onclick="document.getElementById('lightbox-overlay').classList.remove('active')">// CLOSE ✕</button>
+  <video id="lightbox-video" controls autoplay loop src=""></video>
+</div>
 
 <footer>
   <span><span class="lang-en">TECH INDEX // HOUDINI // VFX</span><span class="lang-zh">技术索引 // Houdini // 动画特效</span></span>
@@ -107,6 +269,16 @@
   }
   const savedLang = localStorage.getItem('lang') || 'en';
   setLang(savedLang);
+
+  // LIGHTBOX (video)
+  function openLightbox(src) {
+    const vid = document.getElementById('lightbox-video');
+    vid.src = src;
+    document.getElementById('lightbox-overlay').classList.add('active');
+  }
+  document.getElementById('lightbox-overlay').addEventListener('click', () => {
+    document.getElementById('lightbox-video').pause();
+  });
 </script>
 </body>
 </html>
