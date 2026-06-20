@@ -549,7 +549,93 @@
       </div>
       <div class="module-card-expand">
         <div class="module-card-expand-inner">
-          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;line-height:1.8;margin-bottom:16px;">
+            <span class="lang-en">This system manages items obtained by the player, and converts the player's actions into narrative outcomes through a submission mechanism.</span>
+            <span class="lang-zh">该系统负责管理玩家获得的物品，并通过提交机制将玩家的行为转化为叙事结果。</span>
+          </p>
+
+          <div class="mc-flow">
+            <span class="mc-flow-step">DragItem / Interaction Object</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step">WBP_ItemPopup</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step">Inventory Data / Inventory Array</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step">WBP_InventoryPanel</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step">WBP_SubmissionPanel</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step">BP_CoreDevice</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step">Dice Check / Faction Result / Spawn Next Module</span>
+          </div>
+
+          <hr class="mc-divider-thin">
+
+          <div class="mc-subhead"><span class="lang-en">Item Collection</span><span class="lang-zh">物品收集 Item Collection</span></div>
+          <p style="color:var(--white-dim);font-size:12.5px;line-height:1.7;margin-bottom:10px;">
+            <span class="lang-en">Items are obtained in each module by triggering an interactable component. Each object can be configured with its corresponding item data within its instance.</span>
+            <span class="lang-zh">每个模块中通过触发可交互组件获得物品。每个物体可在实例中配置对应的物品数据。</span>
+          </p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/2_ItemCollection.png" alt="Item Collection" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <hr class="mc-divider-thin">
+
+          <div class="mc-subhead"><span class="lang-en">Add to Inventory</span><span class="lang-zh">放入背包 Add to Inventory</span></div>
+          <p style="color:var(--white);font-size:12.5px;font-weight:600;margin-bottom:6px;"><span class="lang-en">Process:</span><span class="lang-zh">流程：</span></p>
+          <div class="mc-flow">
+            <span class="mc-flow-step lang-en">New item obtained</span><span class="mc-flow-step lang-zh">获得新物品</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step lang-en">Read item data</span><span class="mc-flow-step lang-zh">读取物品数据</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step lang-en">Store item name / icon / description / ideology value</span><span class="mc-flow-step lang-zh">保存物品名称 / 图标 / 描述 / 意识形态值</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step lang-en">Add to Inventory Array</span><span class="mc-flow-step lang-zh">添加到 Inventory Array</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step lang-en">Update inventory state</span><span class="mc-flow-step lang-zh">更新背包状态</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step lang-en">Refresh inventory UI</span><span class="mc-flow-step lang-zh">刷新背包 UI</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step lang-en">Display new item in the inventory panel</span><span class="mc-flow-step lang-zh">在背包面板中显示新物品</span>
+          </div>
+          <p style="color:var(--white-dim);font-size:12px;margin-bottom:8px;"><span class="lang-en">Related Blueprints:</span><span class="lang-zh">相关蓝图：</span></p>
+          <div class="module-card-figrow" style="margin-bottom:8px;">
+            <div class="module-card-fig"><img src="images/2_AddItem.png" alt="Add Item" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/2_InitInventory_01.png" alt="Init Inventory 01" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/2_InitInventory_02.png" alt="Init Inventory 02" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <hr class="mc-divider-thin">
+
+          <div class="mc-subhead"><span class="lang-en">Submission</span><span class="lang-zh">物品上缴 Submission</span></div>
+          <div class="module-card-figrow" style="margin-bottom:8px;">
+            <div class="module-card-fig"><img src="images/2_WBP_InventoryPanel_OnClicked.png" alt="WBP InventoryPanel OnClicked" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/2_OnSubmissionItemChosen.png" alt="On Submission Item Chosen" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/2_OpenInventoryForSubmission.png" alt="Open Inventory For Submission" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Determine whether all three item slots have been filled:</span><span class="lang-zh">判断三个物品槽是否都已放置物品：</span></p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/2_AreAllSlotsFilled.png" alt="Are All Slots Filled" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Function to retrieve submitted items:</span><span class="lang-zh">获取上缴物品函数：</span></p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/2_GetSubmittedItems.png" alt="Get Submitted Items" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Function to clear the submission slots:</span><span class="lang-zh">清空物品槽函数：</span></p>
+          <div class="module-card-figrow">
+            <div class="module-card-fig"><img src="images/2_ClearSubmissionSlots.png" alt="Clear Submission Slots" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -571,14 +657,59 @@
       </div>
       <div class="module-card-expand">
         <div class="module-card-expand-inner">
-          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;line-height:1.8;margin-bottom:16px;">
+            <span class="lang-en">After items are collected, the system checks whether the item slots are full; once this condition is met, the Dice Check is triggered. A random 2d6 dice value is added to the cumulative IDEO attribute value of the three items to produce the final dice score, which is compared against a judgement threshold (currently set to 7) to determine factional allegiance.</span>
+            <span class="lang-zh">收集物品之后，判断物品槽已填满，满足条件即可触发骰子检定，将2d6骰子随机值叠加三个物品的IDEO属性值得到最终骰子点数，与判定阈值（目前设定为7）进行比较，判定阵营归属。</span>
+          </p>
+
+          <div class="mc-flow">
+            <span class="mc-flow-step lang-en">Calculate Ideology Value</span><span class="mc-flow-step lang-zh">计算IDEO属性累计值（Calculate Ideology Value）</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step lang-en">Get random 2d6 dice value</span><span class="mc-flow-step lang-zh">得到2d6骰子随机值</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step lang-en">Sum the dice score and IDEO attribute value</span><span class="mc-flow-step lang-zh">骰子点数和IDEO属性值计算总和</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step lang-en">Determine factional allegiance</span><span class="mc-flow-step lang-zh">判定阵营归属</span>
+          </div>
+
+          <hr class="mc-divider-thin">
+
+          <div class="mc-subhead"><span class="lang-en">Enter Key Triggers Dice Check</span><span class="lang-zh">回车键触发骰子检定</span></div>
+          <div class="mc-code-path"><span class="lang-en">In <code>BP_NoCharacterPlayerController</code>:</span><span class="lang-zh">在BP_NoCharacterPlayerController中：</span></div>
+          <div class="module-card-figrow">
+            <div class="module-card-fig"><img src="images/2_DiceCheck_Enter_01.png" alt="Dice Check Enter 01" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/2_DiceCheck_Enter_02.png" alt="Dice Check Enter 02" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <hr class="mc-divider-thin">
+
+          <div class="mc-subhead"><span class="lang-en">Rolling the Dice and Calculating the Score</span><span class="lang-zh">掷骰子计算点数</span></div>
+          <div class="mc-code-path"><span class="lang-en">In <code>BP_NoCharacterPlayerController</code>:</span><span class="lang-zh">在BP_NoCharacterPlayerController中：</span></div>
+          <div class="module-card-figrow">
+            <div class="module-card-fig"><img src="images/2_DiceRoll_01.png" alt="Dice Roll 01" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/2_DiceRoll_02.png" alt="Dice Roll 02" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <hr class="mc-divider-thin">
+
+          <div class="mc-subhead"><span class="lang-en">Triggering the Dice Check</span><span class="lang-zh">触发骰子检定</span></div>
+          <div class="mc-code-path"><span class="lang-en">In <code>BP_CoreDevice</code>:</span><span class="lang-zh">在BP_CoreDevice中：</span></div>
+          <div class="module-card-figrow" style="margin-bottom:8px;">
+            <div class="module-card-fig"><img src="images/2_BeginCheck_01.png" alt="Begin Check 01" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/2_BeginCheck_02.png" alt="Begin Check 02" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+          <div class="module-card-figrow">
+            <div class="module-card-fig"><img src="images/2_BeginCheck_03.png" alt="Begin Check 03" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
         </div>
       </div>
     </div>
 
   </div>
 
-  <h3 class="sub-title"><span class="lang-en">3. Data Content Management</span><span class="lang-zh">3. 数据管理系统（Data Content Management）</span></h3>
+  <h3 class="sub-title"><span class="lang-en">3. Dynamic Storylet Generation</span><span class="lang-zh">3. 动态模块生成系统（Dynamic Storylet Generation）</span></h3>
 
   <div class="card-grid">
 
@@ -586,8 +717,9 @@
       <div class="module-card-head">
         <span class="module-card-num">01</span>
         <div>
-          <div class="module-card-title"><span class="lang-en">Actor Tag Framework</span><span class="lang-zh">标签框架（Actor Tag Framework）</span></div>
-          <div class="module-card-desc">
+          <div class="module-card-title"><span class="lang-en">Controlled Randomization</span><span class="lang-zh">受控随机生成（Controlled Randomization）</span></div>
+          <div class="module-card-desc"><span class="lang-en">Content is randomly drawn from a pool of modules matching the current faction and phase conditions, improving replayability while preserving narrative coherence.</span><span class="lang-zh">从符合当前阵营和阶段条件的模块池中随机抽取内容，在保证叙事逻辑一致性的同时提升可重复游玩性。</span></div>
+          <div class="module-card-desc" style="margin-top:8px;">
             <span class="lang-en">Every future module is pre-placed in the scene but hidden by default. The jump relationships between modules are not fixed, but are managed through Actor Tags.</span>
             <span class="lang-zh">每个未来模块在场景中提前放置，但默认隐藏。模块之间的跳转关系不固定，而是由Actor Tag进行管理。</span>
           </div>
@@ -599,7 +731,56 @@
       </div>
       <div class="module-card-expand">
         <div class="module-card-expand-inner">
-          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;line-height:1.8;margin-bottom:16px;">
+            <span class="lang-en">All modules pending generation carry an Archivist or Whalemen tag, and are hidden in the environment by default. Based on the relationship between the final dice score and the judgement threshold (currently set to 7), if the score is ≥7, the system retrieves available modules tagged Archivist and randomly generates one; if &lt;7, it retrieves available modules tagged Whalemen and randomly generates one. Once generation is complete, the system clears the submission slots, resets the current round's IDEO value, and proceeds to the next round.</span>
+            <span class="lang-zh">所有待生成模块带有Archivist或Whalemen的tag，初始在环境为隐藏状态。根据最终点数与判定阈值（目前设定为7）的相对大小关系，≥7则检索tag=Archivist的可用模块并随机抽取一个进行生成，＜7则检索tag=Whalemen的可用模块并随机抽取一个进行生成。生成完成后，系统清空提交槽，重置本轮IDEO值，并进入下一轮循环。</span>
+          </p>
+
+          <div class="mc-subhead"><span class="lang-en">Module Generation Based on Check Result</span><span class="lang-zh">根据检定结果生成模块</span></div>
+          <div class="mc-flow">
+            <span class="mc-flow-step lang-en">Input a Tag</span><span class="mc-flow-step lang-zh">输入一个 Tag</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step lang-en">Find all modules with this Tag</span><span class="mc-flow-step lang-zh">找到所有带这个 Tag 的模块</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step lang-en">Filter out modules already generated</span><span class="mc-flow-step lang-zh">过滤已经生成过的模块</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step lang-en">Randomly select an available module</span><span class="mc-flow-step lang-zh">随机选择一个可用模块</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step lang-en">Display the module</span><span class="mc-flow-step lang-zh">显示该模块</span>
+            <span class="mc-flow-arrow">↓</span>
+            <span class="mc-flow-step lang-en">Mark as generated</span><span class="mc-flow-step lang-zh">标记为已生成</span>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;line-height:1.7;margin-bottom:10px;">
+            <span class="lang-en">A module is randomly drawn from the pool corresponding to the determined faction, and the hidden module is revealed in the environment via Blueprint Interface messaging:</span>
+            <span class="lang-zh">最对应阵营的模块池中随机抽取一个，通过蓝图接口信息通知对应隐藏模块在环境中显现：</span>
+          </p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/2_RevealRandomModulebyTag.png" alt="Reveal Random Module by Tag" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <hr class="mc-divider-thin">
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Generating an Archivist / Whalemen faction module:</span><span class="lang-zh">生成Archivist / Whalemen阵营模块：</span></p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/2_SpawnArchivistModule.png" alt="Spawn Archivist Module" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/2_SpawnWhalemenModule.png" alt="Spawn Whalemen Module" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <hr class="mc-divider-thin">
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Interfaces implemented by all generatable modules:</span><span class="lang-zh">所有可被生成的模块实现接口：</span></p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/2_ImplementedInterfaces.png" alt="Implemented Interfaces" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Hide and reveal events for all generatable modules:</span><span class="lang-zh">所有可被生成的模块的隐藏及显现事件：</span></p>
+          <div class="module-card-figrow">
+            <div class="module-card-fig"><img src="images/2_RealModuleGroup.png" alt="Reveal Module Group" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/2_HideModuleGroup.png" alt="Hide Module Group" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -607,6 +788,27 @@
     <div class="module-card">
       <div class="module-card-head">
         <span class="module-card-num">02</span>
+        <div>
+          <div class="module-card-title"><span class="lang-en">Phase State Management</span><span class="lang-zh">阶段状态管理（Phase State Management）</span></div>
+          <div class="module-card-desc"><span class="lang-en">Manages the phase states of the entire narrative framework, recording player progress, factional tendency, and content already triggered. <em>(In development)</em></span><span class="lang-zh">管理整个叙事框架的阶段状态，记录玩家进度、阵营倾向以及已触发内容。<em>（开发中）</em></span></div>
+        </div>
+      </div>
+      <div class="module-card-expand">
+        <div class="module-card-expand-inner">
+          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <h3 class="sub-title"><span class="lang-en">4. Data Content Management</span><span class="lang-zh">4. 数据管理系统（Data Content Management）</span></h3>
+
+  <div class="card-grid">
+
+    <div class="module-card">
+      <div class="module-card-head">
+        <span class="module-card-num">01</span>
         <div>
           <div class="module-card-title"><span class="lang-en">Item Information Management</span><span class="lang-zh">物品信息管理（Item Information Management）</span></div>
           <div class="module-card-desc"><span class="lang-en">Items obtained in each module have individual tags, IDEO attribute values, icons, and other information, managed through a Blueprint Structure.</span><span class="lang-zh">每个模块中获得的物品有单独的标签、IDEO属性值、图标等信息，通过Blueprint Structure进行管理。</span></div>
@@ -621,7 +823,7 @@
 
     <div class="module-card">
       <div class="module-card-head">
-        <span class="module-card-num">03</span>
+        <span class="module-card-num">02</span>
         <div>
           <div class="module-card-title"><span class="lang-en">Dialogue Information Management & Decision Branching</span><span class="lang-zh">对话信息管理及决策分支（Dialogue Information Management & Decision Branching）</span></div>
           <div class="module-card-desc"><span class="lang-en">The dialogue information, options, voice assets, and branching logic corresponding to each module are managed centrally through a Blueprint Structure, enabling data-driven dialogue configuration and scalable narrative branching.</span><span class="lang-zh">每个模块对应的对话信息、选项、语音资源和分支逻辑通过Blueprint Structure进行统一管理，实现数据驱动的对话配置与可扩展的叙事分支。</span></div>
@@ -636,64 +838,10 @@
 
     <div class="module-card">
       <div class="module-card-head">
-        <span class="module-card-num">04</span>
+        <span class="module-card-num">03</span>
         <div>
           <div class="module-card-title"><span class="lang-en">UI Framework</span><span class="lang-zh">UI框架（UI Framework）</span></div>
           <div class="module-card-desc"><span class="lang-en">Dialogue boxes, item inventory bars, submission slot bars, and other UI interfaces.</span><span class="lang-zh">对话框、物品背包栏、上缴物品栏等UI界面。</span></div>
-        </div>
-      </div>
-      <div class="module-card-expand">
-        <div class="module-card-expand-inner">
-          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <h3 class="sub-title"><span class="lang-en">4. Dynamic Storylet Generation</span><span class="lang-zh">4. 动态模块生成系统（Dynamic Storylet Generation）</span></h3>
-
-  <div class="card-grid">
-
-    <div class="module-card">
-      <div class="module-card-head">
-        <span class="module-card-num">01</span>
-        <div>
-          <div class="module-card-title"><span class="lang-en">Controlled Randomization</span><span class="lang-zh">受控随机生成（Controlled Randomization）</span></div>
-          <div class="module-card-desc"><span class="lang-en">Content is randomly drawn from a pool of modules matching the current faction and phase conditions, improving replayability while preserving narrative coherence.</span><span class="lang-zh">从符合当前阵营和阶段条件的模块池中随机抽取内容，在保证叙事逻辑一致性的同时提升可重复游玩性。</span></div>
-        </div>
-      </div>
-      <div class="module-card-expand">
-        <div class="module-card-expand-inner">
-          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="module-card">
-      <div class="module-card-head">
-        <span class="module-card-num">02</span>
-        <div>
-          <div class="module-card-title"><span class="lang-en">Faction Alignment Branching</span><span class="lang-zh">阵营倾向分支逻辑（Faction Alignment Branching）</span></div>
-          <div class="module-card-desc">
-            <span class="lang-en">This is the core logic that determines narrative direction. Every item carries a hidden ideology value. The system calculates the total value of the items submitted by the player, adds it to a random 2d6 dice value, and determines faction allegiance based on the resulting total.</span>
-            <span class="lang-zh">这是决定叙事走向的核心逻辑。每个物品都带有隐藏的意识形态数值。系统会计算玩家提交物品的总值，和2d6骰子的随机值累加，获得总值，以最终数值决定阵营归属。</span>
-          </div>
-        </div>
-      </div>
-      <div class="module-card-expand">
-        <div class="module-card-expand-inner">
-          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="module-card">
-      <div class="module-card-head">
-        <span class="module-card-num">03</span>
-        <div>
-          <div class="module-card-title"><span class="lang-en">Phase State Management</span><span class="lang-zh">阶段状态管理（Phase State Management）</span></div>
-          <div class="module-card-desc"><span class="lang-en">Manages the phase states of the entire narrative framework, recording player progress, factional tendency, and content already triggered. <em>(In development)</em></span><span class="lang-zh">管理整个叙事框架的阶段状态，记录玩家进度、阵营倾向以及已触发内容。<em>（开发中）</em></span></div>
         </div>
       </div>
       <div class="module-card-expand">
