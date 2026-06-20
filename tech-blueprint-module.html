@@ -443,6 +443,28 @@
             <div class="module-card-fig"><img src="images/1_StopWheelDrag.png" alt="Stop Wheel Drag" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
           </div>
 
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Mechanism motion execution function:</span><span class="lang-zh">执行机关运动函数：</span></p>
+          <div class="module-card-figrow" style="margin-bottom:8px;">
+            <div class="module-card-fig"><img src="images/1_ApplyMechanismRotation.png" alt="Apply Mechanism Rotation" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+          <p style="color:var(--white-dim);font-size:12px;margin-bottom:8px;"><span class="lang-en">Components:</span><span class="lang-zh">各部分：</span></p>
+          <div class="module-card-figrow" style="margin-bottom:8px;">
+            <div class="module-card-fig"><img src="images/1_Apply_01.png" alt="Apply 01" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/1_Apply_02.png" alt="Apply 02" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/1_Apply_03.png" alt="Apply 03" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/1_Apply_04.png" alt="Apply 04" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;line-height:1.7;margin-bottom:8px;">
+            <span class="lang-en">Mechanism state synchronisation function: uses a unified Progress parameter to drive the motion of the wheel, gear, and slider.</span>
+            <span class="lang-zh">机关状态同步函数：使用统一 Progress 参数驱动转轮、齿轮和滑块运动。</span>
+          </p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/1_ApplyMechanismProgress.png" alt="Apply Mechanism Progress" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
           <hr class="mc-divider-thin">
 
           <div class="mc-subhead">2 — DragItem</div>
@@ -538,11 +560,33 @@
         <span class="module-card-num">05</span>
         <div>
           <div class="module-card-title"><span class="lang-en">Environment Reveal</span><span class="lang-zh">环境显现（Environment Reveal）</span></div>
+          <div class="module-card-desc"><span class="lang-en">BP_InteractionPoint triggers dialogue and controls the environment reveal — the outer shell dissolves to expose the interior spatial module.</span><span class="lang-zh">BP_InteractionPoint的作用是触发对话，控制环境显现——即外壳消散，暴露出内部空间模块。</span></div>
         </div>
       </div>
       <div class="module-card-expand">
         <div class="module-card-expand-inner">
-          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+
+          <div class="mc-subhead"><span class="lang-en">Components Included</span><span class="lang-zh">包含组件</span></div>
+          <ul class="mc-bullets">
+            <li><span class="lang-en">Interaction prompt hover orb (Houdini animation)</span><span class="lang-zh">提示交互悬浮球（Houdini动画）</span></li>
+            <li><span class="lang-en">Dissolvable outer shell (Houdini animation)</span><span class="lang-zh">可消散外壳（Houdini动画）</span></li>
+            <li><span class="lang-en">Mouse hover trigger range</span><span class="lang-zh">鼠标悬停触发范围</span></li>
+            <li><span class="lang-en">Mouse click trigger range</span><span class="lang-zh">鼠标点击触发范围</span></li>
+          </ul>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/1_InteractionPointComponent.png" alt="Interaction Point Component" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <hr class="mc-divider-thin">
+
+          <p style="color:var(--white-dim);font-size:12.5px;line-height:1.7;margin-bottom:10px;">
+            <span class="lang-en">The Blueprint instance of BP_InteractionPoint and the Blueprint instance of the spatial module are linked within the level scene via Owning Module Ref:</span>
+            <span class="lang-zh">BP_InteractionPoint的蓝图实例和空间模块蓝图实例在关卡场景中通过Owning Module Ref相联系：</span>
+          </p>
+          <div class="module-card-figrow">
+            <div class="module-card-fig"><img src="images/1_OwningModuleRef.png" alt="Owning Module Ref" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -884,7 +928,160 @@
       </div>
       <div class="module-card-expand">
         <div class="module-card-expand-inner">
-          <div class="module-card-empty"><span class="lang-en">Content pending.</span><span class="lang-zh">内容待补充。</span></div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;line-height:1.8;margin-bottom:16px;">
+            <span class="lang-en">When the player clicks different options, different narrative text is triggered, and the environment is simultaneously revealed:</span>
+            <span class="lang-zh">玩家点击的不同选项会触发不同叙事文本，同时将环境显现出来：</span>
+          </p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig">
+              <video autoplay loop muted playsinline>
+                <source src="videos/4_Dialogue.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;line-height:1.7;margin-bottom:10px;">
+            <span class="lang-en"><code style="color:var(--red);">S_DialogueNode</code> manages narrative blocks; <code style="color:var(--red);">S_DialogueOptionData</code> manages each option's text, the function it triggers, and the next narrative block it jumps to:</span>
+            <span class="lang-zh"><code style="color:var(--red);">S_DialogueNode</code>管理叙事块，<code style="color:var(--red);">S_DialogueOptionData</code>管理选项的文字和触发的不同功能及下一个跳转的叙事块：</span>
+          </p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/4_S_DialogueNode.png" alt="S DialogueNode" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/4_S_DialogueOptionData.png" alt="S DialogueOptionData" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <hr class="mc-divider-thin">
+
+          <div class="mc-subhead"><span class="lang-en">Logic related to the interaction Blueprint BP_InteractionPoint</span><span class="lang-zh">和交互块蓝图BP_InteractionPoint有关的逻辑</span></div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Click event:</span><span class="lang-zh">点击事件：</span></p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/1_InteractionPoint_Click_01.png" alt="Interaction Point Click 01" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/1_InteractionPoint_Click_02.png" alt="Interaction Point Click 02" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Start interaction:</span><span class="lang-zh">开始交互：</span></p>
+          <div class="module-card-figrow" style="margin-bottom:8px;">
+            <div class="module-card-fig"><img src="images/4_StartInteraction_01.png" alt="Start Interaction 01" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/4_StartInteraction_02.png" alt="Start Interaction 02" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/4_StartInteraction_03.png" alt="Start Interaction 03" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Find the corresponding dialogue node by ID:</span><span class="lang-zh">通过ID查找对应的对话块：</span></p>
+          <div class="module-card-figrow">
+            <div class="module-card-fig"><img src="images/4_FindDialogueNodebyID.png" alt="Find Dialogue Node by ID" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <hr class="mc-divider-thin">
+
+          <div class="mc-subhead"><span class="lang-en">Main Dialogue Box Widget Blueprint</span><span class="lang-zh">主对话框控件蓝图</span></div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;line-height:1.7;margin-bottom:10px;">
+            <span class="lang-en">Broadcasts via an Event Dispatcher, so that the information that a given option has "been clicked" is received by any subsequent events that need to be triggered.</span>
+            <span class="lang-zh">通过Event Dispatcher进行广播，使某个选项"被点击"的信息被其他需要触发的后续事件接收。</span>
+          </p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/4_Event Dispatchers.png" alt="Event Dispatchers" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Initialise the interface from the data node:</span><span class="lang-zh">从数据节点初始化界面：</span></p>
+          <div class="module-card-figrow" style="margin-bottom:8px;">
+            <div class="module-card-fig"><img src="images/4_InitFromNode_01.png" alt="Init From Node 01" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/4_InitFromNode_02.png" alt="Init From Node 02" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/4_InitFromNode_03.png" alt="Init From Node 03" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Button initialisation:</span><span class="lang-zh">按钮初始化：</span></p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/4_InitOptionButton.png" alt="Init Option Button" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Dialogue option handler function:</span><span class="lang-zh">对话选项处理函数：</span></p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/4_HandleDialogueOption.png" alt="Handle Dialogue Option" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white);font-size:12.5px;margin-bottom:6px;"><span class="lang-en">— Then 0: Reveal Environment</span><span class="lang-zh">— Then0：显现环境 Reveal Environment</span></p>
+          <div class="module-card-figrow" style="margin-bottom:8px;">
+            <div class="module-card-fig"><img src="images/4_Then0_ReavealEnvironment_01.png" alt="Then0 Reveal Environment 01" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+            <div class="module-card-fig"><img src="images/4_Then0_ReavealEnvironment_02.png" alt="Then0 Reveal Environment 02" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/4_Then0_ReavealEnvironment_03.png" alt="Then0 Reveal Environment 03" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white);font-size:12.5px;margin-bottom:6px;"><span class="lang-en">— Then 1: Play the Next Audio</span><span class="lang-zh">— Then1：播放下一段音频</span></p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/4_Then1_PlayNextAudio.png" alt="Then1 Play Next Audio" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white);font-size:12.5px;margin-bottom:6px;"><span class="lang-en">— Then 2: Update Text</span><span class="lang-zh">— Then2：更新文本</span></p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/4_Then2_DialogueUpdate.png" alt="Then2 Dialogue Update" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white);font-size:12.5px;margin-bottom:6px;"><span class="lang-en">— Then 3: Close All UI</span><span class="lang-zh">— Then3：关闭所有UI</span></p>
+          <div class="module-card-figrow">
+            <div class="module-card-fig"><img src="images/4_Then3_CloseAllUI.png" alt="Then3 Close All UI" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <hr class="mc-divider-thin">
+
+          <div class="mc-subhead"><span class="lang-en">Item Inventory Blueprint</span><span class="lang-zh">物品背包蓝图</span></div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Inventory bar initialisation:</span><span class="lang-zh">背包物品栏初始化：</span></p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/4_InitInventory.png" alt="Init Inventory" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Dynamically generating item slots:</span><span class="lang-zh">动态生成物品格：</span></p>
+          <div class="module-card-figrow">
+            <div class="module-card-fig"><img src="images/4_InitFromItem.png" alt="Init From Item" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <hr class="mc-divider-thin">
+
+          <div class="mc-subhead"><span class="lang-en">Item Acquisition Popup</span><span class="lang-zh">获得物品弹窗</span></div>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/4_ItemPopup_EventGraph.png" alt="Item Popup Event Graph" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Item popup initialisation:</span><span class="lang-zh">物品弹窗初始化：</span></p>
+          <div class="module-card-figrow">
+            <div class="module-card-fig"><img src="images/4_InitItem.png" alt="Init Item" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <hr class="mc-divider-thin">
+
+          <div class="mc-subhead"><span class="lang-en">Item Submission Window</span><span class="lang-zh">物品上缴窗口</span></div>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/4_SubmissionPanel_EventGraph.png" alt="Submission Panel Event Graph" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Open the inventory to submit items:</span><span class="lang-zh">打开背包上缴物品：</span></p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/4_OpenInventoryForSubmission.png" alt="Open Inventory For Submission" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Determine whether all submission slots have been filled:</span><span class="lang-zh">判断是否所有上缴槽均已填满：</span></p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/4_AreAllSlotsFilled.png" alt="Are All Slots Filled" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Read the data of all submitted items:</span><span class="lang-zh">读取所有上缴物品的数据信息：</span></p>
+          <div class="module-card-figrow" style="margin-bottom:16px;">
+            <div class="module-card-fig"><img src="images/4_GetSubmittedItems.png" alt="Get Submitted Items" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
+          <p style="color:var(--white-dim);font-size:12.5px;margin-bottom:8px;"><span class="lang-en">Clear the submission slots:</span><span class="lang-zh">清空上缴槽：</span></p>
+          <div class="module-card-figrow">
+            <div class="module-card-fig"><img src="images/4_ClearSubmissionSlots.png" alt="Clear Submission Slots" class="lightbox-trigger" onclick="openLightbox(this.src)"></div>
+          </div>
+
         </div>
       </div>
     </div>
