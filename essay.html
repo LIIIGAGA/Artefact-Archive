@@ -618,6 +618,37 @@
   }
   .gate-explainer.open { display: block; }
 
+  @media (min-width: 901px) {
+    .gate-explainer {
+      position: fixed;
+      top: 56px; right: 0; bottom: 0;
+      width: 280px;
+      margin: 0;
+      padding: 40px 24px;
+      border-left: 1px solid var(--border);
+      border-right: none;
+      background: var(--bg);
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--white-dim);
+      line-height: 1.8;
+      overflow-y: auto;
+      z-index: 480;
+    }
+    .gate-explainer::before {
+      content: '// ERGODIC TEXT';
+      display: block;
+      color: var(--red);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    body.zh .gate-explainer::before {
+      content: '// 遍历性文本';
+    }
+  }
+
   /* TYPE-TO-REVEAL */
   .type-prompt {
     font-family: var(--mono);
@@ -813,16 +844,16 @@
   <!-- ERGODIC GATE -->
   <div class="gate-box">
     <div class="gate-prompt">
-      <p>这是一篇遍历性网络文本，需要您付出非平凡的努力来获取文本。</p>
-      <p>您愿意接受这个挑战吗？</p>
-      <p class="gate-note">【一个小提醒：完整流程的平均遍历时间为：20分钟。您可以随时开始，随时结束，但当您重新刷新页面，所有的进程都将被重置。】</p>
+      <p><span class="lang-en">This is an ergodic web text — accessing it will require a non-trivial effort on your part.</span><span class="lang-zh">这是一篇遍历性网络文本，需要您付出非平凡的努力来获取文本。</span></p>
+      <p><span class="lang-en">Are you willing to take on this challenge?</span><span class="lang-zh">您愿意接受这个挑战吗？</span></p>
+      <p class="gate-note"><span class="lang-en">[A small reminder: the average traversal time for the full process is 20 minutes. You may begin and stop at any time — but refreshing the page will reset all progress.]</span><span class="lang-zh">【一个小提醒：完整流程的平均遍历时间为：20分钟。您可以随时开始，随时结束，但当您重新刷新页面，所有的进程都将被重置。】</span></p>
     </div>
     <div class="gate-choices">
-      <button type="button" class="gate-choice gate-choice-left" id="gate-accept">我愿意，开始吧。</button>
-      <button type="button" class="gate-choice gate-choice-right" id="gate-question">什么是遍历性文本？</button>
+      <button type="button" class="gate-choice gate-choice-left" id="gate-accept"><span class="lang-en">I'm willing. Let's begin.</span><span class="lang-zh">我愿意，开始吧。</span></button>
+      <button type="button" class="gate-choice gate-choice-right" id="gate-question"><span class="lang-en">What is ergodic text?</span><span class="lang-zh">什么是遍历性文本？</span></button>
     </div>
     <div class="gate-explainer" id="gate-explainer">
-      [占位符 — 遍历性文本的补充说明，待补充]
+      <span class="lang-en">[Placeholder — supplementary explanation of ergodic text, to be added]</span><span class="lang-zh">[占位符 — 遍历性文本的补充说明，待补充]</span>
     </div>
   </div>
 
