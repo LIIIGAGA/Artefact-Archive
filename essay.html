@@ -135,6 +135,14 @@
     color: var(--white-dim);
     letter-spacing: 0.04em;
   }
+  .toc-hint {
+    margin-top: 28px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red-dim);
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+  }
   .toc-master-input:focus { border-color: var(--red-dim); }
   .toc-master-input.shake { animation: shake-x 0.4s; border-color: var(--red); }
   @keyframes shake-x {
@@ -568,7 +576,8 @@
 
   /* ERGODIC GATE */
   body.gate-locked .toc-label,
-  body.gate-locked .toc-item { display: none; }
+  body.gate-locked .toc-item,
+  body.gate-locked .toc-hint { display: none; }
   .locked { display: none; }
 
   .gate-box {
@@ -668,6 +677,19 @@
     cursor: zoom-in;
   }
   .annotation-fig img { width: 100%; display: block; }
+  .annotation-list { margin: 0 0 14px; padding-left: 18px; }
+  .annotation-list li { margin-bottom: 10px; color: var(--white-dim); line-height: 1.8; }
+  .annotation-list li strong { color: var(--white); }
+  .annotation-link {
+    display: inline-block;
+    margin-top: 14px;
+    color: var(--red);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--red-dim);
+  }
+  .annotation-link:hover { border-color: var(--red); }
 
   @media (min-width: 901px) {
     .annotation-panel {
@@ -690,11 +712,12 @@
 
   /* TERM LINK — clickable in-text annotation trigger */
   .term-link {
+    color: var(--red);
     cursor: pointer;
     border-bottom: 1px dotted var(--red-dim);
     transition: border-color 0.2s, color 0.2s;
   }
-  .term-link:hover { border-bottom-color: var(--red); color: var(--white); }
+  .term-link:hover { border-bottom-color: var(--red); border-bottom-style: solid; color: var(--white); }
   .term-link.active { border-bottom-style: solid; border-color: var(--red); }
 
   /* QUIZ BLOCK — end-of-chapter question gate */
@@ -903,6 +926,11 @@
   <a href="#ch4" class="toc-item"><span class="lang-en">Ch.4 Design Practice</span><span class="lang-zh">第四章 设计实践</span></a>
   <a href="#ch5" class="toc-item"><span class="lang-en">Ch.5 Conclusion</span><span class="lang-zh">第五章 结论</span></a>
   <a href="#bibliography" class="toc-item"><span class="lang-en">Bibliography</span><span class="lang-zh">参考文献</span></a>
+
+  <div class="toc-hint">
+    <span class="lang-en">// Tip: red text is clickable — click for more information.</span>
+    <span class="lang-zh">// 提示：红色文字可点击，查看补充信息。</span>
+  </div>
 
   <input type="text" class="toc-master-input" id="toc-master-input" autocomplete="off" spellcheck="false">
 </aside>
@@ -1720,8 +1748,26 @@
     'ergodic-text': {
       label: { en: '// Ergodic Text', zh: '// 遍历性文本' },
       body: {
-        en: '[Placeholder — supplementary explanation of ergodic text, to be added]',
-        zh: '[占位符 — 遍历性文本的补充说明，待补充]'
+        en: `<p>"Ergodic text" is a core concept proposed by Espen Aarseth in <em>Cybertext: Perspectives on Ergodic Literature</em> (1997).</p>
+             <p><strong>Etymology:</strong> "ergodic" derives from the Greek <em>ergon</em> (work) + <em>hodos</em> (path) — originally a term from physics and probability theory, which Aarseth borrowed to describe a type of text.</p>
+             <p><strong>Core definition:</strong> ergodic texts require the reader to exert "non-trivial effort" to actually traverse the text itself — the reader is not merely reading or interpreting content, but must make choices or perform actions that determine the path and sequence in which the text is presented. This act of traversal becomes part of the text itself.</p>
+             <p><strong>Comparison:</strong></p>
+             <ul class="annotation-list">
+               <li><strong>Non-ergodic text</strong> (traditional linear narrative, e.g. most novels): the reader simply turns the pages in a fixed order; regardless of where one starts reading, the content and sequence of the text does not change as a result of the reader's actions.</li>
+               <li><strong>Ergodic text:</strong> the actual path through the text depends on the reader's real operations — e.g. which link is clicked in a hypertext novel, what command is typed in a text adventure game, or which page to turn to based on a dice roll in a board game rulebook.</li>
+             </ul>
+             <p><strong>Typical example:</strong> the hypertext novel <em>Afternoon, a story</em>.</p>
+             <a class="annotation-link" href="https://directory.eliterature.org/individual-work/309" target="_blank" rel="noopener">→ directory.eliterature.org</a>`,
+        zh: `<p>"遍历性文本"（ergodic text）是 Espen Aarseth 在《<em>Cybertext: Perspectives on Ergodic Literature</em>》(1997) 中提出的核心概念。</p>
+             <p><strong>词源：</strong>"ergodic" 来自希腊语 ergon（工作）+ hodos（路径），原本是物理学/概率论术语，Aarseth 借用来描述一种文本类型。</p>
+             <p><strong>核心定义：</strong>遍历性文本要求读者付出"非平凡的努力"才能实际穿行（traverse）文本本身——读者不只是阅读/解读内容，还必须做出选择或执行操作来决定文本实际呈现的路径和顺序。这种"穿行行为"本身成为文本的一部分。</p>
+             <p><strong>对比：</strong></p>
+             <ul class="annotation-list">
+               <li><strong>非遍历性文本</strong>（传统线性叙事，如大多数小说）：读者只是按既定顺序"翻页"，无论选择从哪里开始读，文本本身的内容和顺序都不会因读者的操作而改变。</li>
+               <li><strong>遍历性文本：</strong>文本的具体呈现路径依赖于读者的实际操作——比如超文本小说中点击哪个链接、文字冒险游戏中输入什么指令、桌游规则书中根据骰子结果翻到哪一页。</li>
+             </ul>
+             <p><strong>典型例子：</strong>超文本小说《Afternoon, a story》。</p>
+             <a class="annotation-link" href="https://directory.eliterature.org/individual-work/309" target="_blank" rel="noopener">→ directory.eliterature.org</a>`
       }
     },
     '80days': {
@@ -1729,8 +1775,12 @@
       body: {
         en: `<div class="annotation-genre">Text adventure game</div>
              <p>By transforming a <strong>tree-structured narrative</strong> into a <strong>graph-structured narrative</strong>, the number of possible storylines can increase exponentially, even when the number of story modules remains the same.</p>
-             <div class="annotation-fig"><img src="images/80Days_GraphStructure.png" alt="80 Days — graph-structured narrative" class="lightbox-trigger" onclick="document.getElementById('lightbox-overlay').classList.add('active');document.getElementById('lightbox-img').src=this.src;"></div>`,
-        zh: '[占位符 — 关于《80天》的补充说明，待补充]'
+             <div class="annotation-fig"><img src="images/80Days_GraphStructure.png" alt="80 Days — graph-structured narrative" class="lightbox-trigger" onclick="document.getElementById('lightbox-overlay').classList.add('active');document.getElementById('lightbox-img').src=this.src;"></div>
+             <a class="annotation-link" href="https://store.steampowered.com/app/381780/80_Days/" target="_blank" rel="noopener">→ Steam</a>`,
+        zh: `<div class="annotation-genre">文字冒险游戏</div>
+             <p>通过将<strong>树状结构叙事</strong>转化为<strong>图状结构叙事</strong>，即使故事模块的数量保持不变，可能的故事线数量也能实现指数级增长。</p>
+             <div class="annotation-fig"><img src="images/80Days_GraphStructure.png" alt="80天 — 图状结构叙事" class="lightbox-trigger" onclick="document.getElementById('lightbox-overlay').classList.add('active');document.getElementById('lightbox-img').src=this.src;"></div>
+             <a class="annotation-link" href="https://store.steampowered.com/app/381780/80_Days/" target="_blank" rel="noopener">→ Steam</a>`
       }
     }
   };
