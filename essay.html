@@ -768,6 +768,28 @@
     .quiz-options { grid-template-columns: 1fr; }
   }
 
+  /* CHAPTER 4 TABS — section selector revealed after the gate question */
+  .ch4-tabs { margin: 32px 0; }
+  .tab-buttons { display: flex; flex-wrap: wrap; gap: 12px; }
+  .tab-btn {
+    flex: 1;
+    min-width: 160px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--white-dim);
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 14px 16px;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+  }
+  .tab-btn:hover { border-color: var(--blue-dim); color: var(--white); }
+  .tab-btn.active { border-color: var(--blue); color: var(--blue); background: var(--bg3); }
+  @media (max-width: 600px) {
+    .tab-buttons { flex-direction: column; }
+  }
+
   /* OSAIDER PROJECT JUMP LINK — floats into right margin on wide screens */
   .osaider-jump-wrap { position: relative; margin: 32px 0; }
   .osaider-jump-link {
@@ -1463,6 +1485,11 @@
         <p><span class="lang-en">Although the spatial configuration is recombined with each traversal — achieving a very high degree of freedom — the game mechanics do not serve the narrative in any productive way.</span><span class="lang-zh">尽管空间配置随每次遍历重新组合——实现了极高的自由度——游戏机制并未以任何有效方式服务于叙事。</span></p>
       </div>
     </div>
+
+    <div class="figure locked" id="ch3-figure2">
+      <img src="essayimages/figures 3.2–3.4.png" alt="Figure 3 — Correspondence analysis of ergodic texts across Aarseth's seven variables" style="width:100%;display:block;" class="lightbox-trigger" onclick="document.getElementById('lightbox-overlay').classList.add('active');document.getElementById('lightbox-img').src=this.src;">
+      <div class="figure-caption">Mapping the distribution of electronic and paper texts. Source: Aarseth, Cybertext (1997), figures 3.2–3.4.</div>
+    </div>
   </div>
 
   <hr class="divider locked" id="div-ch4">
@@ -1472,19 +1499,30 @@
     <div class="chapter-label"><span class="lang-en">// Chapter 4</span><span class="lang-zh">// 第四章</span></div>
     <h2 class="chapter-title"><span class="lang-en">Design Practice</span><span class="lang-zh">设计实践</span></h2>
 
-    <p><span class="lang-en">This chapter will present an original game design as a practical exploration of the Spatial Storylet system, with the central aim of demonstrating how the design methodology proposed in Chapter 2 can be put into practice, and how the analytical framework developed in the preceding chapters can be applied to reflect on the design decisions made.</span><span class="lang-zh">本章将呈现一个原创游戏设计，作为空间叙事单元系统的实践探索，核心目的在于展示第二章所提出的设计方法论如何付诸实践，以及前述章节所建立的分析框架如何被用于反思所做的设计决策。</span></p>
-
-    <p><span class="lang-en">The chapter will first introduce the core logic of the design concept: how the modular structure corresponds to the three-layer model of the Spatial Storylet, and how the rules governing spatial reconfiguration seek to realise a narrative spatial grammar. It will then present a comparative analysis of the interactive experience between the text-only narrative prototype and the full spatial prototype. Finally, the chapter will apply the analytical framework established in Chapter 2, with particular focus on the eighth variable proposed in this dissertation, spatial morphology, to position the current design within the three-level taxonomy, evaluating the degree to which the decorative, contextual, and constitutive levels have been realised, and honestly identifying the limitations and unresolved questions that remain at this stage of development.<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">17</a></sup></span><span class="lang-zh">本章将首先介绍设计概念的核心逻辑：模块化结构如何对应空间叙事单元的三层模型，以及支配空间重配的规则如何寻求实现叙事空间语法。然后对纯文本叙事原型与完整空间原型之间的互动体验进行比较分析。最后，本章将运用第二章建立的分析框架，特别聚焦于本论文提出的第八变量——空间形态，在三层分类法中定位当前设计，评估装饰性、语境性与构成性层级的实现程度，并诚实地识别当前开发阶段仍存在的局限性与未解决问题。<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">17</a></sup></span></p>
-
-
-    <div class="osaider-jump-wrap">
-      <a href="project-006.html" class="osaider-jump-link">
-        <span>↗</span>
-        <span class="lang-en">View Full Project — OSAIDER | 奥赛德</span><span class="lang-zh">查看完整项目 — OSAIDER | 奥赛德</span>
-      </a>
+    <div class="quiz-block show" id="ch4-gate">
+      <p class="quiz-stem"><span class="lang-en">Before starting this chapter, I'd like to make sure you already have some understanding of my graduation project.</span><span class="lang-zh">在开始本章之前，我需要先确保您对我的毕设作品已有一定了解。</span></p>
+      <div class="gate-choices">
+        <button type="button" class="gate-choice gate-choice-left" id="ch4-gate-yes"><span class="lang-en">Yes, I already understand it.</span><span class="lang-zh">是的，我已经了解。</span></button>
+        <button type="button" class="gate-choice gate-choice-right" id="ch4-gate-no"><span class="lang-en">No, I don't understand it yet.</span><span class="lang-zh">不，我还不了解。</span></button>
+      </div>
+      <div class="osaider-jump-wrap" id="ch4-jump-wrap" style="display:none;">
+        <a href="project-006.html" class="osaider-jump-link">
+          <span>↗</span>
+          <span class="lang-en">View Full Project — OSAIDER | 奥赛德</span><span class="lang-zh">查看完整项目 — OSAIDER | 奥赛德</span>
+        </a>
+      </div>
     </div>
 
-    <div class="chapter-section">
+    <div class="ch4-tabs locked" id="ch4-tabs">
+      <div class="tab-buttons">
+        <button type="button" class="tab-btn" data-tab="ch4-tab-1"><span class="lang-en">4.1 The Conceptual Origin</span><span class="lang-zh">4.1 概念起源</span></button>
+        <button type="button" class="tab-btn" data-tab="ch4-tab-2"><span class="lang-en">4.2 The Three-Layer Model in Practice</span><span class="lang-zh">4.2 三层模型的设计实现</span></button>
+        <button type="button" class="tab-btn" data-tab="ch4-tab-3"><span class="lang-en">4.3 Comparative Analysis</span><span class="lang-zh">4.3 对比分析</span></button>
+        <button type="button" class="tab-btn" data-tab="ch4-tab-4"><span class="lang-en">4.4 Evaluation</span><span class="lang-zh">4.4 评估</span></button>
+      </div>
+    </div>
+
+    <div class="chapter-section tab-panel locked" id="ch4-tab-1">
       <h3 class="section-title"><span class="lang-en">4.1 The Conceptual Origin</span><span class="lang-zh">4.1 概念起源</span></h3>
 
       <p><span class="lang-en">The spatial archetype at the centre of this design is the Palace of the Soviets — a monument that was never built. In the 1930s, the Soviet Union planned to construct the Palace of the Soviets in Moscow — a super-structure intended to become the symbol of its age. As envisioned, it would have been the tallest building in the world, crowned with a colossal statue of Lenin. Yet this ambitious project, once begun, was never completed. Times changed, governments shifted, and an open-air swimming pool was built on the original foundations; the Palace of the Soviets, along with the dream of shared glory, receded from the stage of history. Yet its vitality survived in another form — it was continually reproduced as propaganda posters, appeared in films, textbooks, and art exhibitions, and even on product packaging, stamps, and postcards. The narrative tension it carried far exceeded that of any realised building, making it an enduring cultural symbol: a red spectre haunting the collective memory of post-Soviet nations.</span><span class="lang-zh">本设计的空间原型是苏维埃宫——一座从未建成的纪念碑。20世纪30年代，苏联计划在莫斯科建造苏维埃宫——一座足以成为时代象征的超级建筑。按照设想，它将成为世界最高建筑，顶端矗立着巨大的列宁雕像。然而，这项雄心勃勃的工程在开工后却始终没能建成。时代变迁，政府更迭，原本的地基上修建起了一座露天游泳池，苏维埃宫和共荣梦想一同退出了历史舞台。然而它的生命力却以另一种方式留存下来——它不断被制作成宣传画、出现在电影、教科书、艺术展览会，甚至商品包装、邮票明信片上。它所携带的叙事张力远超任何已建成建筑，让它成为了一个恒久的文化符号：一个游荡在后苏联国家集体记忆中的红色幽灵。</span></p>
@@ -1503,6 +1541,7 @@
       <p style="font-size:13px;font-style:italic;margin-top:10px;color:var(--white-dim);"><span class="lang-en">This video is a research presentation produced by the author during the conceptual exploration phase of the project, documenting historical research into the Palace of the Soviets.</span><span class="lang-zh">该视频为笔者在项目概念探索期对苏维埃宫历史事件进行调研时所制作的演示视频。</span></p>
     </div>
 
+    <div class="tab-panel locked" id="ch4-tab-2">
     <div class="chapter-section">
       <h3 class="section-title"><span class="lang-en">4.2 The Three-Layer Model in Practice</span><span class="lang-zh">4.2 三层模型的设计实现</span></h3>
 
@@ -1595,8 +1634,9 @@
 
       <p><span class="lang-en">Irony is the dramatic effect produced when contrast is pushed further. In the narrative design of <em>OSAIDER</em>, irony does not depend on any explicit textual statement — it emerges from the player's repeated traversals, their attempts to piece together the palace's overall form, and their continual failure to do so, trapped in an eternal cycle. The player will gradually discover that their efforts may be futile: the palace will never be completed, because its internal conflicts perpetually recur, its structure endlessly rewritten and reorganised by contradictory ideologies. Even entering the world as a nominally neutral figure, the player will be misled by sophistry and illusion, making choices that are not entirely rational. The intention may have been to face everything honestly and seek the truth — but in this very process, one becomes yet another person who has selectively constructed history. This effect cannot be transmitted through any single text block, nor achieved in a single traversal; it accumulates gradually, through the repeated placing of objects and generating of modules, through the slow discovery of the absurdity underlying the logic of generation itself.</span><span class="lang-zh">而反讽则是对比进一步产生的戏剧效果。在<em>OSAIDER</em>的叙事设计中，反讽并非依赖文字的明确表述，而是产生于玩家一次次的遍历，尝试着拼凑出宫殿的整体形态，却始终失败，被困在一个永恒的循环之中。他会逐渐发现自己的努力或许是徒劳，宫殿永远不会被建成，因为它内在的冲突持续地上演，它的结构不断被矛盾的意识形态所改写和重组。哪怕玩家本身作为一个中立角色进入这个世界，也会被各种各样的诡辩和假象所蒙蔽，做出并不理智的选择。你的初衷或许是诚实地面对一切，尝试找到真相，但却在这一过程中成为了又一个对历史进行选择性建构的人。这一效果不是通过任何单一文字块传达的，也不是通过一次遍历就能达到的，而是在一次次的物品放置与模块生成之间，逐渐发现模块生成逻辑的荒诞之处的过程中，慢慢累积起来的。</span></p>
     </div>
+    </div>
 
-    <div class="chapter-section">
+    <div class="chapter-section tab-panel locked" id="ch4-tab-3">
       <h3 class="section-title"><span class="lang-en">4.3 Comparative Analysis: Text-Only Prototype vs. Full Spatial Prototype</span><span class="lang-zh">4.3 对比分析：纯文字原型与完整空间原型</span></h3>
 
       <p><span class="lang-en">The two prototype versions make the contribution of spatial form directly legible through comparison. In the text-only prototype, the player possesses only textual information; the narrative is traversable, but its spatial grammar is absent. Meaning must be imaginatively reconstructed from language alone. In the full spatial prototype, the player encounters the story through three-dimensional space — through a non-textual, embodied experience of manipulating form, scale, and material to obtain objects and clues. Space introduces what text alone cannot supply: an experiential, traversable dimension upon which the contextual and grammatical layers depend.</span><span class="lang-zh">两个版本的原型，使空间形态的贡献通过对比得以直接显现。在纯文字原型中，玩家只拥有文字信息；叙事可以被遍历，但其空间语法缺席。意义必须单纯从语言中被想象性地重建。在完整空间原型中，玩家通过三维空间遭遇故事——通过操作形态、尺度与材质以获得物品和线索的非文字，具身性体验。空间引入了文字单独无法提供的东西：一个语境层和语法层所依赖的、体验性的、可遍历的维度。</span></p>
@@ -1604,7 +1644,7 @@
       <p><span class="lang-en">This embodied dimension calls to mind Rossi's concept of the <em>architectural type</em> — the idea that certain spatial forms recur across different cultures and histories, gradually accumulating layers of history and collective memory, and in doing so come to transcend their specific era and function. When the word "palace" is invoked, people automatically activate a set of associations around power, ritual, and monumentality. This ineffable human experience is transmitted in secret, in the form of a collective unconscious.</span><span class="lang-zh">这种具身性维度让我想起Rossi的"建筑原型"（architectural type）概念中，某些空间形态在不同文化和历史中反复出现，逐渐沉积了历史和集体记忆，便开始超越具体时代和功能。当提起"宫殿"，人们便会自动激发关于权力、仪式、纪念性的联想。这种无法被言说的人类经验以集体潜意识的形式隐秘地传承。</span></p>
     </div>
 
-    <div class="chapter-section">
+    <div class="chapter-section tab-panel locked" id="ch4-tab-4">
       <h3 class="section-title"><span class="lang-en">4.4 Evaluation: The Eight-Variable Analysis of OSAIDER</span><span class="lang-zh">4.4 评估：以八变量框架分析OSAIDER</span></h3>
 
       <div class="figure" style="margin:24px 0 32px;">
@@ -2230,9 +2270,45 @@
       if (allUnlocked) {
         const fig2 = document.getElementById('ch3-figure2');
         if (fig2) fig2.classList.remove('locked');
+        document.getElementById('div-ch4').classList.remove('locked');
+        document.getElementById('ch4').classList.remove('locked');
       }
     });
   }
+
+  // ══════════════════════════════════════════
+  // CHAPTER 4 — UNDERSTANDING GATE + SECTION TABS
+  // ══════════════════════════════════════════
+  const ch4GateYes = document.getElementById('ch4-gate-yes');
+  const ch4GateNo = document.getElementById('ch4-gate-no');
+
+  if (ch4GateYes) {
+    ch4GateYes.addEventListener('click', () => {
+      ch4GateYes.disabled = true;
+      ch4GateNo.disabled = true;
+      document.getElementById('ch4-tabs').classList.remove('locked');
+      document.getElementById('ch4-tabs').scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+  if (ch4GateNo) {
+    ch4GateNo.addEventListener('click', () => {
+      document.getElementById('ch4-jump-wrap').style.display = 'block';
+    });
+  }
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.tab;
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('locked'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      const panel = document.getElementById(targetId);
+      if (panel) {
+        panel.classList.remove('locked');
+        btn.classList.add('active');
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
 
   // ══════════════════════════════════════════
   // TOC MASTER CODE — direct-unlock shortcuts
@@ -2256,6 +2332,15 @@
       document.querySelectorAll('.case-study[data-game]').forEach(el => el.classList.remove('locked'));
       const fig2 = document.getElementById('ch3-figure2');
       if (fig2) fig2.classList.remove('locked');
+      const div4 = document.getElementById('div-ch4');
+      const ch4 = document.getElementById('ch4');
+      if (div4) div4.classList.remove('locked');
+      if (ch4) ch4.classList.remove('locked');
+    }
+    if (n === 4) {
+      const tabs = document.getElementById('ch4-tabs');
+      if (tabs) tabs.classList.remove('locked');
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('locked'));
     }
   }
 
