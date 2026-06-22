@@ -81,6 +81,35 @@
   .flow-step .step-num { color: var(--red); font-size: 11px; flex-shrink: 0; width: 18px; }
   .flow-arrow { text-align: center; color: var(--red); font-size: 16px; padding: 6px 0; }
 
+  /* Branch / merge connector for parallel flow paths */
+  .flow-branch-connector { position: relative; height: 22px; }
+  .flow-branch-connector::before { content: ''; position: absolute; top: 0; left: 25%; right: 25%; height: 1px; background: var(--border); }
+  .flow-branch-connector .stem { position: absolute; width: 1px; background: var(--border); }
+  .flow-branch-connector.top .stem-l { top: 0; left: 25%; height: 22px; }
+  .flow-branch-connector.top .stem-r { top: 0; left: 75%; height: 22px; }
+  .flow-branch-connector.bottom .stem-l { bottom: 0; left: 25%; height: 22px; }
+  .flow-branch-connector.bottom .stem-r { bottom: 0; left: 75%; height: 22px; }
+  .flow-branch-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .flow-branch-col { display: flex; flex-direction: column; }
+  @media (max-width: 600px) {
+    .flow-branch-row { grid-template-columns: 1fr; gap: 12px; }
+    .flow-branch-connector.top .stem-r, .flow-branch-connector.bottom .stem-r { display: none; }
+    .flow-branch-connector::before { left: 50%; right: 50%; }
+    .flow-branch-connector.top .stem-l, .flow-branch-connector.bottom .stem-l { left: 50%; }
+  }
+  .flow-loop {
+    margin-top: 4px;
+    border: 1px dashed var(--red-dim);
+    background: var(--bg3);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--white-dim);
+  }
+  .flow-loop .loop-icon { color: var(--red); font-size: 16px; flex-shrink: 0; }
+
   /* Framework tree */
   .tree-block { border-left: 2px solid var(--border); padding-left: 20px; margin: 16px 0 16px 8px; }
   .tree-item { margin-bottom: 22px; }
@@ -255,17 +284,38 @@
   <h2 class="section-title"><span class="lang-en">Process Flow</span><span class="lang-zh">流程</span></h2>
 
   <div class="flow-box">
-    <div class="flow-step"><span class="step-num">01</span><span><span class="lang-en">Receive 3 items submitted by the player</span><span class="lang-zh">接收玩家提交的3个物品</span></span></div>
+    <div class="flow-step"><span class="step-num">01</span><span><span class="lang-en">Player selects a module</span><span class="lang-zh">玩家选择一个模块</span></span></div>
+
+    <div class="flow-branch-connector top"><div class="stem stem-l"></div><div class="stem stem-r"></div></div>
+
+    <div class="flow-branch-row">
+      <div class="flow-branch-col">
+        <div class="flow-step"><span class="step-num">02</span><span><span class="lang-en">Player interacts with the UI</span><span class="lang-zh">玩家与UI交互</span></span></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><span class="step-num">03</span><span><span class="lang-en">Makes a decision that advances the narrative</span><span class="lang-zh">做出决策推进叙事</span></span></div>
+      </div>
+      <div class="flow-branch-col">
+        <div class="flow-step"><span class="step-num">02</span><span><span class="lang-en">Player interacts with the module</span><span class="lang-zh">玩家与模块交互</span></span></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><span class="step-num">03</span><span><span class="lang-en">Obtains an item</span><span class="lang-zh">获得物品</span></span></div>
+      </div>
+    </div>
+
+    <div class="flow-branch-connector bottom"><div class="stem stem-l"></div><div class="stem stem-r"></div></div>
     <div class="flow-arrow">↓</div>
-    <div class="flow-step"><span class="step-num">02</span><span><span class="lang-en">Calculate cumulative IDEO value (Ideology Value)</span><span class="lang-zh">计算 IDEO 累计值（Ideology Value）</span></span></div>
+
+    <div class="flow-step"><span class="step-num">04</span><span><span class="lang-en">Submits the item</span><span class="lang-zh">上缴物品</span></span></div>
     <div class="flow-arrow">↓</div>
-    <div class="flow-step"><span class="step-num">03</span><span><span class="lang-en">Trigger Dice Check</span><span class="lang-zh">触发骰子检定</span></span></div>
+    <div class="flow-step"><span class="step-num">05</span><span><span class="lang-en">Dice Check</span><span class="lang-zh">骰子检定</span></span></div>
     <div class="flow-arrow">↓</div>
-    <div class="flow-step"><span class="step-num">04</span><span><span class="lang-en">Determine Archivist / Whalemen outcome and search for matching modules</span><span class="lang-zh">根据 Archivist / Whalemen 判断结果寻找符合条件的模块</span></span></div>
+    <div class="flow-step"><span class="step-num">06</span><span><span class="lang-en">Randomly generates a new module</span><span class="lang-zh">随机生成新模块</span></span></div>
     <div class="flow-arrow">↓</div>
-    <div class="flow-step"><span class="step-num">05</span><span><span class="lang-en">Randomly activate one matching hidden module</span><span class="lang-zh">随机激活一个符合条件的隐藏模块</span></span></div>
-    <div class="flow-arrow">↓</div>
-    <div class="flow-step"><span class="step-num">06</span><span><span class="lang-en">Clear the submission slot and reset the current round state</span><span class="lang-zh">清空提交槽，重置当前轮状态</span></span></div>
+    <div class="flow-step"><span class="step-num">07</span><span><span class="lang-en">Resets the submission slot</span><span class="lang-zh">重置上缴槽</span></span></div>
+
+    <div class="flow-loop">
+      <span class="loop-icon">↻</span>
+      <span><span class="lang-en">Loops back to Step 01 — Player selects a module</span><span class="lang-zh">循环回到步骤 01 —— 玩家选择一个模块</span></span>
+    </div>
   </div>
 
   <hr class="divider">
