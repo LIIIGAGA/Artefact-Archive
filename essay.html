@@ -606,7 +606,7 @@
   .gate-choice-left { color: var(--red); border-color: var(--red-dim); }
   .gate-choice-left:hover { background: rgba(227,0,15,0.08); border-color: var(--red); }
   .gate-choice-right { color: var(--white-dim); }
-  .annotation-panel {
+  .gate-explainer {
     display: none;
     margin-top: 20px;
     padding: 18px 20px;
@@ -616,37 +616,10 @@
     color: var(--white-dim);
     line-height: 1.8;
   }
-  .annotation-panel.open { display: block; }
-  .annotation-panel-label {
-    color: var(--red);
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-  .annotation-genre {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--white-dim);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    border: 1px solid var(--border);
-    display: inline-block;
-    padding: 3px 8px;
-    margin-bottom: 12px;
-  }
-  #annotation-panel-body p { margin: 0 0 14px; color: var(--white-dim); line-height: 1.8; }
-  #annotation-panel-body strong { color: var(--white); font-weight: 600; }
-  .annotation-fig {
-    margin-top: 8px;
-    border: 1px solid var(--border);
-    cursor: zoom-in;
-  }
-  .annotation-fig img { width: 100%; display: block; }
+  .gate-explainer.open { display: block; }
 
   @media (min-width: 901px) {
-    .annotation-panel {
+    .gate-explainer {
       position: fixed;
       top: 56px; right: 0; bottom: 0;
       width: 280px;
@@ -662,16 +635,19 @@
       overflow-y: auto;
       z-index: 480;
     }
+    .gate-explainer::before {
+      content: '// ERGODIC TEXT';
+      display: block;
+      color: var(--red);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    body.zh .gate-explainer::before {
+      content: '// 遍历性文本';
+    }
   }
-
-  /* TERM LINK — clickable in-text annotation trigger */
-  .term-link {
-    cursor: pointer;
-    border-bottom: 1px dotted var(--red-dim);
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .term-link:hover { border-bottom-color: var(--red); color: var(--white); }
-  .term-link.active { border-bottom-style: solid; border-color: var(--red); }
 
   /* TYPE-TO-REVEAL */
   .type-prompt {
@@ -868,13 +844,16 @@
   <!-- ERGODIC GATE -->
   <div class="gate-box">
     <div class="gate-prompt">
-      <p><span class="lang-en">This is an ergodic web text — accessing it will require a non-trivial effort on your part.</span><span class="lang-zh">这是一篇遍历性网络文本，需要您付出非平凡的努力来获取文本。</span></p>
+      <p><span class="lang-en">This is an ergodic Cybertext — accessing it will require a non-trivial effort on your part.</span><span class="lang-zh">这是一篇遍历性网络文本，需要您付出非平凡的努力来获取文本。</span></p>
       <p><span class="lang-en">Are you willing to take on this challenge?</span><span class="lang-zh">您愿意接受这个挑战吗？</span></p>
-      <p class="gate-note"><span class="lang-en">[A small reminder: the average traversal time for the full process is 20 minutes. You may begin and stop at any time — but refreshing the page will reset all progress.]</span><span class="lang-zh">【一个小提醒：完整流程的平均遍历时间为：20分钟。您可以随时开始，随时结束，但当您重新刷新页面，所有的进程都将被重置。】</span></p>
+      <p class="gate-note"><span class="lang-en">[A small reminder: the average traversal time for the full process is 20 minutes. You may begin and stop at any time — but refreshing the page will reset all progress!]</span><span class="lang-zh">【一个小提醒：完整流程的平均遍历时间为：20分钟。您可以随时开始，随时结束，但当您重新刷新页面，所有的进程都将被重置！】</span></p>
     </div>
     <div class="gate-choices">
       <button type="button" class="gate-choice gate-choice-left" id="gate-accept"><span class="lang-en">I'm willing. Let's begin.</span><span class="lang-zh">我愿意，开始吧。</span></button>
-      <button type="button" class="gate-choice gate-choice-right term-link" data-annotation="ergodic-text" id="gate-question"><span class="lang-en">What is ergodic text?</span><span class="lang-zh">什么是遍历性文本？</span></button>
+      <button type="button" class="gate-choice gate-choice-right" id="gate-question"><span class="lang-en">What is ergodic text?</span><span class="lang-zh">什么是遍历性文本？</span></button>
+    </div>
+    <div class="gate-explainer" id="gate-explainer">
+      <span class="lang-en">[Placeholder — supplementary explanation of ergodic text, to be added]</span><span class="lang-zh">[占位符 — 遍历性文本的补充说明，待补充]</span>
     </div>
   </div>
 
@@ -897,8 +876,8 @@
     </p>
 
     <p>
-      <span class="lang-en">In many ergodic text adventure games, space tends to exist only as a metaphorical element. In <em class="term-link" data-annotation="80days">80 Days</em>, the narrative is structured as a complex, interwoven graph: whichever branch the player chooses, the resulting path is entirely different and unpredictable, so each traversal constitutes a unique experience. In my view, this graph structure implies latent <strong>spatiality</strong>. When describing the player's journey, it is not enough to simply splice the narrative of each node together in temporal order. Instead, we should map the spatial topology formed by the connections between nodes. Here's the difference: the former is a temporal mode of reading, in which the player's experience is shaped by the sequence in which nodes are encountered; the latter is a spatial mode, in which the relative distances between nodes and the shape of the path they form together quietly alter the player's understanding of the story. However, this topology is too abstract, remaining at the level of a two-dimensional diagram, so the narrative information and aesthetic experience it can provide are quite limited. Meanwhile, the textual content is obviously more direct, naturally attracting more of the player's attention.</span>
-      <span class="lang-zh">在许多遍历性文字冒险游戏中，空间往往仅作为隐喻性元素存在。在<span class="term-link" data-annotation="80days">《80天》</span>中，叙事被构建为一个复杂交织的图结构：无论玩家选择哪条支线，所走路径都是迥异且不可预测的，因此每一次遍历都构成独特的体验。在我看来，这种图结构蕴含着潜在的<strong>空间性</strong>。描述玩家的旅程时，不能仅仅将各节点的叙事按时间顺序拼接在一起；我们应当绘制节点间连接所形成的空间拓扑图。区别在于：前者是一种时间性阅读模式，玩家的体验由节点的遭遇顺序所塑造；后者是一种空间性模式，节点间的相对距离与路径所形成的形状，悄然改变着玩家对故事的理解。然而，这种拓扑关系过于抽象，停留在二维图表的层面，因此所能提供的叙事信息与美学体验相当有限。而文本内容显然更为直接，自然地吸引了玩家更多的注意力。</span>
+      <span class="lang-en">In many ergodic text adventure games, space tends to exist only as a metaphorical element. In <em>80 Days</em>, the narrative is structured as a complex, interwoven graph: whichever branch the player chooses, the resulting path is entirely different and unpredictable, so each traversal constitutes a unique experience. In my view, this graph structure implies latent <strong>spatiality</strong>. When describing the player's journey, it is not enough to simply splice the narrative of each node together in temporal order. Instead, we should map the spatial topology formed by the connections between nodes. Here's the difference: the former is a temporal mode of reading, in which the player's experience is shaped by the sequence in which nodes are encountered; the latter is a spatial mode, in which the relative distances between nodes and the shape of the path they form together quietly alter the player's understanding of the story. However, this topology is too abstract, remaining at the level of a two-dimensional diagram, so the narrative information and aesthetic experience it can provide are quite limited. Meanwhile, the textual content is obviously more direct, naturally attracting more of the player's attention.</span>
+      <span class="lang-zh">在许多遍历性文字冒险游戏中，空间往往仅作为隐喻性元素存在。在《80天》中，叙事被构建为一个复杂交织的图结构：无论玩家选择哪条支线，所走路径都是迥异且不可预测的，因此每一次遍历都构成独特的体验。在我看来，这种图结构蕴含着潜在的<strong>空间性</strong>。描述玩家的旅程时，不能仅仅将各节点的叙事按时间顺序拼接在一起；我们应当绘制节点间连接所形成的空间拓扑图。区别在于：前者是一种时间性阅读模式，玩家的体验由节点的遭遇顺序所塑造；后者是一种空间性模式，节点间的相对距离与路径所形成的形状，悄然改变着玩家对故事的理解。然而，这种拓扑关系过于抽象，停留在二维图表的层面，因此所能提供的叙事信息与美学体验相当有限。而文本内容显然更为直接，自然地吸引了玩家更多的注意力。</span>
     </p>
 
     <div class="pull-quote">
@@ -932,7 +911,7 @@
     <h2 class="chapter-title"><span class="lang-en">Theoretical Framework</span><span class="lang-zh">理论框架</span></h2>
 
     <div id="ch2-1">
-      <h3 class="section-title">3.1 <span class="lang-en">Linearity in Narrative Games</span><span class="lang-zh">叙事游戏中的线性问题</span></h3>
+      <h3 class="section-title">2.1 <span class="lang-en">Linearity in Narrative Games</span><span class="lang-zh">叙事游戏中的线性问题</span></h3>
 
      <div class="pull-quote">
        <div class="lang-en">
@@ -970,9 +949,9 @@
     </div>
 
     <div id="ch2-2">
-      <h3 class="section-title">3.2 <span class="lang-en">Aarseth's Ergodic Theory and the Seven-Variable Framework</span><span class="lang-zh">Aarseth的遍历性理论与七变量框架</span></h3>
+      <h3 class="section-title">2.2 <span class="lang-en">Aarseth's Ergodic Theory and the Seven-Variable Framework</span><span class="lang-zh">Aarseth的遍历性理论与七变量框架</span></h3>
 
-      <h4 class="sub-title">3.2.1 <span class="lang-en">Text &amp; Cybertext</span><span class="lang-zh">文本与赛博文本</span></h4>
+      <h4 class="sub-title">2.2.1 <span class="lang-en">Text &amp; Cybertext</span><span class="lang-zh">文本与赛博文本</span></h4>
 
       <p><span class="lang-en">In <em>Cybertext</em>, Aarseth poses the question: in what sense are hypertext, adventure games, and similar forms that generate linguistic structures for aesthetic effect to be considered text at all? Compared to the ambiguity and variability that arise in traditional texts from the openness of interpretation, the sense of uncertainty in ergodic texts originates in the mechanism itself. The former concerns itself with what was being read; the latter, with what was being read from.<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">5</a></sup></span><span class="lang-zh">在《赛博文本》中，Aarseth提出一个问题：超文本、冒险游戏及类似的产生语言结构以达成美学效果的形式，在何种意义上可被视为文本？与传统文本中因解释开放性而产生的模糊性和可变性相比，遍历性文本中的不确定感源于机制本身。前者关注的是被阅读的内容，后者关注的是从何处阅读。<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">5</a></sup></span></p>
 
@@ -980,7 +959,7 @@
 
       <p><span class="lang-en">If narrative is likened to a labyrinth, then traditional literary genres constitute a single-path labyrinth in which the reader "has no choice but to reach the center", any sensation of being lost along the way is a misreading of the metaphor and does not alter the unfolding of the path. Ergodic texts, by contrast, constitute a multi-path labyrinth: the wanderer within it faces genuine choices, each leading toward a different destination.<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">8</a></sup></span><span class="lang-zh">如果将叙事比作迷宫，那么传统文学体裁构成单路径迷宫，读者"别无选择，只能到达中心"，途中迷失的感觉是对隐喻的误读，不会改变路径的展开。相比之下，遍历性文本构成多路径迷宫：其中的漫游者面临真实的选择，每一个选择都通向不同的目的地。<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">8</a></sup></span></p>
 
-      <h4 class="sub-title">3.2.2 <span class="lang-en">Aarseth's Ergodic Theory and the Seven-Variable Framework</span><span class="lang-zh">七变量框架</span></h4>
+      <h4 class="sub-title">2.2.2 <span class="lang-en">Aarseth's Ergodic Theory and the Seven-Variable Framework</span><span class="lang-zh">七变量框架</span></h4>
 
       <p><span class="lang-en">Central to Aarseth's framework is the distinction between textons and scriptons, mediated by the traversal function. Textons are strings as they exist within the text system; scriptons are the strings actually presented to the reader. The traversal function governs the mechanism by which textons are selected, ordered, and revealed as scriptons. To systematise the analysis of ergodic texts, Aarseth proposes seven variables that describe ergodic texts across three dimensions:</span><span class="lang-zh">Aarseth框架的核心是文本元（textons）与呈现元（scriptons）之间的区分，由遍历函数（traversal function）居中调节。文本元是文本系统内存在的字符串；呈现元是实际呈现给读者的字符串。遍历函数支配文本元被选择、排序并显现为呈现元的机制。为系统化地分析遍历性文本，Aarseth提出七个变量，从三个维度描述遍历性文本：</span></p>
 
@@ -1107,7 +1086,7 @@
     </div>
 
     <div id="ch2-3">
-      <h3 class="section-title">3.3 <span class="lang-en">The Eighth Variable: Spatial Morphology</span><span class="lang-zh">第八变量：空间形态</span></h3>
+      <h3 class="section-title">2.3 <span class="lang-en">The Eighth Variable: Spatial Morphology</span><span class="lang-zh">第八变量：空间形态</span></h3>
 
       <p><span class="lang-en">In previous sections, this dissertation identified the absence of spatial analysis within Aarseth's seven-variable framework. It therefore proposes an eighth variable — <strong>spatial morphology</strong> — to extend Aarseth's classificatory system from the abstract two-dimensional domain into three-dimensional space.</span><span class="lang-zh">在前述章节中，本论文识别了Aarseth七变量框架中空间分析的缺失。因此提出第八个变量——<strong>空间形态</strong>——将Aarseth的分类体系从抽象的二维领域延伸至三维空间。</span></p>
 
@@ -1133,7 +1112,7 @@
     </div>
 
     <div id="ch2-4">
-      <h3 class="section-title">3.4 <span class="lang-en">Storylet Theory</span><span class="lang-zh">叙事单元理论</span></h3>
+      <h3 class="section-title">2.4 <span class="lang-en">Storylet Theory</span><span class="lang-zh">叙事单元理论</span></h3>
 
       <p><span class="lang-en">The term <em>storylet</em> originated in the game <em>Fallen London</em>, developed by Failbetter Games. Emily Short has discussed the storylet system extensively on her blog, defining it as "a way of organizing narrative content with more flexibility than the typical branching narrative."<sup><a href="#bib-short" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">12</a></sup> Its core logic is the construction of a database of discrete, recombinable narrative units. Each storylet consists of three elements: narrative content; a set of preconditions; and a set of effects. Unlike branching narrative, the storylet system has no predetermined narrative sequence. Kreminski and Wardrip-Fruin further systematised this design space, classifying storylet systems along four dimensions: precondition type, repeatability, internal structure, and content selection architecture.<sup><a href="#bib-kreminski" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">13</a></sup></span><span class="lang-zh"><em>叙事单元</em>（storylet）一词起源于Failbetter Games开发的游戏《堕落伦敦》。Emily Short在其博客中广泛讨论了叙事单元系统，将其定义为"一种比典型分支叙事更具灵活性的叙事内容组织方式"。<sup><a href="#bib-short" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">12</a></sup>其核心逻辑是构建一个由离散的、可重新组合的叙事单位组成的数据库。每个叙事单元由三个要素构成：叙事内容、一组前提条件和一组效果。与分支叙事不同，叙事单元系统没有预定的叙事序列。Kreminski和Wardrip-Fruin进一步将这一设计空间系统化，沿四个维度对叙事单元系统进行分类：前提条件类型、可重复性、内部结构和内容选择架构。<sup><a href="#bib-kreminski" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">13</a></sup></span></p>
 
@@ -1143,7 +1122,7 @@
     </div>
 
     <div id="ch2-5">
-      <h3 class="section-title">3.5 <span class="lang-en">Spatial Storylet: Definition and Three-Layer Model</span><span class="lang-zh">空间叙事单元：定义与三层模型</span></h3>
+      <h3 class="section-title">2.5 <span class="lang-en">Spatial Storylet: Definition and Three-Layer Model</span><span class="lang-zh">空间叙事单元：定义与三层模型</span></h3>
 
       <p><span class="lang-en">Building upon these two theoretical frameworks, this dissertation proposes the <strong>Spatial Storylet</strong> model, which introduces a fourth element — the <strong>spatial module</strong> — alongside the three basic components of the storylet: narrative content, preconditions, and effects. Spatial design is matched to narrative content and exists as a necessary context for interpreting it. The same passage of text, when embedded within spatial modules of different forms, produces different narrative meanings.</span><span class="lang-zh">在这两个理论框架的基础上，本论文提出<strong>空间叙事单元</strong>模型，在叙事单元的三个基本要素——叙事内容、前提条件和效果——之外引入第四个要素：<strong>空间模块</strong>。空间设计与叙事内容匹配，作为解释叙事内容的必要语境而存在。同一段文本，嵌入不同形态的空间模块后，产生不同的叙事意义。</span></p>
 
@@ -1529,11 +1508,6 @@
     </div>
   </div>
 
-  <div class="annotation-panel" id="annotation-panel">
-    <div class="annotation-panel-label" id="annotation-panel-label"></div>
-    <div id="annotation-panel-body"></div>
-  </div>
-
 </main>
 
 <footer>
@@ -1542,9 +1516,6 @@
 </footer>
 
 <script>
-  let activeGate = null;
-  const annotationPanel = document.getElementById('annotation-panel');
-
   // LANGUAGE TOGGLE
   function setLang(lang) {
     document.body.classList.remove('en', 'zh');
@@ -1552,8 +1523,6 @@
     document.getElementById('btn-en').classList.toggle('active', lang === 'en');
     document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
     localStorage.setItem('lang', lang);
-    if (activeGate) activeGate.onLangSwitch();
-    refreshAnnotationPanel();
   }
   const savedLang = localStorage.getItem('lang') || 'en';
   setLang(savedLang);
@@ -1586,101 +1555,29 @@
   reveals.forEach(el => revealObserver.observe(el));
 
   // ══════════════════════════════════════════
-  // ANNOTATION PANEL — shared right-margin panel for in-text glosses
-  // ══════════════════════════════════════════
-
-  const ANNOTATIONS = {
-    'ergodic-text': {
-      label: { en: '// Ergodic Text', zh: '// 遍历性文本' },
-      body: {
-        en: '[Placeholder — supplementary explanation of ergodic text, to be added]',
-        zh: '[占位符 — 遍历性文本的补充说明，待补充]'
-      }
-    },
-    '80days': {
-      label: { en: '// 80 Days', zh: '// 《80天》' },
-      body: {
-        en: `<div class="annotation-genre">Text adventure game</div>
-             <p>By transforming a <strong>tree-structured narrative</strong> into a <strong>graph-structured narrative</strong>, the number of possible storylines can increase exponentially, even when the number of story modules remains the same.</p>
-             <div class="annotation-fig"><img src="images/80Days_GraphStructure.png" alt="80 Days — graph-structured narrative" class="lightbox-trigger" onclick="document.getElementById('lightbox-overlay').classList.add('active');document.getElementById('lightbox-img').src=this.src;"></div>`,
-        zh: '[占位符 — 关于《80天》的补充说明，待补充]'
-      }
-    }
-  };
-
-  function currentSiteLang() { return document.body.classList.contains('zh') ? 'zh' : 'en'; }
-
-  function openAnnotation(key) {
-    const data = ANNOTATIONS[key];
-    if (!data) return;
-    const lang = currentSiteLang();
-    document.getElementById('annotation-panel-label').textContent = data.label[lang];
-    document.getElementById('annotation-panel-body').innerHTML = data.body[lang];
-    annotationPanel.classList.add('open');
-    annotationPanel.dataset.current = key;
-    document.querySelectorAll('.term-link.active').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll(`.term-link[data-annotation="${key}"]`).forEach(el => el.classList.add('active'));
-  }
-
-  function closeAnnotation() {
-    annotationPanel.classList.remove('open');
-    delete annotationPanel.dataset.current;
-    document.querySelectorAll('.term-link.active').forEach(el => el.classList.remove('active'));
-  }
-
-  function refreshAnnotationPanel() {
-    if (annotationPanel.classList.contains('open') && annotationPanel.dataset.current) {
-      openAnnotation(annotationPanel.dataset.current);
-    }
-  }
-
-  document.querySelectorAll('.term-link').forEach(el => {
-    el.addEventListener('click', (e) => {
-      e.preventDefault();
-      const key = el.dataset.annotation;
-      if (annotationPanel.classList.contains('open') && annotationPanel.dataset.current === key) {
-        closeAnnotation();
-      } else {
-        openAnnotation(key);
-      }
-    });
-  });
-
-  // ══════════════════════════════════════════
   // ERGODIC GATE
   // ══════════════════════════════════════════
 
+  // "What is ergodic text?" toggle
+  document.getElementById('gate-question').addEventListener('click', () => {
+    document.getElementById('gate-explainer').classList.toggle('open');
+  });
+
   // Wrap every character of a chapter-body's text nodes in its own <span class="tchar">,
   // preserving existing inline tags (strong/em/spans for lang-en/lang-zh) untouched.
-  // Characters are bucketed by which language wrapper (if any) they fall under, so
-  // typing only ever advances the language that's actually visible on screen.
   function splitIntoChars(root) {
-    const enChars = [];
-    const zhChars = [];
-    function langOf(el) {
-      while (el && el !== root) {
-        if (el.classList) {
-          if (el.classList.contains('lang-en')) return 'en';
-          if (el.classList.contains('lang-zh')) return 'zh';
-        }
-        el = el.parentElement;
-      }
-      return null;
-    }
+    const chars = [];
     function walk(node) {
       if (node.nodeType === Node.TEXT_NODE) {
         const text = node.textContent;
         if (!text) return;
-        const lang = langOf(node.parentElement);
-        if (!lang) return; // structural whitespace between spans — leave untouched, always visible
         const frag = document.createDocumentFragment();
         for (const ch of text) {
           const span = document.createElement('span');
           span.className = 'tchar';
           span.textContent = ch;
           frag.appendChild(span);
-          if (lang === 'zh') zhChars.push(span);
-          else enChars.push(span);
+          chars.push(span);
         }
         node.parentNode.replaceChild(frag, node);
       } else if (node.nodeType === Node.ELEMENT_NODE) {
@@ -1688,7 +1585,7 @@
       }
     }
     Array.from(root.childNodes).forEach(walk);
-    return { enChars, zhChars };
+    return chars;
   }
 
   // Sets up a type-to-reveal gate for a single chapter.
@@ -1699,19 +1596,13 @@
     const body = document.getElementById(bodyId);
     if (!prompt || !body) return null;
 
-    const { enChars, zhChars } = splitIntoChars(body);
-    let enRevealed = 0, zhRevealed = 0;
+    const chars = splitIntoChars(body);
+    let revealed = 0;
 
     const cursor = document.createElement('span');
     cursor.className = 'type-cursor';
 
-    function activeLang() { return document.body.classList.contains('zh') ? 'zh' : 'en'; }
-    function activeChars() { return activeLang() === 'zh' ? zhChars : enChars; }
-    function activeRevealed() { return activeLang() === 'zh' ? zhRevealed : enRevealed; }
-
     function placeCursor() {
-      const chars = activeChars();
-      const revealed = activeRevealed();
       if (revealed > 0 && chars[revealed - 1]) {
         chars[revealed - 1].insertAdjacentElement('afterend', cursor);
       } else {
@@ -1720,12 +1611,9 @@
     }
 
     function revealNext() {
-      const chars = activeChars();
-      let revealed = activeRevealed();
       if (revealed >= chars.length) return;
       chars[revealed].classList.add('revealed');
       revealed++;
-      if (activeLang() === 'zh') zhRevealed = revealed; else enRevealed = revealed;
       placeCursor();
     }
 
@@ -1738,34 +1626,35 @@
       placeCursor();
     }
 
-    return {
-      start, revealNext,
-      get done() { return activeRevealed() >= activeChars().length; },
-      onLangSwitch() { if (started) placeCursor(); }
-    };
+    return { start, revealNext, get done() { return revealed >= chars.length; } };
   }
 
   const ch1Gate = setupTypeGate('ch1-type-prompt', 'ch1-body');
 
-  // Listen for keydown globally — no hidden input / focus juggling needed,
-  // which avoids races when focus briefly sits on a button (e.g. the EN/中文 toggle).
-  const IGNORED_KEYS = new Set([
-    'Tab', 'Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 'Escape',
-    'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
-    'Home', 'End', 'PageUp', 'PageDown', 'Insert', 'Delete',
-    'F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','F11','F12'
-  ]);
+  // Hidden always-focused input captures keystrokes (works for IME / mobile keyboards too)
+  const typeCapture = document.createElement('input');
+  typeCapture.type = 'text';
+  typeCapture.autocomplete = 'off';
+  typeCapture.setAttribute('aria-hidden', 'true');
+  typeCapture.style.position = 'fixed';
+  typeCapture.style.top = '-100px';
+  typeCapture.style.left = '0';
+  typeCapture.style.opacity = '0';
+  typeCapture.style.pointerEvents = 'none';
+  document.body.appendChild(typeCapture);
 
-  document.addEventListener('keydown', (e) => {
-    if (!activeGate || activeGate.done) return;
-    if (IGNORED_KEYS.has(e.key)) return;
-    if (e.metaKey || e.ctrlKey || e.altKey) return; // let browser shortcuts through
-    const tag = document.activeElement && document.activeElement.tagName;
-    if (tag === 'INPUT' || tag === 'TEXTAREA') return; // don't hijack real text fields
-    if ((tag === 'BUTTON' || tag === 'A') && (e.key === 'Enter' || e.key === ' ')) return; // let the focused control activate normally
-    e.preventDefault();
-    activeGate.revealNext();
+  let activeGate = null;
+
+  typeCapture.addEventListener('input', () => {
+    const n = typeCapture.value.length;
+    typeCapture.value = '';
+    if (!activeGate) return;
+    for (let i = 0; i < n; i++) activeGate.revealNext();
   });
+
+  function focusCapture() {
+    if (activeGate && !activeGate.done) typeCapture.focus();
+  }
 
   document.getElementById('gate-accept').addEventListener('click', () => {
     document.body.classList.remove('gate-locked');
@@ -1774,8 +1663,10 @@
     activeGate = ch1Gate;
     activeGate.start();
     document.getElementById('ch1').scrollIntoView({ behavior: 'smooth' });
-    if (document.activeElement) document.activeElement.blur();
+    focusCapture();
   });
+
+  document.addEventListener('click', focusCapture);
 </script>
 <div id="lightbox-overlay" onclick="this.classList.remove('active')">
   <button id="lightbox-close" onclick="document.getElementById('lightbox-overlay').classList.remove('active')">// CLOSE ✕</button>
