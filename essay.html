@@ -768,6 +768,52 @@
     .quiz-options { grid-template-columns: 1fr; }
   }
 
+  /* CHAPTER 5 — 2d6 DICE CHECK PER PARAGRAPH */
+  .dice-para {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .dice-check {
+    flex: 0 0 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding-top: 2px;
+  }
+  .dice-btn {
+    display: flex;
+    gap: 4px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .dice-btn:hover:not(:disabled) { border-color: var(--blue-dim); background: var(--bg3); }
+  .dice-btn:disabled { cursor: default; }
+  .die { font-size: 22px; line-height: 1; color: var(--white); }
+  .dice-check.solved .die { color: var(--blue); }
+  .dice-result {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    color: var(--white-dim);
+    text-align: center;
+    min-height: 2.2em;
+  }
+  .dice-result.ok { color: #3A7A3A; }
+  .dice-result.bad { color: var(--red); }
+  .dice-para-body { flex: 1; min-width: 0; }
+  .dice-para-body p { color: var(--white-dim); line-height: 1.9; }
+  .dice-para .lang-en, .dice-para .lang-zh { word-break: break-word; }
+  @media (max-width: 600px) {
+    .dice-para { flex-direction: row; }
+    .dice-check { flex: 0 0 56px; }
+  }
+
   /* CHAPTER 4 TABS — section selector revealed after the gate question */
   .ch4-tabs { margin: 32px 0; }
   .tab-buttons { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -1717,21 +1763,85 @@
     <div class="chapter-label"><span class="lang-en">// Chapter 5</span><span class="lang-zh">// 第五章</span></div>
     <h2 class="chapter-title"><span class="lang-en">Conclusion</span><span class="lang-zh">结论</span></h2>
 
-    <p><span class="lang-en">The first question this dissertation has sought to answer is how the design of a Spatial Storylet system might extend narrative grammar from temporal sequence into three-dimensional space. I have developed this across two levels, in Chapters 2 and 4: at the theoretical level, the eighth variable I propose — spatial morphology — extends Aarseth's seven-variable analytical framework into the spatial dimension; the three-layer model of lexical, contextual, and grammatical layers, in turn, provides an operable methodology for putting this extension into practice.</span><span class="lang-zh">我通过这篇论文试图回答的第一个问题是：空间叙事单元系统的设计如何将叙事语法从时间序列拓展至三维空间。我在第二章与第四章中分两个层面展开：在理论层面，我提出的第八变量——空间形态——将Aarseth的七变量分析框架延伸至三维空间维度；而词汇层、语境层、语法层的三层模型，为这一延伸提供了一套可操作的实践方法论。</span></p>
+    <div class="dice-para" data-solved="false">
+      <div class="dice-check">
+        <button type="button" class="dice-btn" aria-label="Roll 2d6"><span class="die">⚀</span><span class="die">⚀</span></button>
+        <div class="dice-result"></div>
+      </div>
+      <div class="dice-para-body">
+        <p><span class="lang-en">The first question this dissertation has sought to answer is how the design of a Spatial Storylet system might extend narrative grammar from temporal sequence into three-dimensional space. I have developed this across two levels, in Chapters 2 and 4: at the theoretical level, the eighth variable I propose — spatial morphology — extends Aarseth's seven-variable analytical framework into the spatial dimension; the three-layer model of lexical, contextual, and grammatical layers, in turn, provides an operable methodology for putting this extension into practice.</span><span class="lang-zh">我通过这篇论文试图回答的第一个问题是：空间叙事单元系统的设计如何将叙事语法从时间序列拓展至三维空间。我在第二章与第四章中分两个层面展开：在理论层面，我提出的第八变量——空间形态——将Aarseth的七变量分析框架延伸至三维空间维度；而词汇层、语境层、语法层的三层模型，为这一延伸提供了一套可操作的实践方法论。</span></p>
+      </div>
+    </div>
 
-    <p><span class="lang-en">I have tested this method in practice through my graduation game project, <em>OSAIDER</em>. In the game, the Dice Check mechanism, item-based access conditions, and dynamic module generation together constitute a Spatial Storylet system — an ergodic text that must be felt and understood spatially, one that cannot be accurately conveyed through text alone, nor through a single traversal.</span><span class="lang-zh">我将这套方法通过毕设游戏项目<em>OSAIDER</em>进行了实践验证。在游戏中，骰子检定机制、基于物品的访问条件，以及动态模块生成，共同构成了空间叙事单元系统——一个需要被"立体"地感受和理解，而无法通过文字和单次穿越准确传达的"遍历文本"系统。</span></p>
+    <div class="dice-para" data-solved="false">
+      <div class="dice-check">
+        <button type="button" class="dice-btn" aria-label="Roll 2d6"><span class="die">⚀</span><span class="die">⚀</span></button>
+        <div class="dice-result"></div>
+      </div>
+      <div class="dice-para-body">
+        <p><span class="lang-en">I have tested this method in practice through my graduation game project, <em>OSAIDER</em>. In the game, the Dice Check mechanism, item-based access conditions, and dynamic module generation together constitute a Spatial Storylet system — an ergodic text that must be felt and understood spatially, one that cannot be accurately conveyed through text alone, nor through a single traversal.</span><span class="lang-zh">我将这套方法通过毕设游戏项目<em>OSAIDER</em>进行了实践验证。在游戏中，骰子检定机制、基于物品的访问条件，以及动态模块生成，共同构成了空间叙事单元系统——一个需要被"立体"地感受和理解，而无法通过文字和单次穿越准确传达的"遍历文本"系统。</span></p>
+      </div>
+    </div>
 
-    <p><span class="lang-en">The second research question asked whether this transformation could enable fragmented narrative to achieve coherence independent of temporal sequence, and produce measurable effects on players' meaning-making and emotional engagement. The case analysis in Chapter 3 showed that <em>Disco Elysium</em> and <em>Citizen Sleeper</em> share identical coordinates under Aarseth's seven-variable framework, yet become distinguishable once spatial morphology is introduced: in the former, players are drawn primarily to the story itself, with the environment playing a supporting role that enriches the text; in the latter, fixed spatial locations anchored to specific functions mean that the player's spatial awareness and narrative progression reinforce one another.</span><span class="lang-zh">第二个研究问题：这种转化能否使碎片化叙事在不依赖时间序列的情况下实现连贯性，并对玩家的意义建构与情感投入产生可衡量的效果。第三章的案例分析已表明，《极乐迪斯科》与《深空梦里人》在Aarseth七变量框架下坐标完全相同，却在引入空间形态后变得可区分：玩家在前者的游玩过程中更多被故事本身所吸引，而环境作为辅助角色，起到丰富文本的作用；后者却因为空间点位和特定功能锚定，玩家对空间的认知与叙事推进相辅相成。</span></p>
+    <div class="dice-para" data-solved="false">
+      <div class="dice-check">
+        <button type="button" class="dice-btn" aria-label="Roll 2d6"><span class="die">⚀</span><span class="die">⚀</span></button>
+        <div class="dice-result"></div>
+      </div>
+      <div class="dice-para-body">
+        <p><span class="lang-en">The second research question asked whether this transformation could enable fragmented narrative to achieve coherence independent of temporal sequence, and produce measurable effects on players' meaning-making and emotional engagement. The case analysis in Chapter 3 showed that <em>Disco Elysium</em> and <em>Citizen Sleeper</em> share identical coordinates under Aarseth's seven-variable framework, yet become distinguishable once spatial morphology is introduced: in the former, players are drawn primarily to the story itself, with the environment playing a supporting role that enriches the text; in the latter, fixed spatial locations anchored to specific functions mean that the player's spatial awareness and narrative progression reinforce one another.</span><span class="lang-zh">第二个研究问题：这种转化能否使碎片化叙事在不依赖时间序列的情况下实现连贯性，并对玩家的意义建构与情感投入产生可衡量的效果。第三章的案例分析已表明，《极乐迪斯科》与《深空梦里人》在Aarseth七变量框架下坐标完全相同，却在引入空间形态后变得可区分：玩家在前者的游玩过程中更多被故事本身所吸引，而环境作为辅助角色，起到丰富文本的作用；后者却因为空间点位和特定功能锚定，玩家对空间的认知与叙事推进相辅相成。</span></p>
+      </div>
+    </div>
 
-    <p><span class="lang-en">In <em>Blue Prince</em>, however, although space itself becomes the protagonist and the narrative changes alongside spatial reconfiguration, players' meaning-making and emotional engagement were not correspondingly enhanced — the narrative's excessive randomness and fragmentation instead greatly reduced the likelihood of players forming a coherent sense of perception and immersion.</span><span class="lang-zh">然而在《蓝途王子》中，虽然空间本身成为了主角，叙事围绕着空间变化而变化，但玩家的意义建构与情感投入并没有得到相应的提升，反而因为过于随机和碎片化的叙事切分使玩家形成连贯感知和沉浸感的几率大大降低。</span></p>
+    <div class="dice-para" data-solved="false">
+      <div class="dice-check">
+        <button type="button" class="dice-btn" aria-label="Roll 2d6"><span class="die">⚀</span><span class="die">⚀</span></button>
+        <div class="dice-result"></div>
+      </div>
+      <div class="dice-para-body">
+        <p><span class="lang-en">In <em>Blue Prince</em>, however, although space itself becomes the protagonist and the narrative changes alongside spatial reconfiguration, players' meaning-making and emotional engagement were not correspondingly enhanced — the narrative's excessive randomness and fragmentation instead greatly reduced the likelihood of players forming a coherent sense of perception and immersion.</span><span class="lang-zh">然而在《蓝途王子》中，虽然空间本身成为了主角，叙事围绕着空间变化而变化，但玩家的意义建构与情感投入并没有得到相应的提升，反而因为过于随机和碎片化的叙事切分使玩家形成连贯感知和沉浸感的几率大大降低。</span></p>
+      </div>
+    </div>
 
-    <p><span class="lang-en"><em>OSAIDER</em> represents the author's exploratory attempt at the constitutive level of spatial morphology — <strong>a design in which spatial configuration is not a backdrop for narrative but its necessary condition.</strong> Building on the comparative analysis of the three case-study games, the balance <em>OSAIDER</em> seeks to strike is to introduce three-dimensional space — adding a perceptible dimension to the narrative text — while leaving the player's immersive experience unaffected, achieving a form of "bounded ambiguity": open enough to invite players to actively construct meaning, yet constrained enough to prevent meaning itself from collapsing.</span><span class="lang-zh"><em>OSAIDER</em>是笔者对空间形态构成性层级的一次探索性尝试——<strong>在这个设计中，空间构型不是叙事的背景，而是叙事的必要条件。</strong>在对三款案例游戏的对比分析的基础上，<em>OSAIDER</em>想要达到的平衡就是在引入三维空间增加叙事文本的可感知维度的同时，又保证玩家的沉浸式体验不被影响，达到"有界歧义性"——开放到足以邀请玩家主动建构意义，又受限到不至于让意义本身崩溃瓦解。</span></p>
+    <div class="dice-para" data-solved="false">
+      <div class="dice-check">
+        <button type="button" class="dice-btn" aria-label="Roll 2d6"><span class="die">⚀</span><span class="die">⚀</span></button>
+        <div class="dice-result"></div>
+      </div>
+      <div class="dice-para-body">
+        <p><span class="lang-en"><em>OSAIDER</em> represents the author's exploratory attempt at the constitutive level of spatial morphology — <strong>a design in which spatial configuration is not a backdrop for narrative but its necessary condition.</strong> Building on the comparative analysis of the three case-study games, the balance <em>OSAIDER</em> seeks to strike is to introduce three-dimensional space — adding a perceptible dimension to the narrative text — while leaving the player's immersive experience unaffected, achieving a form of "bounded ambiguity": open enough to invite players to actively construct meaning, yet constrained enough to prevent meaning itself from collapsing.</span><span class="lang-zh"><em>OSAIDER</em>是笔者对空间形态构成性层级的一次探索性尝试——<strong>在这个设计中，空间构型不是叙事的背景，而是叙事的必要条件。</strong>在对三款案例游戏的对比分析的基础上，<em>OSAIDER</em>想要达到的平衡就是在引入三维空间增加叙事文本的可感知维度的同时，又保证玩家的沉浸式体验不被影响，达到"有界歧义性"——开放到足以邀请玩家主动建构意义，又受限到不至于让意义本身崩溃瓦解。</span></p>
+      </div>
+    </div>
 
-    <p><span class="lang-en">The Dice Check mechanism, the object-based spatial interaction, the Spatial Storylet three-layer model, and the dynamic module generation together constitute a system in which the player's traversal of space is structurally necessary for the production of narrative meaning. In playtesting, players consistently reported that their understanding of the text fragments was shaped by the spatial context in which they encountered them.</span><span class="lang-zh">骰子检定、基于物品的空间交互、空间叙事单元（Spatial Storylet）三层模型以及动态模块生成机制，共同构成了一个系统——在这个系统中，玩家对空间的遍历在结构上是生产叙事意义的必要条件。在玩家测试中，玩家们一致反映，他们对文字片段的理解受到遭遇这些片段时所处空间语境的塑造。</span></p>
+    <div class="dice-para" data-solved="false">
+      <div class="dice-check">
+        <button type="button" class="dice-btn" aria-label="Roll 2d6"><span class="die">⚀</span><span class="die">⚀</span></button>
+        <div class="dice-result"></div>
+      </div>
+      <div class="dice-para-body">
+        <p><span class="lang-en">The Dice Check mechanism, the object-based spatial interaction, the Spatial Storylet three-layer model, and the dynamic module generation together constitute a system in which the player's traversal of space is structurally necessary for the production of narrative meaning. In playtesting, players consistently reported that their understanding of the text fragments was shaped by the spatial context in which they encountered them.</span><span class="lang-zh">骰子检定、基于物品的空间交互、空间叙事单元（Spatial Storylet）三层模型以及动态模块生成机制，共同构成了一个系统——在这个系统中，玩家对空间的遍历在结构上是生产叙事意义的必要条件。在玩家测试中，玩家们一致反映，他们对文字片段的理解受到遭遇这些片段时所处空间语境的塑造。</span></p>
+      </div>
+    </div>
 
-    <p><span class="lang-en">Yet the author is also aware that the relationship between spatial configuration and narrative meaning remains highly opaque to the player. The "grammar" of the palace is not fully legible, and the author's verification of whether space is able to fill the gaps between text blocks and achieve semantic coherence remains relatively lacking. Narrative spatial grammar functions in this design practice as an exploratory pathway — one that has received encouraging feedback in player testing — but as a methodology it has not yet reached a transferable, general-purpose level. This is the central unresolved problem.</span><span class="lang-zh">然而笔者也意识到，空间构型与叙事意义之间的关系对于玩家而言仍然有极高的不透明度，宫殿的"语法"并非完全可读，笔者对于空间是否能填补文字块之间的空隙，达到语义连贯的验证尚较为欠缺。叙事语法在本设计实践中作为一个路径尝试，在玩家测试中收到了较好的反馈，但作为方法论还未达到可移植的通用级别，这是核心的未解问题。</span></p>
+    <div class="dice-para" data-solved="false">
+      <div class="dice-check">
+        <button type="button" class="dice-btn" aria-label="Roll 2d6"><span class="die">⚀</span><span class="die">⚀</span></button>
+        <div class="dice-result"></div>
+      </div>
+      <div class="dice-para-body">
+        <p><span class="lang-en">Yet the author is also aware that the relationship between spatial configuration and narrative meaning remains highly opaque to the player. The "grammar" of the palace is not fully legible, and the author's verification of whether space is able to fill the gaps between text blocks and achieve semantic coherence remains relatively lacking. Narrative spatial grammar functions in this design practice as an exploratory pathway — one that has received encouraging feedback in player testing — but as a methodology it has not yet reached a transferable, general-purpose level. This is the central unresolved problem.</span><span class="lang-zh">然而笔者也意识到，空间构型与叙事意义之间的关系对于玩家而言仍然有极高的不透明度，宫殿的"语法"并非完全可读，笔者对于空间是否能填补文字块之间的空隙，达到语义连贯的验证尚较为欠缺。叙事语法在本设计实践中作为一个路径尝试，在玩家测试中收到了较好的反馈，但作为方法论还未达到可移植的通用级别，这是核心的未解问题。</span></p>
+      </div>
+    </div>
 
-    <p><span class="lang-en">But the author believes this is a direction of great potential for future development: the constitutive level is reachable, but reaching it requires a more explicit spatial grammar and more sustained application in practice, until players are able to begin internalising spatial logic as a shared language on a par with verbal expression — no longer relying solely on textual description to understand the story. The world is experienced in three dimensions, not described in the abstract.</span><span class="lang-zh">但笔者相信这是未来发展极具潜力的方向：构成性层级是可以抵达的，但抵达它需要一套更明确的空间语法和更多持续性的应用实践，直至玩家能够开始将空间逻辑内化为和文字表达相同高度的一种通用语言，不再仅仅依赖文字描述来理解故事。世界是被立体地体验，而不是被抽象地描述。</span></p>
+    <div class="dice-para" data-solved="false">
+      <div class="dice-check">
+        <button type="button" class="dice-btn" aria-label="Roll 2d6"><span class="die">⚀</span><span class="die">⚀</span></button>
+        <div class="dice-result"></div>
+      </div>
+      <div class="dice-para-body">
+        <p><span class="lang-en">But the author believes this is a direction of great potential for future development: the constitutive level is reachable, but reaching it requires a more explicit spatial grammar and more sustained application in practice, until players are able to begin internalising spatial logic as a shared language on a par with verbal expression — no longer relying solely on textual description to understand the story. The world is experienced in three dimensions, not described in the abstract.</span><span class="lang-zh">但笔者相信这是未来发展极具潜力的方向：构成性层级是可以抵达的，但抵达它需要一套更明确的空间语法和更多持续性的应用实践，直至玩家能够开始将空间逻辑内化为和文字表达相同高度的一种通用语言，不再仅仅依赖文字描述来理解故事。世界是被立体地体验，而不是被抽象地描述。</span></p>
+      </div>
+    </div>
   </div>
 
   <hr class="divider locked" id="div-bib">
@@ -2284,6 +2394,10 @@
       ch4GateNo.disabled = true;
       document.getElementById('ch4-tabs').classList.remove('locked');
       document.getElementById('ch4-tabs').scrollIntoView({ behavior: 'smooth' });
+      const div5 = document.getElementById('div-ch5');
+      const ch5 = document.getElementById('ch5');
+      if (div5) div5.classList.remove('locked');
+      if (ch5) ch5.classList.remove('locked');
     });
   }
   if (ch4GateNo) {
@@ -2303,6 +2417,83 @@
         btn.classList.add('active');
         panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
+    });
+  });
+
+  // ══════════════════════════════════════════
+  // CHAPTER 5 — 2d6 DICE CHECK PER PARAGRAPH
+  // ══════════════════════════════════════════
+  const GLITCH_CHARS = '█▓▒░ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@$%&*‡†§◊¤¥';
+
+  function scrambleText(text) {
+    let out = '';
+    for (const ch of text) {
+      out += /\s/.test(ch) ? ch : GLITCH_CHARS[Math.floor(Math.random() * GLITCH_CHARS.length)];
+    }
+    return out;
+  }
+
+  function initDicePara(p) {
+    const spans = p.querySelectorAll('.dice-para-body .lang-en, .dice-para-body .lang-zh');
+    spans.forEach(span => {
+      span.dataset.original = span.innerHTML;
+      span.textContent = scrambleText(span.textContent);
+    });
+  }
+
+  function solveDicePara(p) {
+    p.dataset.solved = 'true';
+    p.querySelectorAll('.dice-para-body .lang-en, .dice-para-body .lang-zh').forEach(span => {
+      span.innerHTML = span.dataset.original;
+    });
+    p.querySelector('.dice-check').classList.add('solved');
+    checkCh5AllSolved();
+  }
+
+  function checkCh5AllSolved() {
+    const all = document.querySelectorAll('#ch5 .dice-para');
+    const solved = all.length > 0 && Array.from(all).every(p => p.dataset.solved === 'true');
+    if (solved) {
+      const divBib = document.getElementById('div-bib');
+      const bib = document.getElementById('bibliography');
+      if (divBib) divBib.classList.remove('locked');
+      if (bib) bib.classList.remove('locked');
+    }
+  }
+
+  const DIE_FACES = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+
+  document.querySelectorAll('#ch5 .dice-para').forEach(p => {
+    initDicePara(p);
+    const btn = p.querySelector('.dice-btn');
+    const dieEls = p.querySelectorAll('.die');
+    const resultEl = p.querySelector('.dice-result');
+    btn.addEventListener('click', () => {
+      if (btn.disabled) return;
+      btn.disabled = true;
+      let ticks = 0;
+      const ticker = setInterval(() => {
+        dieEls.forEach(d => { d.textContent = DIE_FACES[Math.floor(Math.random() * 6)]; });
+        ticks++;
+        if (ticks >= 10) {
+          clearInterval(ticker);
+          const r1 = 1 + Math.floor(Math.random() * 6);
+          const r2 = 1 + Math.floor(Math.random() * 6);
+          dieEls[0].textContent = DIE_FACES[r1 - 1];
+          dieEls[1].textContent = DIE_FACES[r2 - 1];
+          const sum = r1 + r2;
+          const lang = currentSiteLang();
+          if (sum >= 7) {
+            resultEl.textContent = (lang === 'zh' ? `${sum} 点 — 检定成功` : `${sum} — Success`);
+            resultEl.className = 'dice-result ok';
+            solveDicePara(p);
+          } else {
+            resultEl.textContent = (lang === 'zh' ? `${sum} 点 — 检定失败，请再试一次` : `${sum} — Failed, try again`);
+            resultEl.className = 'dice-result bad';
+            btn.disabled = false;
+          }
+        }
+      }, 80);
     });
   });
 
@@ -2335,6 +2526,15 @@
       const tabs = document.getElementById('ch4-tabs');
       if (tabs) tabs.classList.remove('locked');
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('locked'));
+      const div5 = document.getElementById('div-ch5');
+      const ch5 = document.getElementById('ch5');
+      if (div5) div5.classList.remove('locked');
+      if (ch5) ch5.classList.remove('locked');
+    }
+    if (n === 5) {
+      document.querySelectorAll('#ch5 .dice-para').forEach(p => {
+        if (p.dataset.solved !== 'true') solveDicePara(p);
+      });
     }
   }
 
