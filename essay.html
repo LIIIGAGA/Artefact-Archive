@@ -11,6 +11,7 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --red: #E3000F; --red-dim: #7A0008;
+    --blue: #2D9CFF; --blue-dim: #0F4C8A;
     --white: #F0EDE8; --white-dim: #888880;
     --bg: #080808; --bg2: #111111; --bg3: #1A1A1A;
     --border: #2A2A2A;
@@ -138,11 +139,11 @@
   .toc-hint {
     margin-top: 28px;
     padding: 10px 12px;
-    background: rgba(227, 0, 15, 0.08);
-    border-left: 2px solid var(--red);
+    background: rgba(45, 156, 255, 0.08);
+    border-left: 2px solid var(--blue);
     font-family: var(--mono);
     font-size: 10px;
-    color: var(--red);
+    color: var(--blue);
     letter-spacing: 0.04em;
     line-height: 1.6;
   }
@@ -686,13 +687,13 @@
   .annotation-link {
     display: inline-block;
     margin-top: 14px;
-    color: var(--red);
+    color: var(--blue);
     text-decoration: none;
     font-size: 11px;
     letter-spacing: 0.04em;
-    border-bottom: 1px solid var(--red-dim);
+    border-bottom: 1px solid var(--blue-dim);
   }
-  .annotation-link:hover { border-color: var(--red); }
+  .annotation-link:hover { border-color: var(--blue); }
 
   @media (min-width: 901px) {
     .annotation-panel {
@@ -715,13 +716,13 @@
 
   /* TERM LINK — clickable in-text annotation trigger */
   .term-link {
-    color: var(--red);
+    color: var(--blue);
     cursor: pointer;
-    border-bottom: 1px dotted var(--red-dim);
+    border-bottom: 1px dotted var(--blue-dim);
     transition: border-color 0.2s, color 0.2s;
   }
-  .term-link:hover { border-bottom-color: var(--red); border-bottom-style: solid; color: var(--white); }
-  .term-link.active { border-bottom-style: solid; border-color: var(--red); }
+  .term-link:hover { border-bottom-color: var(--blue); border-bottom-style: solid; color: var(--white); }
+  .term-link.active { border-bottom-style: solid; border-color: var(--blue); }
 
   /* QUIZ BLOCK — end-of-chapter question gate */
   .quiz-block { display: none; margin-top: 32px; }
@@ -931,8 +932,8 @@
   <a href="#bibliography" class="toc-item"><span class="lang-en">Bibliography</span><span class="lang-zh">参考文献</span></a>
 
   <div class="toc-hint">
-    <span class="lang-en">// Tip: red text is clickable — click for more information.</span>
-    <span class="lang-zh">// 提示：红色文字可点击，查看补充信息。</span>
+    <span class="lang-en">// Tip: blue text is clickable — click for more information.</span>
+    <span class="lang-zh">// 提示：蓝色文字可点击，查看补充信息。</span>
   </div>
 
   <input type="text" class="toc-master-input" id="toc-master-input" autocomplete="off" spellcheck="false">
