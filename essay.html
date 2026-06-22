@@ -122,6 +122,21 @@
   .toc-item.sub { padding-left: 24px; margin-left: -12px; font-size: 10px; color: #555; }
   .toc-item.sub.active { color: var(--white-dim); }
 
+  .toc-master-input {
+    display: block;
+    width: 100%;
+    margin-top: 32px;
+    background: transparent;
+    border: 1px solid var(--border);
+    outline: none;
+    padding: 6px 10px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--white-dim);
+    letter-spacing: 0.04em;
+  }
+  .toc-master-input:focus { border-color: var(--red-dim); }
+
   /* MAIN CONTENT */
   main {
     margin-left: 220px;
@@ -544,7 +559,8 @@
   .reveal.visible { opacity: 1; transform: none; }
 
   /* ERGODIC GATE */
-  body.gate-locked .toc { display: none; }
+  body.gate-locked .toc-label,
+  body.gate-locked .toc-item { display: none; }
   .locked { display: none; }
 
   .gate-box {
@@ -877,8 +893,10 @@
   <a href="#ch2-5" class="toc-item sub"><span class="lang-en">2.5 Spatial Storylet</span><span class="lang-zh">2.5 空间叙事单元</span></a>
   <a href="#ch3" class="toc-item"><span class="lang-en">Ch.3 Case Analysis</span><span class="lang-zh">第三章 案例分析</span></a>
   <a href="#ch4" class="toc-item"><span class="lang-en">Ch.4 Design Practice</span><span class="lang-zh">第四章 设计实践</span></a>
-  <a href="#ch6" class="toc-item"><span class="lang-en">Ch.6 Conclusion</span><span class="lang-zh">第六章 结论</span></a>
+  <a href="#ch5" class="toc-item"><span class="lang-en">Ch.5 Conclusion</span><span class="lang-zh">第五章 结论</span></a>
   <a href="#bibliography" class="toc-item"><span class="lang-en">Bibliography</span><span class="lang-zh">参考文献</span></a>
+
+  <input type="text" class="toc-master-input" id="toc-master-input" autocomplete="off" spellcheck="false">
 </aside>
 
 <main>
@@ -954,7 +972,7 @@
       <p class="gate-note"><span class="lang-en">[A small reminder: the average traversal time for the full process is 20 minutes. You may begin and stop at any time — but refreshing the page will reset all progress.]</span><span class="lang-zh">【一个小提醒：完整流程的平均遍历时间为：20分钟。您可以随时开始，随时结束，但当您重新刷新页面，所有的进程都将被重置。】</span></p>
     </div>
     <div class="gate-choices">
-      <button type="button" class="gate-choice gate-choice-left" id="gate-accept"><span class="lang-en">Yes, I am. Let's begin.</span><span class="lang-zh">我愿意，开始吧。</span></button>
+      <button type="button" class="gate-choice gate-choice-left" id="gate-accept"><span class="lang-en">I'm willing. Let's begin.</span><span class="lang-zh">我愿意，开始吧。</span></button>
       <button type="button" class="gate-choice gate-choice-right term-link" data-annotation="ergodic-text" id="gate-question"><span class="lang-en">What is ergodic text?</span><span class="lang-zh">什么是遍历性文本？</span></button>
     </div>
   </div>
@@ -1024,8 +1042,7 @@
     <h2 class="chapter-title"><span class="lang-en">Theoretical Framework</span><span class="lang-zh">理论框架</span></h2>
 
     <div class="password-gate">
-      <p class="password-prompt"><span class="lang-en">The password for this chapter is: Aarseth + section number.(section number range: 2.1-2.5)</span><span class="lang-zh">本章节密码为：Aarseth+章节编号。(章节编号范围: 2.1-2.5)</span></p>
-      <p class="password-prompt"><span class="lang-en">【Hint: You can choose any reading order.】</span><span class="lang-zh">【提示：您可以选择任何阅读顺序。】</span></p>
+      <p class="password-prompt"><span class="lang-en">The password for this chapter is: Aarseth + section number.</span><span class="lang-zh">本章节密码为：Aarseth+章节编号。</span></p>
       <div class="password-input-row">
         <span class="type-cursor"></span>
         <input type="text" class="password-input" id="ch2-password-input" autocomplete="off" spellcheck="false" placeholder="Aarseth2.1">
@@ -1369,9 +1386,9 @@
     <div class="chapter-label"><span class="lang-en">// Chapter 4</span><span class="lang-zh">// 第四章</span></div>
     <h2 class="chapter-title"><span class="lang-en">Design Practice</span><span class="lang-zh">设计实践</span></h2>
 
-    <p><span class="lang-en">This chapter will present an original game design as a practical exploration of the Spatial Storylet system, with the central aim of demonstrating how the design methodology proposed in Chapter 3 can be put into practice, and how the analytical framework developed in the preceding chapters can be applied to reflect on the design decisions made.</span><span class="lang-zh">本章将呈现一个原创游戏设计，作为空间叙事单元系统的实践探索，核心目的在于展示第三章所提出的设计方法论如何付诸实践，以及前述章节所建立的分析框架如何被用于反思所做的设计决策。</span></p>
+    <p><span class="lang-en">This chapter will present an original game design as a practical exploration of the Spatial Storylet system, with the central aim of demonstrating how the design methodology proposed in Chapter 2 can be put into practice, and how the analytical framework developed in the preceding chapters can be applied to reflect on the design decisions made.</span><span class="lang-zh">本章将呈现一个原创游戏设计，作为空间叙事单元系统的实践探索，核心目的在于展示第二章所提出的设计方法论如何付诸实践，以及前述章节所建立的分析框架如何被用于反思所做的设计决策。</span></p>
 
-    <p><span class="lang-en">The chapter will first introduce the core logic of the design concept: how the modular structure corresponds to the three-layer model of the Spatial Storylet, and how the rules governing spatial reconfiguration seek to realise a narrative spatial grammar. It will then present a comparative analysis of the interactive experience between the text-only narrative prototype and the full spatial prototype. Finally, the chapter will apply the analytical framework established in Chapter 3, with particular focus on the eighth variable proposed in this dissertation, spatial morphology, to position the current design within the three-level taxonomy, evaluating the degree to which the decorative, contextual, and constitutive levels have been realised, and honestly identifying the limitations and unresolved questions that remain at this stage of development.<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">17</a></sup></span><span class="lang-zh">本章将首先介绍设计概念的核心逻辑：模块化结构如何对应空间叙事单元的三层模型，以及支配空间重配的规则如何寻求实现叙事空间语法。然后对纯文本叙事原型与完整空间原型之间的互动体验进行比较分析。最后，本章将运用第三章建立的分析框架，特别聚焦于本论文提出的第八变量——空间形态，在三层分类法中定位当前设计，评估装饰性、语境性与构成性层级的实现程度，并诚实地识别当前开发阶段仍存在的局限性与未解决问题。<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">17</a></sup></span></p>
+    <p><span class="lang-en">The chapter will first introduce the core logic of the design concept: how the modular structure corresponds to the three-layer model of the Spatial Storylet, and how the rules governing spatial reconfiguration seek to realise a narrative spatial grammar. It will then present a comparative analysis of the interactive experience between the text-only narrative prototype and the full spatial prototype. Finally, the chapter will apply the analytical framework established in Chapter 2, with particular focus on the eighth variable proposed in this dissertation, spatial morphology, to position the current design within the three-level taxonomy, evaluating the degree to which the decorative, contextual, and constitutive levels have been realised, and honestly identifying the limitations and unresolved questions that remain at this stage of development.<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">17</a></sup></span><span class="lang-zh">本章将首先介绍设计概念的核心逻辑：模块化结构如何对应空间叙事单元的三层模型，以及支配空间重配的规则如何寻求实现叙事空间语法。然后对纯文本叙事原型与完整空间原型之间的互动体验进行比较分析。最后，本章将运用第二章建立的分析框架，特别聚焦于本论文提出的第八变量——空间形态，在三层分类法中定位当前设计，评估装饰性、语境性与构成性层级的实现程度，并诚实地识别当前开发阶段仍存在的局限性与未解决问题。<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">17</a></sup></span></p>
 
 
     <div style="margin: 32px 0;">
@@ -1845,8 +1862,21 @@
       placeCursor();
     }
 
+    function revealAll() {
+      if (!started) start();
+      enChars.forEach(c => c.classList.add('revealed'));
+      zhChars.forEach(c => c.classList.add('revealed'));
+      enRevealed = enChars.length;
+      zhRevealed = zhChars.length;
+      placeCursor();
+      if (!completed) {
+        completed = true;
+        if (onComplete) onComplete();
+      }
+    }
+
     return {
-      start, revealNext,
+      start, revealNext, revealAll,
       get done() { return activeRevealed() >= activeChars().length; },
       onLangSwitch() { if (started) placeCursor(); }
     };
@@ -1940,6 +1970,58 @@
         ch2PasswordFeedback.className = 'password-feedback ok';
       }
       ch2PasswordInput.value = '';
+    });
+  }
+
+  // ══════════════════════════════════════════
+  // TOC MASTER CODE — direct-unlock shortcuts
+  // ══════════════════════════════════════════
+  function unlockChapter(n) {
+    const div = document.getElementById('div-ch' + n);
+    const ch = document.getElementById('ch' + n);
+    if (div) div.classList.remove('locked');
+    if (ch) ch.classList.remove('locked');
+    if (n === 1) {
+      activeGate = ch1Gate;
+      ch1Gate.revealAll();
+    }
+    if (n === 2) {
+      for (let i = 1; i <= 5; i++) {
+        const sub = document.getElementById('ch2-' + i);
+        if (sub) sub.classList.remove('locked');
+      }
+    }
+  }
+
+  function unlockBibliography() {
+    const div = document.getElementById('div-bib');
+    const bib = document.getElementById('bibliography');
+    if (div) div.classList.remove('locked');
+    if (bib) bib.classList.remove('locked');
+  }
+
+  function unlockAllChapters() {
+    for (let i = 1; i <= 5; i++) unlockChapter(i);
+    unlockBibliography();
+  }
+
+  const tocMasterInput = document.getElementById('toc-master-input');
+  if (tocMasterInput) {
+    tocMasterInput.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      const val = tocMasterInput.value.trim().toLowerCase();
+      tocMasterInput.value = '';
+      document.body.classList.remove('gate-locked');
+
+      const chapterMatch = val.match(/^liigaga2026_chapter([1-5])$/);
+      if (chapterMatch) {
+        unlockChapter(parseInt(chapterMatch[1], 10));
+      } else if (val === 'liigaga2026_bibliography') {
+        unlockBibliography();
+      } else if (val === 'liigaga2026_allchapters') {
+        unlockAllChapters();
+      }
     });
   }
 </script>
