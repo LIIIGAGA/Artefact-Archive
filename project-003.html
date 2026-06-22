@@ -335,6 +335,120 @@
   span.lang-en { display: inline; }
   body.zh span.lang-zh { display: inline; }
   body.zh span.lang-en { display: none; }
+
+  /* ═══════════════════════════════════════════
+     PROCESS STEPS
+     ═══════════════════════════════════════════ */
+  .process-step { margin-top: 40px; }
+  .process-step:first-child { margin-top: 28px; }
+  .process-step-title {
+    font-family: var(--sans);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--white);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .process-step-num { font-family: var(--mono); font-size: 12px; color: var(--red); letter-spacing: 0.1em; flex-shrink: 0; }
+  .process-mechanic { margin-top: 22px; padding-left: 16px; border-left: 1px solid var(--border); }
+  .process-mechanic-title {
+    font-size: 12px;
+    color: var(--white-dim);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  /* VIDEO GRID (process clips) */
+  .video-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .video-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+  .video-grid.cols-1 { grid-template-columns: 1fr; }
+  .video-tile { position: relative; aspect-ratio: 16/9; background: var(--bg2); overflow: hidden; }
+  .video-tile video { width: 100%; height: 100%; object-fit: cover; display: block; background: var(--bg2); }
+  .video-tile .expand-btn {
+    position: absolute;
+    top: 8px; right: 8px;
+    width: 26px; height: 26px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(8,8,8,0.75);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-size: 13px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 5;
+    opacity: 0.7;
+    transition: opacity 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .video-tile .expand-btn:hover { opacity: 1; border-color: var(--red-dim); color: var(--red); }
+
+  /* CLICK-TO-ENLARGE AFFORDANCE ON IMAGES */
+  .zoomable { cursor: zoom-in; position: relative; }
+  .zoomable::after {
+    content: '⤢';
+    position: absolute;
+    top: 8px; right: 8px;
+    width: 26px; height: 26px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(8,8,8,0.75);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-size: 13px;
+    opacity: 0.55;
+    transition: opacity 0.2s, border-color 0.2s, color 0.2s;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .zoomable:hover::after { opacity: 1; border-color: var(--red-dim); color: var(--red); }
+
+  /* LIGHTBOX */
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8,8,8,0.96);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 64px;
+    cursor: zoom-out;
+  }
+  .lightbox-overlay.active { display: flex; }
+  .lightbox-overlay img, .lightbox-overlay video {
+    max-width: 100%;
+    max-height: 100%;
+    border: 1px solid var(--border);
+    cursor: default;
+  }
+  #lightbox-img, #lightbox-video { display: none; }
+  .lightbox-close {
+    position: fixed;
+    top: 20px; right: 24px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--white-dim);
+    cursor: pointer;
+    z-index: 2001;
+    font-family: var(--mono);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    background: var(--bg);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .lightbox-close:hover { color: var(--red); border-color: var(--red-dim); }
+  .lightbox-hint {
+    position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%);
+    font-size: 10px; color: var(--white-dim); letter-spacing: 0.08em; z-index: 2001;
+  }
 </style>
 </head>
 <body>
@@ -440,19 +554,19 @@
   <div class="block-label">// Stills</div>
   <div class="block-content">
     <div class="image-grid cols-2">
-      <div class="image-slot">
+      <div class="image-slot zoomable" onclick="openLightbox('image','images/BubbleNight01.png')">
         <img src="images/BubbleNight01.png" alt="Project still 01">
       </div>
-      <div class="image-slot">
+      <div class="image-slot zoomable" onclick="openLightbox('image','images/BubbleNight02.png')">
         <img src="images/BubbleNight02.png" alt="Project still 02">
       </div>
-      <div class="image-slot wide">
+      <div class="image-slot wide zoomable" onclick="openLightbox('image','images/BubbleNight03.png')">
         <img src="images/BubbleNight03.png" alt="Project still 03 — wide">
       </div>
-      <div class="image-slot">
+      <div class="image-slot zoomable" onclick="openLightbox('image','images/BubbleNight04.png')">
         <img src="images/BubbleNight04.png" alt="Project still 04">
       </div>
-      <div class="image-slot">
+      <div class="image-slot zoomable" onclick="openLightbox('image','images/BubbleNight05.png')">
         <img src="images/BubbleNight05.png" alt="Project still 05">
       </div>
     </div>
@@ -463,8 +577,8 @@
 </div>
 
 <!-- ═══════════════════════════════════════════
-     PROCESS — 可选，展示草图/过程图
-     不需要就把这整个 content-block 删掉
+     PROCESS — 来自 Bubble_Night_Tech.docx 的制作流程拆解
+     视频/图片路径需要放进同级的 videos/ 和 images/ 文件夹
      ═══════════════════════════════════════════ -->
 <div class="content-block reveal">
   <div class="block-label">// Process</div>
@@ -473,17 +587,190 @@
       <span class="lang-en">Blender modelling and texture creation, UE5 for scene assembly and Blueprint-based gameplay mechanics.</span>
       <span class="lang-zh">Blender建模和制作贴图，UE5进行场景搭建和蓝图游戏机制设计。</span>
     </p>
-    <div class="image-grid cols-3" style="margin-top:16px;">
-      <div class="image-slot">
-        <img src="images/BubbleNight_Process01.png" alt="Process sketch 01">
+
+    <!-- STEP 01 — LEVEL BLOCKOUT -->
+    <div class="process-step">
+      <div class="process-step-title">
+        <span class="process-step-num">01</span>
+        <span><span class="lang-en">UE Level Blockout</span><span class="lang-zh">UE关卡白盒</span></span>
       </div>
-      <div class="image-slot">
-        <img src="images/BubbleNight_Process02.png" alt="Process sketch 02">
-      </div>
-      <div class="image-slot">
-        <img src="images/BubbleNight_Process03.png" alt="Process sketch 03">
+      <div class="video-grid cols-2">
+        <div class="video-tile">
+          <video src="videos/BubbleNight_Blockout_01.mp4" controls></video>
+          <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_Blockout_01.mp4')">⤢</div>
+        </div>
+        <div class="video-tile">
+          <video src="videos/BubbleNight_Blockout_02.mp4" controls></video>
+          <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_Blockout_02.mp4')">⤢</div>
+        </div>
       </div>
     </div>
+
+    <!-- STEP 02 — BLENDER MODELLING & BAKING -->
+    <div class="process-step">
+      <div class="process-step-title">
+        <span class="process-step-num">02</span>
+        <span><span class="lang-en">Blender Modelling &amp; Material Baking</span><span class="lang-zh">Blender建模&amp;烘焙材质贴图</span></span>
+      </div>
+      <div class="video-grid cols-2">
+        <div class="video-tile">
+          <video src="videos/BubbleNight_BlenderMod&amp;Mat_01.mp4" controls></video>
+          <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_BlenderMod&amp;Mat_01.mp4')">⤢</div>
+        </div>
+        <div class="video-tile">
+          <video src="videos/BubbleNight_BlenderMod&amp;Mat_02.mp4" controls></video>
+          <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_BlenderMod&amp;Mat_02.mp4')">⤢</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 03 — SCENE ASSEMBLY & LIGHTING -->
+    <div class="process-step">
+      <div class="process-step-title">
+        <span class="process-step-num">03</span>
+        <span><span class="lang-en">UE Scene Assembly &amp; Lighting Atmosphere</span><span class="lang-zh">UE场景搭建&amp;灯光氛围塑造</span></span>
+      </div>
+      <div class="video-grid cols-2">
+        <div class="video-tile">
+          <video src="videos/BubbleNight_Environment_01.mp4" controls></video>
+          <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_Environment_01.mp4')">⤢</div>
+        </div>
+        <div class="video-tile">
+          <video src="videos/BubbleNight_Environment_02.mp4" controls></video>
+          <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_Environment_02.mp4')">⤢</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 04 — BLUEPRINT MECHANICS -->
+    <div class="process-step">
+      <div class="process-step-title">
+        <span class="process-step-num">04</span>
+        <span><span class="lang-en">UE Blueprint Mechanics</span><span class="lang-zh">UE蓝图机制</span></span>
+      </div>
+
+      <div class="process-mechanic">
+        <div class="process-mechanic-title"><span class="lang-en">01 — Teleportation</span><span class="lang-zh">机制1 — 传送</span></div>
+        <div class="image-grid cols-1" style="margin-bottom:8px;">
+          <div class="image-slot zoomable" onclick="openLightbox('image','images/BubbleNight_Mache01.png')">
+            <img src="images/BubbleNight_Mache01.png" alt="Blueprint mechanic 01 — Teleportation">
+          </div>
+        </div>
+        <div class="video-grid cols-1">
+          <div class="video-tile">
+            <video src="videos/BubbleNight_BlueprintTele.mp4" controls></video>
+            <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_BlueprintTele.mp4')">⤢</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-mechanic">
+        <div class="process-mechanic-title"><span class="lang-en">02 — Pick Up &amp; Place Items</span><span class="lang-zh">机制2 — 拾取和放置物品</span></div>
+        <div class="image-grid cols-1" style="margin-bottom:8px;">
+          <div class="image-slot zoomable" onclick="openLightbox('image','images/BubbleNight_Mache02.png')">
+            <img src="images/BubbleNight_Mache02.png" alt="Blueprint mechanic 02 — Pick up and place items">
+          </div>
+        </div>
+        <div class="video-grid cols-2">
+          <div class="video-tile">
+            <video src="videos/BubbleNight_BPPickUpBall_01.mp4" controls></video>
+            <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_BPPickUpBall_01.mp4')">⤢</div>
+          </div>
+          <div class="video-tile">
+            <video src="videos/BubbleNight_BPPickUpBall_02.mp4" controls></video>
+            <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_BPPickUpBall_02.mp4')">⤢</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-mechanic">
+        <div class="process-mechanic-title"><span class="lang-en">03 — Disappear on Water Contact</span><span class="lang-zh">机制3 — 接触水面消失</span></div>
+        <div class="image-grid cols-1" style="margin-bottom:8px;">
+          <div class="image-slot zoomable" onclick="openLightbox('image','images/BubbleNight_Mache03.png')">
+            <img src="images/BubbleNight_Mache03.png" alt="Blueprint mechanic 03 — Disappear on water contact">
+          </div>
+        </div>
+        <div class="video-grid cols-1">
+          <div class="video-tile">
+            <video src="videos/BubbleNight_BPDissapearingBall.mp4" controls></video>
+            <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_BPDissapearingBall.mp4')">⤢</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-mechanic">
+        <div class="process-mechanic-title"><span class="lang-en">04 — Traffic Light Match Trigger</span><span class="lang-zh">机制4 — 红绿灯正误判定</span></div>
+        <div class="image-grid cols-1" style="margin-bottom:8px;">
+          <div class="image-slot zoomable" onclick="openLightbox('image','images/BubbleNight_Mache04.png')">
+            <img src="images/BubbleNight_Mache04.png" alt="Blueprint mechanic 04 — Traffic light match trigger">
+          </div>
+        </div>
+        <div class="video-grid cols-2">
+          <div class="video-tile">
+            <video src="videos/BubbleNight_BPMatchTrigger_01.mp4" controls></video>
+            <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_BPMatchTrigger_01.mp4')">⤢</div>
+          </div>
+          <div class="video-tile">
+            <video src="videos/BubbleNight_BPMatchTrigger_02.mp4" controls></video>
+            <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_BPMatchTrigger_02.mp4')">⤢</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 05 — NIAGARA & SPECIAL MATERIALS -->
+    <div class="process-step">
+      <div class="process-step-title">
+        <span class="process-step-num">05</span>
+        <span><span class="lang-en">UE Niagara System &amp; Node-Based Special Materials</span><span class="lang-zh">UE Niagara系统&amp;节点化特殊材质</span></span>
+      </div>
+
+      <div class="process-mechanic">
+        <div class="process-mechanic-title"><span class="lang-en">Flowing Light Material</span><span class="lang-zh">流光材质</span></div>
+        <div class="image-grid cols-1" style="margin-bottom:8px;">
+          <div class="image-slot zoomable" onclick="openLightbox('image','images/BubbleNight_FlameMat.png')">
+            <img src="images/BubbleNight_FlameMat.png" alt="Flowing light material">
+          </div>
+        </div>
+        <div class="video-grid cols-1">
+          <div class="video-tile">
+            <video src="videos/BubbleNight_FlameMat.mp4" controls></video>
+            <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_FlameMat.mp4')">⤢</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-mechanic">
+        <div class="process-mechanic-title"><span class="lang-en">Twinkling Starlight</span><span class="lang-zh">闪烁星光</span></div>
+        <div class="image-grid cols-1" style="margin-bottom:8px;">
+          <div class="image-slot zoomable" onclick="openLightbox('image','images/BubbleNight_StarMat.png')">
+            <img src="images/BubbleNight_StarMat.png" alt="Twinkling starlight material">
+          </div>
+        </div>
+        <div class="video-grid cols-1">
+          <div class="video-tile">
+            <video src="videos/BubbleNight_StarMat.mp4" controls></video>
+            <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_StarMat.mp4')">⤢</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-mechanic">
+        <div class="process-mechanic-title"><span class="lang-en">Mask Material</span><span class="lang-zh">遮罩材质</span></div>
+        <div class="image-grid cols-1" style="margin-bottom:8px;">
+          <div class="image-slot zoomable" onclick="openLightbox('image','images/BubbleNight_MaskMat.png')">
+            <img src="images/BubbleNight_MaskMat.png" alt="Mask material">
+          </div>
+        </div>
+        <div class="video-grid cols-1">
+          <div class="video-tile">
+            <video src="videos/BubbleNight_MaskMat.mp4" controls></video>
+            <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_MaskMat.mp4')">⤢</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -520,6 +807,16 @@
   <span><a href="index.html" style="color:var(--white-dim);text-decoration:none;">← Return to Archive</a></span>
 </footer>
 
+<!-- ═══════════════════════════════════════════
+     LIGHTBOX — 点击图片/视频放大查看
+     ═══════════════════════════════════════════ -->
+<div class="lightbox-overlay" id="lightbox" onclick="if(event.target===this) closeLightbox()">
+  <div class="lightbox-close" onclick="closeLightbox()">✕ <span class="lang-en">CLOSE</span><span class="lang-zh">关闭</span></div>
+  <img id="lightbox-img" src="" alt="">
+  <video id="lightbox-video" controls></video>
+  <div class="lightbox-hint"><span class="lang-en">ESC OR CLICK OUTSIDE TO CLOSE</span><span class="lang-zh">按 ESC 或点击空白处关闭</span></div>
+</div>
+
 <script>
   const ch = document.getElementById('ch');
   const cv = document.getElementById('cv');
@@ -543,6 +840,36 @@
   }
   const savedLang = localStorage.getItem('lang') || 'en';
   setLang(savedLang);
+
+  // ── LIGHTBOX ──
+  function openLightbox(type, src) {
+    const overlay = document.getElementById('lightbox');
+    const imgEl = document.getElementById('lightbox-img');
+    const vidEl = document.getElementById('lightbox-video');
+    vidEl.pause();
+    if (type === 'image') {
+      imgEl.src = src;
+      imgEl.style.display = 'block';
+      vidEl.style.display = 'none';
+      vidEl.removeAttribute('src');
+    } else {
+      vidEl.src = src;
+      vidEl.style.display = 'block';
+      imgEl.style.display = 'none';
+      imgEl.removeAttribute('src');
+      vidEl.play().catch(() => {});
+    }
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    const overlay = document.getElementById('lightbox');
+    const vidEl = document.getElementById('lightbox-video');
+    vidEl.pause();
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 </script>
 </body>
 </html>
