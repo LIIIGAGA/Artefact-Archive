@@ -543,6 +543,102 @@
   .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .reveal.visible { opacity: 1; transform: none; }
 
+  /* ERGODIC GATE */
+  body.gate-locked .toc { display: none; }
+  .locked { display: none; }
+
+  .gate-box {
+    max-width: var(--reading-max);
+    margin: 0 auto 80px;
+    border: 1px solid var(--red-dim);
+    background: var(--bg2);
+    padding: 32px 28px;
+    position: relative;
+  }
+  .gate-box::before {
+    content: '// ERGODIC GATE';
+    position: absolute;
+    top: -1px; left: 20px;
+    background: var(--bg2);
+    padding: 0 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    transform: translateY(-50%);
+  }
+  .gate-prompt p {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--white);
+    line-height: 1.9;
+    margin-bottom: 14px;
+  }
+  .gate-prompt p:last-child { margin-bottom: 0; }
+  .gate-note {
+    color: var(--white-dim) !important;
+    font-size: 12px !important;
+    border-left: 2px solid var(--red-dim);
+    padding-left: 14px;
+    margin-top: 18px !important;
+  }
+  .gate-choices {
+    display: flex;
+    gap: 16px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .gate-choice {
+    flex: 1;
+    min-width: 200px;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    color: var(--white);
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 16px 18px;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+  }
+  .gate-choice:hover { border-color: var(--red-dim); background: var(--bg2); }
+  .gate-choice-left { color: var(--red); border-color: var(--red-dim); }
+  .gate-choice-left:hover { background: rgba(227,0,15,0.08); border-color: var(--red); }
+  .gate-choice-right { color: var(--white-dim); }
+  .gate-explainer {
+    display: none;
+    margin-top: 20px;
+    padding: 18px 20px;
+    border-left: 2px solid var(--border);
+    background: var(--bg3);
+    font-size: 13px;
+    color: var(--white-dim);
+    line-height: 1.8;
+  }
+  .gate-explainer.open { display: block; }
+
+  /* TYPE-TO-REVEAL */
+  .type-prompt {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--white-dim);
+    letter-spacing: 0.04em;
+    padding: 4px 0 8px;
+  }
+  .type-cursor {
+    display: inline-block;
+    width: 0.5em;
+    height: 1em;
+    background: var(--red);
+    vertical-align: text-bottom;
+    margin-left: 1px;
+    animation: blink 1s steps(1) infinite;
+  }
+  .chapter-body.gated { display: none; }
+  .tchar { display: none; }
+  .tchar.revealed { display: inline; }
+
   footer {
     margin-left: 220px;
     padding: 24px 80px;
@@ -613,7 +709,7 @@
   }
 </style>
 </head>
-<body>
+<body class="gate-locked">
 
 <div class="hud-corner hud-tl"><div class="hud-box"></div><span class="rec-dot"></span><span>REC</span></div>
 <div class="hud-corner hud-tr">[2025]</div>
@@ -714,12 +810,34 @@
     </div>
   </div>
 
-  <hr class="divider">
+  <!-- ERGODIC GATE -->
+  <div class="gate-box">
+    <div class="gate-prompt">
+      <p>这是一篇遍历性网络文本，需要您付出非平凡的努力来获取文本。</p>
+      <p>您愿意接受这个挑战吗？</p>
+      <p class="gate-note">【一个小提醒：完整流程的平均遍历时间为：20分钟。您可以随时开始，随时结束，但当您重新刷新页面，所有的进程都将被重置。】</p>
+    </div>
+    <div class="gate-choices">
+      <button type="button" class="gate-choice gate-choice-left" id="gate-accept">我愿意，开始吧。</button>
+      <button type="button" class="gate-choice gate-choice-right" id="gate-question">什么是遍历性文本？</button>
+    </div>
+    <div class="gate-explainer" id="gate-explainer">
+      [占位符 — 遍历性文本的补充说明，待补充]
+    </div>
+  </div>
+
+  <hr class="divider locked" id="div-ch1">
 
   <!-- CHAPTER 1 -->
-  <div id="ch1" class="chapter reveal">
+  <div id="ch1" class="chapter reveal locked">
     <div class="chapter-label"><span class="lang-en">// Chapter 1</span><span class="lang-zh">// 第一章</span></div>
     <h2 class="chapter-title"><span class="lang-en">Introduction</span><span class="lang-zh">引言</span></h2>
+
+    <div class="type-prompt" id="ch1-type-prompt">
+      <span class="lang-en">Start typing</span><span class="lang-zh">开始输入</span><span class="type-cursor"></span>
+    </div>
+
+    <div class="chapter-body gated" id="ch1-body">
 
     <p>
       <span class="lang-en">In the design practice of narrative video games, there has long existed a disconnect between space and text: the environment is neither shaped by the narrative content, nor does it shape the player's understanding of it. Players traverse carefully designed virtual spaces, yet they are often merely moving, not reading. Stories unfold through dialogue boxes and cutscenes, while space functions only as their backdrop. This disconnect is not a failure of individual designers, but a consequence of existing narrative models — when narrative coherence is understood as a product of temporal sequence, space can only serve as a container for time-based storytelling rather than as a source of meaning itself. As a result, the narrative potential of virtual space has never been fully unleashed.</span>
@@ -750,12 +868,14 @@
       <p><em><span class="lang-en">How can spatial elements become an irreplaceable condition for the story to be understood, rather than an optional backdrop?</span><span class="lang-zh">空间元素如何成为故事得以理解的不可或缺的条件，而非可有可无的背景？</span></em></p>
       <p><em><span class="lang-en">In the process of integrating textual and spatial narrative, how can narrative coherence be made to depend on spatial relations rather than temporal sequence?</span><span class="lang-zh">在融合文本叙事与空间叙事的过程中，如何使叙事连贯性依赖于空间关系，而非时间序列？</span></em></p>
     </div>
+
+    </div>
   </div>
 
-  <hr class="divider">
+  <hr class="divider locked" id="div-ch2">
 
   <!-- CHAPTER 2 -->
-  <div id="ch2" class="chapter reveal">
+  <div id="ch2" class="chapter reveal locked">
     <div class="chapter-label"><span class="lang-en">// Chapter 2</span><span class="lang-zh">// 第二章</span></div>
     <h2 class="chapter-title"><span class="lang-en">Theoretical Framework</span><span class="lang-zh">理论框架</span></h2>
 
@@ -1009,10 +1129,10 @@
     </div>
   </div>
 
-  <hr class="divider">
+  <hr class="divider locked" id="div-ch3">
 
   <!-- CHAPTER 3 -->
-  <div id="ch3" class="chapter reveal">
+  <div id="ch3" class="chapter reveal locked">
     <div class="chapter-label"><span class="lang-en">// Chapter 3</span><span class="lang-zh">// 第三章</span></div>
     <h2 class="chapter-title"><span class="lang-en">Case Analysis</span><span class="lang-zh">案例分析</span></h2>
 
@@ -1088,10 +1208,10 @@
     </div>
   </div>
 
-  <hr class="divider">
+  <hr class="divider locked" id="div-ch4">
 
   <!-- CHAPTER 4 -->
-  <div id="ch4" class="chapter reveal">
+  <div id="ch4" class="chapter reveal locked">
     <div class="chapter-label"><span class="lang-en">// Chapter 4</span><span class="lang-zh">// 第四章</span></div>
     <h2 class="chapter-title"><span class="lang-en">Design Practice</span><span class="lang-zh">设计实践</span></h2>
 
@@ -1306,10 +1426,10 @@
     </div>
   </div>
 
-  <hr class="divider">
+  <hr class="divider locked" id="div-ch5">
 
   <!-- CHAPTER 5 -->
-  <div id="ch5" class="chapter reveal">
+  <div id="ch5" class="chapter reveal locked">
     <div class="chapter-label"><span class="lang-en">// Chapter 5</span><span class="lang-zh">// 第五章</span></div>
     <h2 class="chapter-title"><span class="lang-en">Conclusion</span><span class="lang-zh">结论</span></h2>
 
@@ -1319,10 +1439,10 @@
     </div>
   </div>
 
-  <hr class="divider">
+  <hr class="divider locked" id="div-bib">
 
   <!-- BIBLIOGRAPHY -->
-  <div id="bibliography" class="chapter reveal">
+  <div id="bibliography" class="chapter reveal locked">
     <div class="chapter-label"><span class="lang-en">// Bibliography</span><span class="lang-zh">// 参考文献</span></div>
     <h2 class="chapter-title"><span class="lang-en">Bibliography</span><span class="lang-zh">参考文献</span></h2>
 
@@ -1402,6 +1522,120 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.05 });
   reveals.forEach(el => revealObserver.observe(el));
+
+  // ══════════════════════════════════════════
+  // ERGODIC GATE
+  // ══════════════════════════════════════════
+
+  // "What is ergodic text?" toggle
+  document.getElementById('gate-question').addEventListener('click', () => {
+    document.getElementById('gate-explainer').classList.toggle('open');
+  });
+
+  // Wrap every character of a chapter-body's text nodes in its own <span class="tchar">,
+  // preserving existing inline tags (strong/em/spans for lang-en/lang-zh) untouched.
+  function splitIntoChars(root) {
+    const chars = [];
+    function walk(node) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const text = node.textContent;
+        if (!text) return;
+        const frag = document.createDocumentFragment();
+        for (const ch of text) {
+          const span = document.createElement('span');
+          span.className = 'tchar';
+          span.textContent = ch;
+          frag.appendChild(span);
+          chars.push(span);
+        }
+        node.parentNode.replaceChild(frag, node);
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        Array.from(node.childNodes).forEach(walk);
+      }
+    }
+    Array.from(root.childNodes).forEach(walk);
+    return chars;
+  }
+
+  // Sets up a type-to-reveal gate for a single chapter.
+  // promptId: the "Start typing" placeholder element
+  // bodyId: the chapter-body element whose text should be revealed character-by-character
+  function setupTypeGate(promptId, bodyId) {
+    const prompt = document.getElementById(promptId);
+    const body = document.getElementById(bodyId);
+    if (!prompt || !body) return null;
+
+    const chars = splitIntoChars(body);
+    let revealed = 0;
+
+    const cursor = document.createElement('span');
+    cursor.className = 'type-cursor';
+
+    function placeCursor() {
+      if (revealed > 0 && chars[revealed - 1]) {
+        chars[revealed - 1].insertAdjacentElement('afterend', cursor);
+      } else {
+        body.insertBefore(cursor, body.firstChild);
+      }
+    }
+
+    function revealNext() {
+      if (revealed >= chars.length) return;
+      chars[revealed].classList.add('revealed');
+      revealed++;
+      placeCursor();
+    }
+
+    let started = false;
+    function start() {
+      if (started) return;
+      started = true;
+      prompt.style.display = 'none';
+      body.classList.remove('gated');
+      placeCursor();
+    }
+
+    return { start, revealNext, get done() { return revealed >= chars.length; } };
+  }
+
+  const ch1Gate = setupTypeGate('ch1-type-prompt', 'ch1-body');
+
+  // Hidden always-focused input captures keystrokes (works for IME / mobile keyboards too)
+  const typeCapture = document.createElement('input');
+  typeCapture.type = 'text';
+  typeCapture.autocomplete = 'off';
+  typeCapture.setAttribute('aria-hidden', 'true');
+  typeCapture.style.position = 'fixed';
+  typeCapture.style.top = '-100px';
+  typeCapture.style.left = '0';
+  typeCapture.style.opacity = '0';
+  typeCapture.style.pointerEvents = 'none';
+  document.body.appendChild(typeCapture);
+
+  let activeGate = null;
+
+  typeCapture.addEventListener('input', () => {
+    const n = typeCapture.value.length;
+    typeCapture.value = '';
+    if (!activeGate) return;
+    for (let i = 0; i < n; i++) activeGate.revealNext();
+  });
+
+  function focusCapture() {
+    if (activeGate && !activeGate.done) typeCapture.focus();
+  }
+
+  document.getElementById('gate-accept').addEventListener('click', () => {
+    document.body.classList.remove('gate-locked');
+    document.getElementById('div-ch1').classList.remove('locked');
+    document.getElementById('ch1').classList.remove('locked');
+    activeGate = ch1Gate;
+    activeGate.start();
+    document.getElementById('ch1').scrollIntoView({ behavior: 'smooth' });
+    focusCapture();
+  });
+
+  document.addEventListener('click', focusCapture);
 </script>
 <div id="lightbox-overlay" onclick="this.classList.remove('active')">
   <button id="lightbox-close" onclick="document.getElementById('lightbox-overlay').classList.remove('active')">// CLOSE ✕</button>
