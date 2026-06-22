@@ -606,7 +606,7 @@
   .gate-choice-left { color: var(--red); border-color: var(--red-dim); }
   .gate-choice-left:hover { background: rgba(227,0,15,0.08); border-color: var(--red); }
   .gate-choice-right { color: var(--white-dim); }
-  .gate-explainer {
+  .annotation-panel {
     display: none;
     margin-top: 20px;
     padding: 18px 20px;
@@ -616,10 +616,37 @@
     color: var(--white-dim);
     line-height: 1.8;
   }
-  .gate-explainer.open { display: block; }
+  .annotation-panel.open { display: block; }
+  .annotation-panel-label {
+    color: var(--red);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .annotation-genre {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--white-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    display: inline-block;
+    padding: 3px 8px;
+    margin-bottom: 12px;
+  }
+  #annotation-panel-body p { margin: 0 0 14px; color: var(--white-dim); line-height: 1.8; }
+  #annotation-panel-body strong { color: var(--white); font-weight: 600; }
+  .annotation-fig {
+    margin-top: 8px;
+    border: 1px solid var(--border);
+    cursor: zoom-in;
+  }
+  .annotation-fig img { width: 100%; display: block; }
 
   @media (min-width: 901px) {
-    .gate-explainer {
+    .annotation-panel {
       position: fixed;
       top: 56px; right: 0; bottom: 0;
       width: 280px;
@@ -635,19 +662,16 @@
       overflow-y: auto;
       z-index: 480;
     }
-    .gate-explainer::before {
-      content: '// ERGODIC TEXT';
-      display: block;
-      color: var(--red);
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-    }
-    body.zh .gate-explainer::before {
-      content: '// 遍历性文本';
-    }
   }
+
+  /* TERM LINK — clickable in-text annotation trigger */
+  .term-link {
+    cursor: pointer;
+    border-bottom: 1px dotted var(--red-dim);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .term-link:hover { border-bottom-color: var(--red); color: var(--white); }
+  .term-link.active { border-bottom-style: solid; border-color: var(--red); }
 
   /* TYPE-TO-REVEAL */
   .type-prompt {
@@ -850,10 +874,7 @@
     </div>
     <div class="gate-choices">
       <button type="button" class="gate-choice gate-choice-left" id="gate-accept"><span class="lang-en">I'm willing. Let's begin.</span><span class="lang-zh">我愿意，开始吧。</span></button>
-      <button type="button" class="gate-choice gate-choice-right" id="gate-question"><span class="lang-en">What is ergodic text?</span><span class="lang-zh">什么是遍历性文本？</span></button>
-    </div>
-    <div class="gate-explainer" id="gate-explainer">
-      <span class="lang-en">[Placeholder — supplementary explanation of ergodic text, to be added]</span><span class="lang-zh">[占位符 — 遍历性文本的补充说明，待补充]</span>
+      <button type="button" class="gate-choice gate-choice-right term-link" data-annotation="ergodic-text" id="gate-question"><span class="lang-en">What is ergodic text?</span><span class="lang-zh">什么是遍历性文本？</span></button>
     </div>
   </div>
 
@@ -876,8 +897,8 @@
     </p>
 
     <p>
-      <span class="lang-en">In many ergodic text adventure games, space tends to exist only as a metaphorical element. In <em>80 Days</em>, the narrative is structured as a complex, interwoven graph: whichever branch the player chooses, the resulting path is entirely different and unpredictable, so each traversal constitutes a unique experience. In my view, this graph structure implies latent <strong>spatiality</strong>. When describing the player's journey, it is not enough to simply splice the narrative of each node together in temporal order. Instead, we should map the spatial topology formed by the connections between nodes. Here's the difference: the former is a temporal mode of reading, in which the player's experience is shaped by the sequence in which nodes are encountered; the latter is a spatial mode, in which the relative distances between nodes and the shape of the path they form together quietly alter the player's understanding of the story. However, this topology is too abstract, remaining at the level of a two-dimensional diagram, so the narrative information and aesthetic experience it can provide are quite limited. Meanwhile, the textual content is obviously more direct, naturally attracting more of the player's attention.</span>
-      <span class="lang-zh">在许多遍历性文字冒险游戏中，空间往往仅作为隐喻性元素存在。在《80天》中，叙事被构建为一个复杂交织的图结构：无论玩家选择哪条支线，所走路径都是迥异且不可预测的，因此每一次遍历都构成独特的体验。在我看来，这种图结构蕴含着潜在的<strong>空间性</strong>。描述玩家的旅程时，不能仅仅将各节点的叙事按时间顺序拼接在一起；我们应当绘制节点间连接所形成的空间拓扑图。区别在于：前者是一种时间性阅读模式，玩家的体验由节点的遭遇顺序所塑造；后者是一种空间性模式，节点间的相对距离与路径所形成的形状，悄然改变着玩家对故事的理解。然而，这种拓扑关系过于抽象，停留在二维图表的层面，因此所能提供的叙事信息与美学体验相当有限。而文本内容显然更为直接，自然地吸引了玩家更多的注意力。</span>
+      <span class="lang-en">In many ergodic text adventure games, space tends to exist only as a metaphorical element. In <em class="term-link" data-annotation="80days">80 Days</em>, the narrative is structured as a complex, interwoven graph: whichever branch the player chooses, the resulting path is entirely different and unpredictable, so each traversal constitutes a unique experience. In my view, this graph structure implies latent <strong>spatiality</strong>. When describing the player's journey, it is not enough to simply splice the narrative of each node together in temporal order. Instead, we should map the spatial topology formed by the connections between nodes. Here's the difference: the former is a temporal mode of reading, in which the player's experience is shaped by the sequence in which nodes are encountered; the latter is a spatial mode, in which the relative distances between nodes and the shape of the path they form together quietly alter the player's understanding of the story. However, this topology is too abstract, remaining at the level of a two-dimensional diagram, so the narrative information and aesthetic experience it can provide are quite limited. Meanwhile, the textual content is obviously more direct, naturally attracting more of the player's attention.</span>
+      <span class="lang-zh">在许多遍历性文字冒险游戏中，空间往往仅作为隐喻性元素存在。在<span class="term-link" data-annotation="80days">《80天》</span>中，叙事被构建为一个复杂交织的图结构：无论玩家选择哪条支线，所走路径都是迥异且不可预测的，因此每一次遍历都构成独特的体验。在我看来，这种图结构蕴含着潜在的<strong>空间性</strong>。描述玩家的旅程时，不能仅仅将各节点的叙事按时间顺序拼接在一起；我们应当绘制节点间连接所形成的空间拓扑图。区别在于：前者是一种时间性阅读模式，玩家的体验由节点的遭遇顺序所塑造；后者是一种空间性模式，节点间的相对距离与路径所形成的形状，悄然改变着玩家对故事的理解。然而，这种拓扑关系过于抽象，停留在二维图表的层面，因此所能提供的叙事信息与美学体验相当有限。而文本内容显然更为直接，自然地吸引了玩家更多的注意力。</span>
     </p>
 
     <div class="pull-quote">
@@ -1508,6 +1529,11 @@
     </div>
   </div>
 
+  <div class="annotation-panel" id="annotation-panel">
+    <div class="annotation-panel-label" id="annotation-panel-label"></div>
+    <div id="annotation-panel-body"></div>
+  </div>
+
 </main>
 
 <footer>
@@ -1517,6 +1543,7 @@
 
 <script>
   let activeGate = null;
+  const annotationPanel = document.getElementById('annotation-panel');
 
   // LANGUAGE TOGGLE
   function setLang(lang) {
@@ -1526,6 +1553,7 @@
     document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
     localStorage.setItem('lang', lang);
     if (activeGate) activeGate.onLangSwitch();
+    refreshAnnotationPanel();
   }
   const savedLang = localStorage.getItem('lang') || 'en';
   setLang(savedLang);
@@ -1558,13 +1586,69 @@
   reveals.forEach(el => revealObserver.observe(el));
 
   // ══════════════════════════════════════════
-  // ERGODIC GATE
+  // ANNOTATION PANEL — shared right-margin panel for in-text glosses
   // ══════════════════════════════════════════
 
-  // "What is ergodic text?" toggle
-  document.getElementById('gate-question').addEventListener('click', () => {
-    document.getElementById('gate-explainer').classList.toggle('open');
+  const ANNOTATIONS = {
+    'ergodic-text': {
+      label: { en: '// Ergodic Text', zh: '// 遍历性文本' },
+      body: {
+        en: '[Placeholder — supplementary explanation of ergodic text, to be added]',
+        zh: '[占位符 — 遍历性文本的补充说明，待补充]'
+      }
+    },
+    '80days': {
+      label: { en: '// 80 Days', zh: '// 《80天》' },
+      body: {
+        en: `<div class="annotation-genre">Text adventure game</div>
+             <p>By transforming a <strong>tree-structured narrative</strong> into a <strong>graph-structured narrative</strong>, the number of possible storylines can increase exponentially, even when the number of story modules remains the same.</p>
+             <div class="annotation-fig"><img src="images/80Days_GraphStructure.png" alt="80 Days — graph-structured narrative" class="lightbox-trigger" onclick="document.getElementById('lightbox-overlay').classList.add('active');document.getElementById('lightbox-img').src=this.src;"></div>`,
+        zh: '[占位符 — 关于《80天》的补充说明，待补充]'
+      }
+    }
+  };
+
+  function currentSiteLang() { return document.body.classList.contains('zh') ? 'zh' : 'en'; }
+
+  function openAnnotation(key) {
+    const data = ANNOTATIONS[key];
+    if (!data) return;
+    const lang = currentSiteLang();
+    document.getElementById('annotation-panel-label').textContent = data.label[lang];
+    document.getElementById('annotation-panel-body').innerHTML = data.body[lang];
+    annotationPanel.classList.add('open');
+    annotationPanel.dataset.current = key;
+    document.querySelectorAll('.term-link.active').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll(`.term-link[data-annotation="${key}"]`).forEach(el => el.classList.add('active'));
+  }
+
+  function closeAnnotation() {
+    annotationPanel.classList.remove('open');
+    delete annotationPanel.dataset.current;
+    document.querySelectorAll('.term-link.active').forEach(el => el.classList.remove('active'));
+  }
+
+  function refreshAnnotationPanel() {
+    if (annotationPanel.classList.contains('open') && annotationPanel.dataset.current) {
+      openAnnotation(annotationPanel.dataset.current);
+    }
+  }
+
+  document.querySelectorAll('.term-link').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const key = el.dataset.annotation;
+      if (annotationPanel.classList.contains('open') && annotationPanel.dataset.current === key) {
+        closeAnnotation();
+      } else {
+        openAnnotation(key);
+      }
+    });
   });
+
+  // ══════════════════════════════════════════
+  // ERGODIC GATE
+  // ══════════════════════════════════════════
 
   // Wrap every character of a chapter-body's text nodes in its own <span class="tchar">,
   // preserving existing inline tags (strong/em/spans for lang-en/lang-zh) untouched.
