@@ -72,6 +72,34 @@
   body.zh span.lang-zh { display: inline; }
   body.zh span.lang-en { display: none; }
 
+  /* FEATURED ROW — Osaider highlight */
+  .project-row.featured {
+    border-top: 1px solid var(--red-dim);
+    border-bottom-color: var(--red-dim);
+  }
+  .project-row.featured::before {
+    opacity: 1;
+    background: rgba(227, 0, 15, 0.05);
+  }
+  .project-row.featured:hover::before {
+    background: rgba(227, 0, 15, 0.09);
+  }
+  .featured-tag {
+    position: absolute;
+    top: 32px;
+    right: 0;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red);
+    border: 1px solid var(--red-dim);
+    padding: 3px 10px;
+    background: var(--bg);
+    z-index: 2;
+  }
+  @media (max-width: 768px) {
+    .featured-tag { top: 24px; font-size: 9px; padding: 2px 7px; }
+  }
 </style>
 </head>
 <body>
@@ -134,7 +162,8 @@
     <div class="row-arrow">→</div>
   </a>
 
-  <a href="project-006.html" class="project-row reveal">
+  <a href="project-006.html" class="project-row reveal featured">
+    <span class="featured-tag"><span class="lang-en">Featured</span><span class="lang-zh">重点项目</span></span>
     <div class="row-num">003</div>
     <div class="row-main">
       <div class="row-status status-wip">IN DEVELOPMENT</div>
