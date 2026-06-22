@@ -136,6 +136,14 @@
     letter-spacing: 0.04em;
   }
   .toc-master-input:focus { border-color: var(--red-dim); }
+  .toc-master-input.shake { animation: shake-x 0.4s; border-color: var(--red); }
+  @keyframes shake-x {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-4px); }
+    40% { transform: translateX(4px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(3px); }
+  }
 
   /* MAIN CONTENT */
   main {
@@ -2012,15 +2020,20 @@
       e.preventDefault();
       const val = tocMasterInput.value.trim().toLowerCase();
       tocMasterInput.value = '';
-      document.body.classList.remove('gate-locked');
 
       const chapterMatch = val.match(/^liigaga2026_chapter([1-5])$/);
       if (chapterMatch) {
+        document.body.classList.remove('gate-locked');
         unlockChapter(parseInt(chapterMatch[1], 10));
       } else if (val === 'liigaga2026_bibliography') {
+        document.body.classList.remove('gate-locked');
         unlockBibliography();
       } else if (val === 'liigaga2026_allchapters') {
+        document.body.classList.remove('gate-locked');
         unlockAllChapters();
+      } else {
+        tocMasterInput.classList.add('shake');
+        setTimeout(() => tocMasterInput.classList.remove('shake'), 400);
       }
     });
   }
