@@ -814,6 +814,35 @@
     .dice-check { flex: 0 0 56px; }
   }
 
+  /* UNLOCK CONGRATULATIONS — shown once all of Chapter 5 is solved */
+  .unlock-congrats {
+    margin: 40px 0;
+    border: 1px solid var(--red-dim);
+    background: var(--bg2);
+    padding: 28px 24px;
+  }
+  .unlock-congrats-label {
+    color: var(--red);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .unlock-congrats p { color: var(--white-dim); line-height: 1.8; margin-bottom: 12px; }
+  .unlock-congrats-list { list-style: none; padding: 0; margin-top: 8px; }
+  .unlock-congrats-list li { color: var(--white-dim); margin-bottom: 14px; line-height: 1.8; }
+  .unlock-congrats-list code {
+    display: inline-block;
+    margin-top: 4px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--blue);
+    padding: 2px 8px;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+
   /* CHAPTER 4 TABS — section selector revealed after the gate question */
   .ch4-tabs { margin: 32px 0; }
   .tab-buttons { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -1844,6 +1873,17 @@
     </div>
   </div>
 
+  <div class="unlock-congrats locked" id="unlock-congrats">
+    <div class="unlock-congrats-label"><span class="lang-en">// Access Granted</span><span class="lang-zh">// 访问已授权</span></div>
+    <p><span class="lang-en">Congratulations — you've successfully unlocked every chapter! You now have full access to read the complete text.</span><span class="lang-zh">恭喜你成功解锁所有章节！现在你有阅读全文的完整权限。</span></p>
+    <p><span class="lang-en">The next time you return, you can use the code box in the left-hand contents menu to retrieve the text directly:</span><span class="lang-zh">当你下一次重返时，可在左侧目录索引的指令框中输入以下指令以快速获取文本：</span></p>
+    <ul class="unlock-congrats-list">
+      <li><span class="lang-en">To get a specific chapter:</span><span class="lang-zh">获取某一章节：</span><br><code>liiigaga2026_chapter1</code> <span class="lang-en">through</span><span class="lang-zh">~</span> <code>liiigaga2026_chapter5</code></li>
+      <li><span class="lang-en">To get all chapters:</span><span class="lang-zh">获取所有章节：</span><br><code>liiigaga2026_allchapters</code></li>
+      <li><span class="lang-en">To get the bibliography:</span><span class="lang-zh">获取参考文献：</span><br><code>liiigaga2026_bibliography</code></li>
+    </ul>
+  </div>
+
   <hr class="divider locked" id="div-bib">
 
   <!-- BIBLIOGRAPHY -->
@@ -2456,8 +2496,10 @@
     if (solved) {
       const divBib = document.getElementById('div-bib');
       const bib = document.getElementById('bibliography');
+      const congrats = document.getElementById('unlock-congrats');
       if (divBib) divBib.classList.remove('locked');
       if (bib) bib.classList.remove('locked');
+      if (congrats) congrats.classList.remove('locked');
     }
   }
 
@@ -2541,8 +2583,10 @@
   function unlockBibliography() {
     const div = document.getElementById('div-bib');
     const bib = document.getElementById('bibliography');
+    const congrats = document.getElementById('unlock-congrats');
     if (div) div.classList.remove('locked');
     if (bib) bib.classList.remove('locked');
+    if (congrats) congrats.classList.remove('locked');
   }
 
   function unlockAllChapters() {
