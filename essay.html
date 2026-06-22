@@ -1077,7 +1077,7 @@
     <h2 class="chapter-title"><span class="lang-en">Introduction</span><span class="lang-zh">引言</span></h2>
 
     <div class="type-prompt" id="ch1-type-prompt">
-      <span class="lang-en">Start typing</span><span class="lang-zh">开始输入</span><span class="type-cursor"></span>
+      <span class="lang-en">Type anything...</span><span class="lang-zh">输入任意字符...</span><span class="type-cursor"></span>
     </div>
 
     <div class="chapter-body gated" id="ch1-body">
@@ -1462,6 +1462,11 @@
         <p><span class="lang-en">The spatial configuration changes according to the player's choices, with procedural generation enabling dynamic reconfiguration. Yet a disconnection of gameplay from narrative becomes apparent: once the player has fully mastered the system, the rooms become purely instrumental. <strong>The recombination logic bears no relationship to narrative meaning.</strong></span><span class="lang-zh">空间配置根据玩家选择而变化，程序生成使动态重配成为可能。然而游戏玩法与叙事的脱节变得明显：一旦玩家完全掌握系统，房间便成为纯粹的工具性存在。<strong>重组逻辑与叙事意义毫无关联。</strong></span></p>
         <p><span class="lang-en">Although the spatial configuration is recombined with each traversal — achieving a very high degree of freedom — the game mechanics do not serve the narrative in any productive way.</span><span class="lang-zh">尽管空间配置随每次遍历重新组合——实现了极高的自由度——游戏机制并未以任何有效方式服务于叙事。</span></p>
       </div>
+    </div>
+
+    <div class="figure locked" id="ch3-figure2">
+      <img src="essayimages/figures 3.2–3.4.png" alt="Figure 3 — Correspondence analysis of ergodic texts across Aarseth's seven variables" style="width:100%;display:block;" class="lightbox-trigger" onclick="document.getElementById('lightbox-overlay').classList.add('active');document.getElementById('lightbox-img').src=this.src;">
+      <div class="figure-caption">Mapping the distribution of electronic and paper texts. Source: Aarseth, Cybertext (1997), figures 3.2–3.4.</div>
     </div>
   </div>
 
@@ -1997,6 +2002,11 @@
     }
 
     function revealNext() {
+      if (!bodyRevealed) {
+        bodyRevealed = true;
+        prompt.style.display = 'none';
+        body.classList.remove('gated');
+      }
       const chars = activeChars();
       let revealed = activeRevealed();
       if (revealed >= chars.length) return;
@@ -2011,16 +2021,19 @@
     }
 
     let started = false;
+    let bodyRevealed = false;
     function start() {
       if (started) return;
       started = true;
-      prompt.style.display = 'none';
-      body.classList.remove('gated');
-      placeCursor();
     }
 
     function revealAll() {
       if (!started) start();
+      if (!bodyRevealed) {
+        bodyRevealed = true;
+        prompt.style.display = 'none';
+        body.classList.remove('gated');
+      }
       enChars.forEach(c => c.classList.add('revealed'));
       zhChars.forEach(c => c.classList.add('revealed'));
       enRevealed = enChars.length;
