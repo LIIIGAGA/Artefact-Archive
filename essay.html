@@ -1485,11 +1485,6 @@
         <p><span class="lang-en">Although the spatial configuration is recombined with each traversal — achieving a very high degree of freedom — the game mechanics do not serve the narrative in any productive way.</span><span class="lang-zh">尽管空间配置随每次遍历重新组合——实现了极高的自由度——游戏机制并未以任何有效方式服务于叙事。</span></p>
       </div>
     </div>
-
-    <div class="figure locked" id="ch3-figure2">
-      <img src="essayimages/figures 3.2–3.4.png" alt="Figure 3 — Correspondence analysis of ergodic texts across Aarseth's seven variables" style="width:100%;display:block;" class="lightbox-trigger" onclick="document.getElementById('lightbox-overlay').classList.add('active');document.getElementById('lightbox-img').src=this.src;">
-      <div class="figure-caption">Mapping the distribution of electronic and paper texts. Source: Aarseth, Cybertext (1997), figures 3.2–3.4.</div>
-    </div>
   </div>
 
   <hr class="divider locked" id="div-ch4">
@@ -1500,10 +1495,10 @@
     <h2 class="chapter-title"><span class="lang-en">Design Practice</span><span class="lang-zh">设计实践</span></h2>
 
     <div class="quiz-block show" id="ch4-gate">
-      <p class="quiz-stem"><span class="lang-en">Before starting this chapter, I'd like to make sure you already have some understanding of my graduation project.</span><span class="lang-zh">在开始本章之前，我需要先确保您对我的毕设作品已有一定了解。</span></p>
+      <p class="quiz-stem"><span class="lang-en">Before starting this chapter, I'd like to make sure you already have some understanding of my graduation project OSAIDER.</span><span class="lang-zh">在开始本章之前，我需要先确保您对我的毕设作品已有一定了解。</span></p>
       <div class="gate-choices">
-        <button type="button" class="gate-choice gate-choice-left" id="ch4-gate-yes"><span class="lang-en">Yes, I already understand it.</span><span class="lang-zh">是的，我已经了解。</span></button>
-        <button type="button" class="gate-choice gate-choice-right" id="ch4-gate-no"><span class="lang-en">No, I don't understand it yet.</span><span class="lang-zh">不，我还不了解。</span></button>
+        <button type="button" class="gate-choice gate-choice-left" id="ch4-gate-yes"><span class="lang-en">Yes, I am familiar with it.</span><span class="lang-zh">是的，我已经了解。</span></button>
+        <button type="button" class="gate-choice gate-choice-right" id="ch4-gate-no"><span class="lang-en">No, I don't know it yet.</span><span class="lang-zh">不，我还不了解。</span></button>
       </div>
       <div class="osaider-jump-wrap" id="ch4-jump-wrap" style="display:none;">
         <a href="project-006.html" class="osaider-jump-link">
@@ -2268,8 +2263,6 @@
         return el && !el.classList.contains('locked');
       });
       if (allUnlocked) {
-        const fig2 = document.getElementById('ch3-figure2');
-        if (fig2) fig2.classList.remove('locked');
         document.getElementById('div-ch4').classList.remove('locked');
         document.getElementById('ch4').classList.remove('locked');
       }
@@ -2330,8 +2323,6 @@
     }
     if (n === 3) {
       document.querySelectorAll('.case-study[data-game]').forEach(el => el.classList.remove('locked'));
-      const fig2 = document.getElementById('ch3-figure2');
-      if (fig2) fig2.classList.remove('locked');
       const div4 = document.getElementById('div-ch4');
       const ch4 = document.getElementById('ch4');
       if (div4) div4.classList.remove('locked');
