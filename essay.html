@@ -1516,6 +1516,8 @@
 </footer>
 
 <script>
+  let activeGate = null;
+
   // LANGUAGE TOGGLE
   function setLang(lang) {
     document.body.classList.remove('en', 'zh');
@@ -1523,6 +1525,7 @@
     document.getElementById('btn-en').classList.toggle('active', lang === 'en');
     document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
     localStorage.setItem('lang', lang);
+    if (activeGate) activeGate.onLangSwitch();
   }
   const savedLang = localStorage.getItem('lang') || 'en';
   setLang(savedLang);
@@ -1565,19 +1568,35 @@
 
   // Wrap every character of a chapter-body's text nodes in its own <span class="tchar">,
   // preserving existing inline tags (strong/em/spans for lang-en/lang-zh) untouched.
+  // Characters are bucketed by which language wrapper (if any) they fall under, so
+  // typing only ever advances the language that's actually visible on screen.
   function splitIntoChars(root) {
-    const chars = [];
+    const enChars = [];
+    const zhChars = [];
+    function langOf(el) {
+      while (el && el !== root) {
+        if (el.classList) {
+          if (el.classList.contains('lang-en')) return 'en';
+          if (el.classList.contains('lang-zh')) return 'zh';
+        }
+        el = el.parentElement;
+      }
+      return null;
+    }
     function walk(node) {
       if (node.nodeType === Node.TEXT_NODE) {
         const text = node.textContent;
         if (!text) return;
+        const lang = langOf(node.parentElement);
+        if (!lang) return; // structural whitespace between spans — leave untouched, always visible
         const frag = document.createDocumentFragment();
         for (const ch of text) {
           const span = document.createElement('span');
           span.className = 'tchar';
           span.textContent = ch;
           frag.appendChild(span);
-          chars.push(span);
+          if (lang === 'zh') zhChars.push(span);
+          else enChars.push(span);
         }
         node.parentNode.replaceChild(frag, node);
       } else if (node.nodeType === Node.ELEMENT_NODE) {
@@ -1585,7 +1604,7 @@
       }
     }
     Array.from(root.childNodes).forEach(walk);
-    return chars;
+    return { enChars, zhChars };
   }
 
   // Sets up a type-to-reveal gate for a single chapter.
@@ -1596,13 +1615,19 @@
     const body = document.getElementById(bodyId);
     if (!prompt || !body) return null;
 
-    const chars = splitIntoChars(body);
-    let revealed = 0;
+    const { enChars, zhChars } = splitIntoChars(body);
+    let enRevealed = 0, zhRevealed = 0;
 
     const cursor = document.createElement('span');
     cursor.className = 'type-cursor';
 
+    function activeLang() { return document.body.classList.contains('zh') ? 'zh' : 'en'; }
+    function activeChars() { return activeLang() === 'zh' ? zhChars : enChars; }
+    function activeRevealed() { return activeLang() === 'zh' ? zhRevealed : enRevealed; }
+
     function placeCursor() {
+      const chars = activeChars();
+      const revealed = activeRevealed();
       if (revealed > 0 && chars[revealed - 1]) {
         chars[revealed - 1].insertAdjacentElement('afterend', cursor);
       } else {
@@ -1611,9 +1636,12 @@
     }
 
     function revealNext() {
+      const chars = activeChars();
+      let revealed = activeRevealed();
       if (revealed >= chars.length) return;
       chars[revealed].classList.add('revealed');
       revealed++;
+      if (activeLang() === 'zh') zhRevealed = revealed; else enRevealed = revealed;
       placeCursor();
     }
 
@@ -1626,35 +1654,34 @@
       placeCursor();
     }
 
-    return { start, revealNext, get done() { return revealed >= chars.length; } };
+    return {
+      start, revealNext,
+      get done() { return activeRevealed() >= activeChars().length; },
+      onLangSwitch() { if (started) placeCursor(); }
+    };
   }
 
   const ch1Gate = setupTypeGate('ch1-type-prompt', 'ch1-body');
 
-  // Hidden always-focused input captures keystrokes (works for IME / mobile keyboards too)
-  const typeCapture = document.createElement('input');
-  typeCapture.type = 'text';
-  typeCapture.autocomplete = 'off';
-  typeCapture.setAttribute('aria-hidden', 'true');
-  typeCapture.style.position = 'fixed';
-  typeCapture.style.top = '-100px';
-  typeCapture.style.left = '0';
-  typeCapture.style.opacity = '0';
-  typeCapture.style.pointerEvents = 'none';
-  document.body.appendChild(typeCapture);
+  // Listen for keydown globally — no hidden input / focus juggling needed,
+  // which avoids races when focus briefly sits on a button (e.g. the EN/中文 toggle).
+  const IGNORED_KEYS = new Set([
+    'Tab', 'Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 'Escape',
+    'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
+    'Home', 'End', 'PageUp', 'PageDown', 'Insert', 'Delete',
+    'F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','F11','F12'
+  ]);
 
-  let activeGate = null;
-
-  typeCapture.addEventListener('input', () => {
-    const n = typeCapture.value.length;
-    typeCapture.value = '';
-    if (!activeGate) return;
-    for (let i = 0; i < n; i++) activeGate.revealNext();
+  document.addEventListener('keydown', (e) => {
+    if (!activeGate || activeGate.done) return;
+    if (IGNORED_KEYS.has(e.key)) return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return; // let browser shortcuts through
+    const tag = document.activeElement && document.activeElement.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA') return; // don't hijack real text fields
+    if ((tag === 'BUTTON' || tag === 'A') && (e.key === 'Enter' || e.key === ' ')) return; // let the focused control activate normally
+    e.preventDefault();
+    activeGate.revealNext();
   });
-
-  function focusCapture() {
-    if (activeGate && !activeGate.done) typeCapture.focus();
-  }
 
   document.getElementById('gate-accept').addEventListener('click', () => {
     document.body.classList.remove('gate-locked');
@@ -1663,10 +1690,8 @@
     activeGate = ch1Gate;
     activeGate.start();
     document.getElementById('ch1').scrollIntoView({ behavior: 'smooth' });
-    focusCapture();
+    if (document.activeElement) document.activeElement.blur();
   });
-
-  document.addEventListener('click', focusCapture);
 </script>
 <div id="lightbox-overlay" onclick="this.classList.remove('active')">
   <button id="lightbox-close" onclick="document.getElementById('lightbox-overlay').classList.remove('active')">// CLOSE ✕</button>
