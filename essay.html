@@ -2021,14 +2021,14 @@
       const val = tocMasterInput.value.trim().toLowerCase();
       tocMasterInput.value = '';
 
-      const chapterMatch = val.match(/^liigaga2026_chapter([1-5])$/);
+      const chapterMatch = val.match(/^liiigaga2026_chapter([1-5])$/);
       if (chapterMatch) {
         document.body.classList.remove('gate-locked');
         unlockChapter(parseInt(chapterMatch[1], 10));
-      } else if (val === 'liigaga2026_bibliography') {
+      } else if (val === 'liiigaga2026_bibliography') {
         document.body.classList.remove('gate-locked');
         unlockBibliography();
-      } else if (val === 'liigaga2026_allchapters') {
+      } else if (val === 'liiigaga2026_allchapters') {
         document.body.classList.remove('gate-locked');
         unlockAllChapters();
       } else {
