@@ -58,6 +58,134 @@
   footer { padding: 24px 80px; display: flex; justify-content: space-between; font-size: 11px; color: var(--white-dim); letter-spacing: 0.06em; border-top: 1px solid var(--border); }
 
   @media (max-width: 768px) { nav, main, footer { padding-left: 20px; padding-right: 20px; } }
+
+  /* ═══════════════════════════════════════════
+     MATERIAL CONTENT
+     ═══════════════════════════════════════════ */
+  .overview-text { font-size: 14px; color: var(--white-dim); line-height: 1.9; max-width: 680px; margin-bottom: 48px; }
+
+  .material-section { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border); }
+  .material-section:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+  .material-section-title {
+    font-family: var(--sans);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+
+  .material-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 700px) {
+    .material-grid { grid-template-columns: 1fr; }
+  }
+
+  .image-slot {
+    aspect-ratio: 16/10;
+    background: var(--bg2);
+    overflow: hidden;
+    position: relative;
+  }
+  .image-slot img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .image-slot:hover img { transform: scale(1.03); }
+
+  .video-tile {
+    aspect-ratio: 16/10;
+    background: var(--bg2);
+    overflow: hidden;
+    position: relative;
+  }
+  .video-tile video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    background: var(--bg2);
+  }
+  .video-tile .expand-btn {
+    position: absolute;
+    top: 8px; right: 8px;
+    width: 26px; height: 26px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(8,8,8,0.75);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-size: 13px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 5;
+    opacity: 0.7;
+    transition: opacity 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .video-tile .expand-btn:hover { opacity: 1; border-color: var(--red-dim); color: var(--red); }
+
+  /* CLICK-TO-ENLARGE AFFORDANCE ON IMAGES */
+  .zoomable { cursor: zoom-in; position: relative; }
+  .zoomable::after {
+    content: '⤢';
+    position: absolute;
+    top: 8px; right: 8px;
+    width: 26px; height: 26px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(8,8,8,0.75);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-size: 13px;
+    opacity: 0.55;
+    transition: opacity 0.2s, border-color 0.2s, color 0.2s;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .zoomable:hover::after { opacity: 1; border-color: var(--red-dim); color: var(--red); }
+
+  /* LIGHTBOX */
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8,8,8,0.96);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 64px;
+    cursor: zoom-out;
+  }
+  .lightbox-overlay.active { display: flex; }
+  .lightbox-overlay img, .lightbox-overlay video {
+    max-width: 100%;
+    max-height: 100%;
+    border: 1px solid var(--border);
+    cursor: default;
+  }
+  #lightbox-img, #lightbox-video { display: none; }
+  .lightbox-close {
+    position: fixed;
+    top: 20px; right: 24px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--white-dim);
+    cursor: pointer;
+    z-index: 2001;
+    font-family: var(--mono);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    background: var(--bg);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .lightbox-close:hover { color: var(--red); border-color: var(--red-dim); }
+  .lightbox-hint {
+    position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%);
+    font-size: 10px; color: var(--white-dim); letter-spacing: 0.08em; z-index: 2001;
+  }
 </style>
 </head>
 <body>
@@ -80,12 +208,48 @@
 <main>
   <div class="page-label"><span class="lang-en">// UE5 — Node-Based Materials</span><span class="lang-zh">// UE5 — 节点化材质</span></div>
   <h1 class="page-title"><span class="lang-en">Node-Based Materials</span><span class="lang-zh">节点化材质</span></h1>
+  <p class="overview-text">
+    <span class="lang-en">Niagara systems and node-based material graphs built for BubbleNight — flowing light, twinkling starlight, and mask-driven dissolve effects, each constructed and tuned directly in UE5's material editor.</span>
+    <span class="lang-zh">为《浮梦夜》搭建的 Niagara 系统与节点化材质图——流光材质、闪烁星光与遮罩驱动的消隐效果，均在 UE5 材质编辑器中直接搭建与调试。</span>
+  </p>
 
-  <div class="pending-box">
-    <div class="pending-code">// CONTENT PENDING</div>
-    <div class="pending-msg"><span class="lang-en">This page is awaiting content.</span><span class="lang-zh">本页面内容尚未上传。</span></div>
-    <div class="pending-sub lang-en">Documentation for this technical category will be added here.</div>
-    <div class="pending-sub lang-zh">该技术分类的相关说明将在此处补充。</div>
+  <div class="material-section">
+    <div class="material-section-title"><span class="lang-en">Flowing Light Material</span><span class="lang-zh">流光材质</span></div>
+    <div class="material-grid">
+      <div class="image-slot zoomable" onclick="openLightbox('image','images/BubbleNight_FlameMat.png')">
+        <img src="images/BubbleNight_FlameMat.png" alt="Flowing light material — node graph">
+      </div>
+      <div class="video-tile">
+        <video src="videos/BubbleNight_FlameMat.mp4" controls></video>
+        <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_FlameMat.mp4')">⤢</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="material-section">
+    <div class="material-section-title"><span class="lang-en">Twinkling Starlight</span><span class="lang-zh">闪烁星光</span></div>
+    <div class="material-grid">
+      <div class="image-slot zoomable" onclick="openLightbox('image','images/BubbleNight_StarMat.png')">
+        <img src="images/BubbleNight_StarMat.png" alt="Twinkling starlight material — node graph">
+      </div>
+      <div class="video-tile">
+        <video src="videos/BubbleNight_StarMat.mp4" controls></video>
+        <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_StarMat.mp4')">⤢</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="material-section">
+    <div class="material-section-title"><span class="lang-en">Mask Material</span><span class="lang-zh">遮罩材质</span></div>
+    <div class="material-grid">
+      <div class="image-slot zoomable" onclick="openLightbox('image','images/BubbleNight_MaskMat.png')">
+        <img src="images/BubbleNight_MaskMat.png" alt="Mask material — node graph">
+      </div>
+      <div class="video-tile">
+        <video src="videos/BubbleNight_MaskMat.mp4" controls></video>
+        <div class="expand-btn" onclick="openLightbox('video','videos/BubbleNight_MaskMat.mp4')">⤢</div>
+      </div>
+    </div>
   </div>
 </main>
 
@@ -93,6 +257,16 @@
   <span><span class="lang-en">TECH INDEX // UE5 // NODE-BASED MATERIALS</span><span class="lang-zh">技术索引 // UE5 // 节点化材质</span></span>
   <a href="index.html#tech-index" style="color:var(--white-dim);text-decoration:none;">← Return to Tech Index</a>
 </footer>
+
+<!-- ═══════════════════════════════════════════
+     LIGHTBOX — 点击图片/视频放大查看
+     ═══════════════════════════════════════════ -->
+<div class="lightbox-overlay" id="lightbox" onclick="if(event.target===this) closeLightbox()">
+  <div class="lightbox-close" onclick="closeLightbox()">✕ <span class="lang-en">CLOSE</span><span class="lang-zh">关闭</span></div>
+  <img id="lightbox-img" src="" alt="">
+  <video id="lightbox-video" controls></video>
+  <div class="lightbox-hint"><span class="lang-en">ESC OR CLICK OUTSIDE TO CLOSE</span><span class="lang-zh">按 ESC 或点击空白处关闭</span></div>
+</div>
 
 <script>
   const ch = document.getElementById('ch'); const cv = document.getElementById('cv');
@@ -107,6 +281,36 @@
   }
   const savedLang = localStorage.getItem('lang') || 'en';
   setLang(savedLang);
+
+  // ── LIGHTBOX ──
+  function openLightbox(type, src) {
+    const overlay = document.getElementById('lightbox');
+    const imgEl = document.getElementById('lightbox-img');
+    const vidEl = document.getElementById('lightbox-video');
+    vidEl.pause();
+    if (type === 'image') {
+      imgEl.src = src;
+      imgEl.style.display = 'block';
+      vidEl.style.display = 'none';
+      vidEl.removeAttribute('src');
+    } else {
+      vidEl.src = src;
+      vidEl.style.display = 'block';
+      imgEl.style.display = 'none';
+      imgEl.removeAttribute('src');
+      vidEl.play().catch(() => {});
+    }
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    const overlay = document.getElementById('lightbox');
+    const vidEl = document.getElementById('lightbox-video');
+    vidEl.pause();
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 </script>
 </body>
 </html>
