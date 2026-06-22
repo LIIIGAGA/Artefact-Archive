@@ -768,6 +768,58 @@
     .quiz-options { grid-template-columns: 1fr; }
   }
 
+  /* OSAIDER PROJECT JUMP LINK — floats into right margin on wide screens */
+  .osaider-jump-wrap { position: relative; margin: 32px 0; }
+  .osaider-jump-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    border: 1px solid var(--blue);
+    color: var(--blue);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .osaider-jump-link:hover { background: var(--blue); color: var(--bg); }
+
+  @media (min-width: 901px) {
+    .osaider-jump-link {
+      position: absolute;
+      left: 100%;
+      top: 0;
+      margin-left: 32px;
+      width: 200px;
+      white-space: normal;
+    }
+  }
+
+  /* FILL-IN-THE-BLANK — Chapter 2 end-of-chapter check */
+  .fillblank-block { margin-top: 40px; }
+  .fillblank-stem {
+    font-size: 16px;
+    color: var(--white-dim);
+    line-height: 2.4;
+    margin-bottom: 20px;
+  }
+  .fillblank-input {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-bottom: 2px solid var(--blue-dim);
+    color: var(--white);
+    font-family: var(--mono);
+    font-size: 14px;
+    padding: 3px 8px;
+    width: 170px;
+    outline: none;
+    text-align: center;
+    margin: 0 2px;
+  }
+  .fillblank-input:focus { border-bottom-color: var(--blue); }
+
   /* PASSWORD GATE — Chapter 2 section unlock */
   .password-gate { margin-bottom: 40px; }
   .password-prompt {
@@ -1323,6 +1375,16 @@
         <p>"A cybertext is a machine for the production of variety of expression — in the present model, spatial configuration is precisely the variety of expression the text produces."</p>
         <cite>— Aarseth, Cybertext (1997), p.3</cite>
       </div>
+
+      <div class="fillblank-block" id="ch2-fillblank">
+        <p class="quiz-prompt"><span class="lang-en">Please complete the sentence.</span><span class="lang-zh">请完成句子填空。</span></p>
+        <p class="fillblank-stem">
+          <span class="lang-en">Building on Aarseth's seven-variable framework, this dissertation proposes an eighth variable — <input type="text" class="fillblank-input" id="ch2-blank1-en" autocomplete="off" spellcheck="false"> — and extends Emily Short's Storylet theory into the spatial dimension, proposing a <input type="text" class="fillblank-input" id="ch2-blank2-en" autocomplete="off" spellcheck="false"> model.</span>
+          <span class="lang-zh">本文在Aarseth七变量框架的基础上提出第八变量<input type="text" class="fillblank-input" id="ch2-blank1-zh" autocomplete="off" spellcheck="false">，同时将Emily Short的Storylet理论在空间维度上进行拓展，提出<input type="text" class="fillblank-input" id="ch2-blank2-zh" autocomplete="off" spellcheck="false">模型。</span>
+        </p>
+        <button type="button" class="gate-choice gate-choice-left" id="ch2-fillblank-submit" style="max-width:220px;"><span class="lang-en">Submit</span><span class="lang-zh">提交</span></button>
+        <p class="password-feedback" id="ch2-fillblank-feedback"></p>
+      </div>
     </div>
   </div>
 
@@ -1348,7 +1410,16 @@
       <div class="figure-caption">Mapping the distribution of electronic and paper texts. Source: Aarseth, Cybertext: Perspectives on Ergodic Literature (1997), figures 3.2–3.4.</div>
     </div>
 
-    <div class="case-study">
+    <div class="password-gate">
+      <p class="password-prompt"><span class="lang-en">Enter a game's name to reveal its case study below.</span><span class="lang-zh">输入游戏名称，查看对应的案例分析。</span></p>
+      <div class="password-input-row">
+        <span class="type-cursor"></span>
+        <input type="text" class="password-input" id="ch3-game-input" autocomplete="off" spellcheck="false" placeholder="Disco Elysium">
+      </div>
+      <p class="password-feedback" id="ch3-game-feedback"></p>
+    </div>
+
+    <div class="case-study locked" data-game="disco-elysium">
       <div class="case-header">
         <div class="case-name">Disco Elysium — ZA/UM, 2019</div>
         <div class="case-tag">Decorative → Contextual</div>
@@ -1363,7 +1434,7 @@
       </div>
     </div>
 
-    <div class="case-study">
+    <div class="case-study locked" data-game="citizen-sleeper">
       <div class="case-header">
         <div class="case-name">Citizen Sleeper — Jump Over the Age, 2022</div>
         <div class="case-tag">Contextual</div>
@@ -1378,7 +1449,7 @@
       </div>
     </div>
 
-    <div class="case-study">
+    <div class="case-study locked" data-game="blue-prince">
       <div class="case-header">
         <div class="case-name">Blue Prince — Dogubomb, 2025</div>
         <div class="case-tag">Constitutive Attempt — Disconnected</div>
@@ -1391,6 +1462,11 @@
         <p><span class="lang-en">The spatial configuration changes according to the player's choices, with procedural generation enabling dynamic reconfiguration. Yet a disconnection of gameplay from narrative becomes apparent: once the player has fully mastered the system, the rooms become purely instrumental. <strong>The recombination logic bears no relationship to narrative meaning.</strong></span><span class="lang-zh">空间配置根据玩家选择而变化，程序生成使动态重配成为可能。然而游戏玩法与叙事的脱节变得明显：一旦玩家完全掌握系统，房间便成为纯粹的工具性存在。<strong>重组逻辑与叙事意义毫无关联。</strong></span></p>
         <p><span class="lang-en">Although the spatial configuration is recombined with each traversal — achieving a very high degree of freedom — the game mechanics do not serve the narrative in any productive way.</span><span class="lang-zh">尽管空间配置随每次遍历重新组合——实现了极高的自由度——游戏机制并未以任何有效方式服务于叙事。</span></p>
       </div>
+    </div>
+
+    <div class="figure locked" id="ch3-figure2">
+      <img src="essayimages/figures 3.2–3.4.png" alt="Figure 3 — Correspondence analysis of ergodic texts across Aarseth's seven variables" style="width:100%;display:block;" class="lightbox-trigger" onclick="document.getElementById('lightbox-overlay').classList.add('active');document.getElementById('lightbox-img').src=this.src;">
+      <div class="figure-caption">Mapping the distribution of electronic and paper texts. Source: Aarseth, Cybertext (1997), figures 3.2–3.4.</div>
     </div>
   </div>
 
@@ -1406,8 +1482,8 @@
     <p><span class="lang-en">The chapter will first introduce the core logic of the design concept: how the modular structure corresponds to the three-layer model of the Spatial Storylet, and how the rules governing spatial reconfiguration seek to realise a narrative spatial grammar. It will then present a comparative analysis of the interactive experience between the text-only narrative prototype and the full spatial prototype. Finally, the chapter will apply the analytical framework established in Chapter 2, with particular focus on the eighth variable proposed in this dissertation, spatial morphology, to position the current design within the three-level taxonomy, evaluating the degree to which the decorative, contextual, and constitutive levels have been realised, and honestly identifying the limitations and unresolved questions that remain at this stage of development.<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">17</a></sup></span><span class="lang-zh">本章将首先介绍设计概念的核心逻辑：模块化结构如何对应空间叙事单元的三层模型，以及支配空间重配的规则如何寻求实现叙事空间语法。然后对纯文本叙事原型与完整空间原型之间的互动体验进行比较分析。最后，本章将运用第二章建立的分析框架，特别聚焦于本论文提出的第八变量——空间形态，在三层分类法中定位当前设计，评估装饰性、语境性与构成性层级的实现程度，并诚实地识别当前开发阶段仍存在的局限性与未解决问题。<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">17</a></sup></span></p>
 
 
-    <div style="margin: 32px 0;">
-      <a href="project-006.html" style="display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border:1px solid var(--red);color:var(--red);font-family:var(--mono);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:background 0.2s,color 0.2s;" onmouseover="this.style.background='var(--red)';this.style.color='var(--bg)'" onmouseout="this.style.background='transparent';this.style.color='var(--red)'">
+    <div class="osaider-jump-wrap">
+      <a href="project-006.html" class="osaider-jump-link">
         <span>↗</span>
         <span class="lang-en">View Full Project — OSAIDER | 奥赛德</span><span class="lang-zh">查看完整项目 — OSAIDER | 奥赛德</span>
       </a>
@@ -2060,6 +2136,102 @@
   }
 
   // ══════════════════════════════════════════
+  // CHAPTER 2 — END-OF-CHAPTER FILL-IN-THE-BLANK
+  // ══════════════════════════════════════════
+  const ch2FillBlankSubmit = document.getElementById('ch2-fillblank-submit');
+  const ch2FillBlankFeedback = document.getElementById('ch2-fillblank-feedback');
+
+  function checkCh2FillBlank() {
+    const lang = currentSiteLang();
+    const b1 = document.getElementById('ch2-blank1-' + lang);
+    const b2 = document.getElementById('ch2-blank2-' + lang);
+    if (!b1 || !b2) return;
+    const v1 = (b1.value || '').trim().toLowerCase();
+    const v2 = (b2.value || '').trim().toLowerCase();
+    const correct1 = (lang === 'zh' ? '空间形态' : 'spatial morphology');
+    const correct2 = (lang === 'zh' ? '空间叙事单元' : 'spatial storylet');
+    if (v1 === correct1 && v2 === correct2) {
+      ch2FillBlankFeedback.textContent = lang === 'zh' ? '回答正确。' : 'Correct.';
+      ch2FillBlankFeedback.className = 'password-feedback ok';
+      [b1, b2].forEach(b => b.disabled = true);
+      if (ch2FillBlankSubmit) ch2FillBlankSubmit.disabled = true;
+      document.body.classList.remove('gate-locked');
+      const div3 = document.getElementById('div-ch3');
+      const ch3 = document.getElementById('ch3');
+      if (div3) div3.classList.remove('locked');
+      if (ch3) {
+        ch3.classList.remove('locked');
+        ch3.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+          const gameInput = document.getElementById('ch3-game-input');
+          if (gameInput) gameInput.focus();
+        }, 400);
+      }
+    } else {
+      ch2FillBlankFeedback.textContent = lang === 'zh' ? '答案不正确，请再试一次。' : 'Incorrect — please try again.';
+      ch2FillBlankFeedback.className = 'password-feedback bad';
+    }
+  }
+
+  if (ch2FillBlankSubmit) {
+    ch2FillBlankSubmit.addEventListener('click', checkCh2FillBlank);
+    document.querySelectorAll('.fillblank-input').forEach(inp => {
+      inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); checkCh2FillBlank(); } });
+    });
+  }
+
+  // ══════════════════════════════════════════
+  // CHAPTER 3 — GAME-NAME UNLOCK
+  // ══════════════════════════════════════════
+  const GAME_NAME_MAP = {
+    'disco elysium': 'disco-elysium',
+    '极乐迪斯科': 'disco-elysium',
+    'citizen sleeper': 'citizen-sleeper',
+    '深空梦里人': 'citizen-sleeper',
+    'blue prince': 'blue-prince',
+    '蓝途王子': 'blue-prince'
+  };
+  const CASE_STUDY_KEYS = ['disco-elysium', 'citizen-sleeper', 'blue-prince'];
+
+  const ch3GameInput = document.getElementById('ch3-game-input');
+  const ch3GameFeedback = document.getElementById('ch3-game-feedback');
+
+  if (ch3GameInput) {
+    ch3GameInput.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      const raw = ch3GameInput.value.trim().toLowerCase();
+      const lang = currentSiteLang();
+      const key = GAME_NAME_MAP[raw];
+      ch3GameInput.value = '';
+      if (!key) {
+        ch3GameFeedback.textContent = lang === 'zh' ? '未找到该游戏，请检查名称。' : 'Game not found — check the spelling.';
+        ch3GameFeedback.className = 'password-feedback bad';
+        return;
+      }
+      const card = document.querySelector(`.case-study[data-game="${key}"]`);
+      if (!card) return;
+      if (card.classList.contains('locked')) {
+        card.classList.remove('locked');
+        ch3GameFeedback.textContent = lang === 'zh' ? '已解锁该案例。' : 'Case study unlocked.';
+        ch3GameFeedback.className = 'password-feedback ok';
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        ch3GameFeedback.textContent = lang === 'zh' ? '该案例已经解锁过了。' : 'That case study is already unlocked.';
+        ch3GameFeedback.className = 'password-feedback ok';
+      }
+      const allUnlocked = CASE_STUDY_KEYS.every(k => {
+        const el = document.querySelector(`.case-study[data-game="${k}"]`);
+        return el && !el.classList.contains('locked');
+      });
+      if (allUnlocked) {
+        const fig2 = document.getElementById('ch3-figure2');
+        if (fig2) fig2.classList.remove('locked');
+      }
+    });
+  }
+
+  // ══════════════════════════════════════════
   // TOC MASTER CODE — direct-unlock shortcuts
   // ══════════════════════════════════════════
   function unlockChapter(n) {
@@ -2076,6 +2248,11 @@
         const sub = document.getElementById('ch2-' + i);
         if (sub) sub.classList.remove('locked');
       }
+    }
+    if (n === 3) {
+      document.querySelectorAll('.case-study[data-game]').forEach(el => el.classList.remove('locked'));
+      const fig2 = document.getElementById('ch3-figure2');
+      if (fig2) fig2.classList.remove('locked');
     }
   }
 
