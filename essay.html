@@ -1254,10 +1254,10 @@
     <h2 class="chapter-title"><span class="lang-en">Theoretical Framework</span><span class="lang-zh">理论框架</span></h2>
 
     <div class="password-gate">
-      <p class="password-prompt"><span class="lang-en">The password for this chapter is: Aarseth + section number.</span><span class="lang-zh">本章节密码为：Aarseth+章节编号。</span></p>
+      <p class="password-prompt"><span class="lang-en">The password for this chapter is: ergodic + section number.</span><span class="lang-zh">本章节密码为：ergodic+章节编号。</span></p>
       <div class="password-input-row">
         <span class="type-cursor"></span>
-        <input type="text" class="password-input" id="ch2-password-input" autocomplete="off" spellcheck="false" placeholder="e.g. Aarseth2.1">
+        <input type="text" class="password-input" id="ch2-password-input" autocomplete="off" spellcheck="false" placeholder="e.g. ergodic2.1">
       </div>
       <p class="password-feedback" id="ch2-password-feedback"></p>
     </div>
@@ -2397,7 +2397,7 @@
       if (e.key !== 'Enter') return;
       e.preventDefault();
       const raw = ch2PasswordInput.value.trim();
-      const match = raw.match(/^aarseth\s*2\.([1-5])$/i);
+      const match = raw.match(/^ergodic\s*2\.([1-5])$/i);
       const lang = currentSiteLang();
       if (!match) {
         ch2PasswordFeedback.textContent = lang === 'zh' ? '密码不正确。' : 'Incorrect password.';
