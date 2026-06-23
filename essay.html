@@ -866,6 +866,26 @@
     .tab-buttons { flex-direction: column; }
   }
 
+  /* IMAGE CHOICE — click an image to reveal the follow-up paragraph */
+  .image-choice-row {
+    display: flex;
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .image-choice-option {
+    flex: 1;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .image-choice-option img { width: 100%; display: block; }
+  .image-choice-option:hover { border-color: var(--blue-dim); }
+  .image-choice-option.selected { border-color: var(--blue); }
+  @media (max-width: 600px) {
+    .image-choice-row { flex-direction: column; }
+  }
+
   /* OSAIDER PROJECT JUMP LINK — floats into right margin on wide screens */
   .osaider-jump-wrap { position: relative; margin: 32px 0; }
   .osaider-jump-link {
@@ -1712,7 +1732,29 @@
 
       <p><span class="lang-en">The two prototype versions make the contribution of spatial form directly legible through comparison. In the text-only prototype, the player possesses only textual information; the narrative is traversable, but its spatial grammar is absent. Meaning must be imaginatively reconstructed from language alone. In the full spatial prototype, the player encounters the story through three-dimensional space — through a non-textual, embodied experience of manipulating form, scale, and material to obtain objects and clues. Space introduces what text alone cannot supply: an experiential, traversable dimension upon which the contextual and grammatical layers depend.</span><span class="lang-zh">两个版本的原型，使空间形态的贡献通过对比得以直接显现。在纯文字原型中，玩家只拥有文字信息；叙事可以被遍历，但其空间语法缺席。意义必须单纯从语言中被想象性地重建。在完整空间原型中，玩家通过三维空间遭遇故事——通过操作形态、尺度与材质以获得物品和线索的非文字，具身性体验。空间引入了文字单独无法提供的东西：一个语境层和语法层所依赖的、体验性的、可遍历的维度。</span></p>
 
-      <p><span class="lang-en">This embodied dimension calls to mind Rossi's concept of the <em>architectural type</em> — the idea that certain spatial forms recur across different cultures and histories, gradually accumulating layers of history and collective memory, and in doing so come to transcend their specific era and function. When the word "palace" is invoked, people automatically activate a set of associations around power, ritual, and monumentality. This ineffable human experience is transmitted in secret, in the form of a collective unconscious.</span><span class="lang-zh">这种具身性维度让我想起Rossi的"建筑原型"（architectural type）概念中，某些空间形态在不同文化和历史中反复出现，逐渐沉积了历史和集体记忆，便开始超越具体时代和功能。当提起"宫殿"，人们便会自动激发关于权力、仪式、纪念性的联想。这种无法被言说的人类经验以集体潜意识的形式隐秘地传承。</span></p>
+      <p><span class="lang-en">This embodied dimension calls to mind Rossi's concept of the <em>architectural type</em> — the idea that certain spatial forms recur across different cultures and histories, gradually accumulating layers of history and collective memory, and in doing so come to transcend their specific era and function. When the word "palace" is invoked, people automatically activate a set of associations around power, ritual, and monumentality. This ineffable human experience is transmitted in secret, in the form of a collective unconscious. Yet across different cultures, people hold strikingly different imaginings of what a "palace" looks like. When you read a passage like this:</span><span class="lang-zh">这种具身性维度让我想起Rossi的"建筑原型"（architectural type）概念中，某些空间形态在不同文化和历史中反复出现，逐渐沉积了历史和集体记忆，便开始超越具体时代和功能。当提起"宫殿"，人们便会自动激发关于权力、仪式、纪念性的联想。这种无法被言说的人类经验以集体潜意识的形式隐秘地传承。但在不同文化中，人们对于"宫殿"形象有着截然不同的想象，当阅读到这样的文段：</span></p>
+
+      <div class="pull-quote">
+        <p><span class="lang-en">According to the Archivist's records, over a hundred years have passed since the great war with Osaider. Nearly thirty years have passed since the last Commemoration Movement.<br>People have lost so much — home, faith, memory... and hope.<br>The Archivist assures the people that the efforts of their forebears will not be in vain. They will fight with everything they have to protect our shared home. This palace will stand forever, until the end of time.</span><span class="lang-zh">根据Archivist的记述，与Osaider的大战已经过去了上百年。距离上一次纪念运动也已经将近30年了。<br>人们失去了太多东西，家园，信仰，记忆...以及希望。<br>Archivist向人们保证，先辈们的努力不会付诸东流。他们会拼尽一切守护我们共同的家园。这座宫殿将会永远存在，直到时间的尽头。</span></p>
+      </div>
+
+      <p><span class="lang-en">Which of these images is closer to the picture in your mind?</span><span class="lang-zh">你脑海中的画面更接近下面哪一张图片呢？</span></p>
+
+      <div class="image-choice-row" id="palace-choice">
+        <div class="image-choice-option" data-choice="1">
+          <img src="essayimages/Palace01.png" alt="Palace imagination — option 1">
+        </div>
+        <div class="image-choice-option" data-choice="2">
+          <img src="essayimages/Palace02.png" alt="Palace imagination — option 2">
+        </div>
+        <div class="image-choice-option" data-choice="3">
+          <img src="essayimages/Palace03.png" alt="Palace imagination — option 3">
+        </div>
+      </div>
+
+      <div class="locked" id="palace-followup">
+        <p><span class="lang-en">The blanks and ambiguity that text affords create a vast imaginative space, and this is precisely where the charm of literature lies. Non-textual, "material" media, by weakening their own properties of expression and interpretation, instead cultivate a sense of distance. I do not wish to deny the romantic aesthetic experience that pure textual reading offers for ambiguous meaning; rather, building on the text-only prototype, I introduce a spatial medium in an attempt to find a narrative pathway that activates people's bodily experience and spatial perception. When people confront the unsayable, a sense of awe naturally arises — and this greatly heightens the immersive emotional experience of narrative.</span><span class="lang-zh">文字带来的留白和歧义创造了广阔的想象空间，这也正是文学的魅力所在。而非文字化的"物质"媒介因为弱化了自身"表达"和"诠释"的属性，营造出距离感。我并不想要否认纯文字阅读对于模糊意义的浪漫审美体验，而是在文字原型的基础上引入空间媒介，试图找到一种激发人们身体经验和空间感知的叙事途径。人们面对不可言说之物时会油然而生一种敬畏感，这将大大提高叙事的沉浸式情感体验。</span></p>
+      </div>
     </div>
 
     <div class="chapter-section tab-panel locked" id="ch4-tab-4">
@@ -2524,6 +2566,15 @@
       }
     });
   }
+
+  document.querySelectorAll('.image-choice-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('#palace-choice .image-choice-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      const followup = document.getElementById('palace-followup');
+      if (followup) followup.classList.remove('locked');
+    });
+  });
 
   // ══════════════════════════════════════════
   // CHAPTER 4 — UNDERSTANDING GATE + SECTION TABS
