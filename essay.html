@@ -866,26 +866,6 @@
     .tab-buttons { flex-direction: column; }
   }
 
-  /* IMAGE CHOICE — click an image to reveal the follow-up paragraph */
-  .image-choice-row {
-    display: flex;
-    gap: 12px;
-    margin: 20px 0;
-  }
-  .image-choice-option {
-    flex: 1;
-    border: 1px solid var(--border);
-    cursor: pointer;
-    overflow: hidden;
-    transition: border-color 0.2s;
-  }
-  .image-choice-option img { width: 100%; display: block; }
-  .image-choice-option:hover { border-color: var(--blue-dim); }
-  .image-choice-option.selected { border-color: var(--blue); }
-  @media (max-width: 600px) {
-    .image-choice-row { flex-direction: column; }
-  }
-
   /* OSAIDER PROJECT JUMP LINK — floats into right margin on wide screens */
   .osaider-jump-wrap { position: relative; margin: 32px 0; }
   .osaider-jump-link {
@@ -1252,10 +1232,10 @@
     <h2 class="chapter-title"><span class="lang-en">Theoretical Framework</span><span class="lang-zh">理论框架</span></h2>
 
     <div class="password-gate">
-      <p class="password-prompt"><span class="lang-en">The password for this chapter is: ergodic + section number. [Range: 2.1–2.5, read in any order]</span><span class="lang-zh">本章节密码为：ergodic+章节编号。【范围：2.1~2.5，顺序不限】</span></p>
+      <p class="password-prompt"><span class="lang-en">The password for this chapter is: Aarseth + section number.</span><span class="lang-zh">本章节密码为：Aarseth+章节编号。</span></p>
       <div class="password-input-row">
         <span class="type-cursor"></span>
-        <input type="text" class="password-input" id="ch2-password-input" autocomplete="off" spellcheck="false" placeholder="e.g. ergodic2.1">
+        <input type="text" class="password-input" id="ch2-password-input" autocomplete="off" spellcheck="false" placeholder="e.g. Aarseth2.1">
       </div>
       <p class="password-feedback" id="ch2-password-feedback"></p>
     </div>
@@ -1303,11 +1283,11 @@
 
       <h4 class="sub-title">2.2.1 <span class="lang-en">Text &amp; Cybertext</span><span class="lang-zh">文本与赛博文本</span></h4>
 
-      <p><span class="lang-en">In <em>Cybertext</em>, Aarseth poses the question: in what sense are hypertext, adventure games, and similar forms that generate linguistic structures for aesthetic effect to be considered text at all? Compared to the ambiguity and variability that arise in traditional texts from the openness of interpretation, the sense of uncertainty in ergodic texts originates in the mechanism itself. The former concerns itself with what was being read; the latter, with what was being read from.<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">5</a></sup></span><span class="lang-zh">在《赛博文本》中，Aarseth提出一个问题：超文本、冒险游戏及类似的产生语言结构以达成美学效果的形式，在何种意义上可被视为文本？与传统文本中因解释开放性而产生的模糊性和可变性相比，遍历性文本中的不确定感源于机制本身。前者关注的是被阅读的内容，后者关注的是从何处阅读。<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">5</a></sup></span></p>
+      <p><span class="lang-en">In Cybertext, Aarseth poses the question: in what sense are hypertext, adventure games, and similar forms that generate linguistic structures for aesthetic effect to be considered text at all? Compared to the ambiguity and variability that arise in traditional texts from the openness of interpretation, the sense of uncertainty in ergodic texts originates in the mechanism itself. The former concerns itself with what was being read; the latter, with what was being read from.<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">5</a></sup></span><span class="lang-zh">在《赛博文本》中，Aarseth提出一个问题：超文本、冒险游戏及类似的产生语言结构以达成美学效果的形式，在何种意义上可被视为文本？与传统文本中因解释开放性而产生的模糊性和可变性相比，遍历性文本中的不确定感源于机制本身。前者关注的是被阅读的内容，后者关注的是从何处阅读。<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">5</a></sup></span></p>
 
-      <p><span class="lang-en">The reader of a cybertext is placed in an insecure position: every choice made represents a possible path that refuse to be traversed. It is worth noting that this uncertainty differs from what <span class="term-link" data-annotation="costikyan">Costikyan</span> describes as the uncertainty inherent in game systems, which refers to the unpredictability of outcomes and paths that makes games compelling<sup><a href="#bib-costikyan" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">6</a></sup>, for the uncertainty of cybertext is narrative in nature. This structural absence cannot be remedied; it persists as a constant reminder of the cost of choosing. It is precisely for this reason that the reader's subjective effort is engaged in generating the world itself, rather than merely introducing a personal interpretive perspective onto a text whose existence proceeds undisturbed. The reader's struggle is to obtain "the story as mine", which is essentially a form of personal improvisation.<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">7</a></sup></span><span class="lang-zh">赛博文本的读者处于一种不安全的位置：每一个选择都代表一条拒绝被遍历的可能路径。值得注意的是，这种不确定性不同于<span class="term-link" data-annotation="costikyan">Costikyan</span>所描述的游戏系统内在的不确定性（即使游戏引人入胜的结果与路径的不可预测性）<sup><a href="#bib-costikyan" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">6</a></sup>，因为赛博文本的不确定性在本质上是叙事性的。这种结构性缺失无法弥补；它作为选择代价的持续提醒而存在。正因如此，读者的主观努力投入于生成世界本身，而非仅仅将个人解释视角引入一个其存在未受干扰的文本。读者的挣扎在于获得"属于我的故事"，这本质上是一种个人即兴创作。<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">7</a></sup></span></p>
+      <p><span class="lang-en">The reader of a cybertext is placed in an insecure position: every choice made represents a possible path that refuse to be traversed. It is worth noting that this uncertainty differs from what Costikyan describes as the uncertainty inherent in game systems, which refers to the unpredictability of outcomes and paths that makes games compelling<sup><a href="#bib-costikyan" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">6</a></sup>, for the uncertainty of cybertext is narrative in nature. This structural absence cannot be remedied; it persists as a constant reminder of the cost of choosing. It is precisely for this reason that the reader's subjective effort is engaged in generating the world itself, rather than merely introducing a personal interpretive perspective onto a text whose existence proceeds undisturbed. The reader's struggle is to obtain "the story as mine", which is essentially a form of personal improvisation.<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">7</a></sup></span><span class="lang-zh">赛博文本的读者处于一种不安全的位置：每一个选择都代表一条拒绝被遍历的可能路径。值得注意的是，这种不确定性不同于Costikyan所描述的游戏系统内在的不确定性（即使游戏引人入胜的结果与路径的不可预测性）<sup><a href="#bib-costikyan" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">6</a></sup>，因为赛博文本的不确定性在本质上是叙事性的。这种结构性缺失无法弥补；它作为选择代价的持续提醒而存在。正因如此，读者的主观努力投入于生成世界本身，而非仅仅将个人解释视角引入一个其存在未受干扰的文本。读者的挣扎在于获得"属于我的故事"，这本质上是一种个人即兴创作。<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">7</a></sup></span></p>
 
-      <p><span class="lang-en">If narrative is likened to a <span class="term-link" data-annotation="labyrinth">labyrinth</span>, then traditional literary genres constitute a single-path labyrinth in which the reader "has no choice but to reach the center", any sensation of being lost along the way is a misreading of the metaphor and does not alter the unfolding of the path. Ergodic texts, by contrast, constitute a multi-path labyrinth: the wanderer within it faces genuine choices, each leading toward a different destination.<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">8</a></sup></span><span class="lang-zh">如果将叙事比作<span class="term-link" data-annotation="labyrinth">迷宫</span>，那么传统文学体裁构成单路径迷宫，读者"别无选择，只能到达中心"，途中迷失的感觉是对隐喻的误读，不会改变路径的展开。相比之下，遍历性文本构成多路径迷宫：其中的漫游者面临真实的选择，每一个选择都通向不同的目的地。<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">8</a></sup></span></p>
+      <p><span class="lang-en">If narrative is likened to a labyrinth, then traditional literary genres constitute a single-path labyrinth in which the reader "has no choice but to reach the center", any sensation of being lost along the way is a misreading of the metaphor and does not alter the unfolding of the path. Ergodic texts, by contrast, constitute a multi-path labyrinth: the wanderer within it faces genuine choices, each leading toward a different destination.<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">8</a></sup></span><span class="lang-zh">如果将叙事比作迷宫，那么传统文学体裁构成单路径迷宫，读者"别无选择，只能到达中心"，途中迷失的感觉是对隐喻的误读，不会改变路径的展开。相比之下，遍历性文本构成多路径迷宫：其中的漫游者面临真实的选择，每一个选择都通向不同的目的地。<sup><a href="#bib-aarseth" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">8</a></sup></span></p>
 
       <h4 class="sub-title">2.2.2 <span class="lang-en">Aarseth's Ergodic Theory and the Seven-Variable Framework</span><span class="lang-zh">七变量框架</span></h4>
 
@@ -1450,7 +1430,7 @@
     <div id="ch2-4" class="locked">
       <h3 class="section-title">2.4 <span class="lang-en">Storylet Theory</span><span class="lang-zh">叙事单元理论</span></h3>
 
-      <p><span class="lang-en">The term <em>storylet</em> originated in the game <em class="term-link" data-annotation="fallen-london">Fallen London</em>, developed by Failbetter Games. <span class="term-link" data-annotation="emily-short">Emily Short</span> has discussed the storylet system extensively on her blog, defining it as "a way of organizing narrative content with more flexibility than the typical branching narrative."<sup><a href="#bib-short" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">12</a></sup> Its core logic is the construction of a database of discrete, recombinable narrative units. Each storylet consists of three elements: narrative content; a set of preconditions; and a set of effects. Unlike branching narrative, the storylet system has no predetermined narrative sequence. Kreminski and Wardrip-Fruin further systematised this design space, classifying storylet systems along four dimensions: precondition type, repeatability, internal structure, and content selection architecture.<sup><a href="#bib-kreminski" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">13</a></sup></span><span class="lang-zh"><em>叙事单元</em>（storylet）一词起源于Failbetter Games开发的游戏《<em class="term-link" data-annotation="fallen-london">堕落伦敦</em>》。<span class="term-link" data-annotation="emily-short">Emily Short</span>在其博客中广泛讨论了叙事单元系统，将其定义为"一种比典型分支叙事更具灵活性的叙事内容组织方式"。<sup><a href="#bib-short" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">12</a></sup>其核心逻辑是构建一个由离散的、可重新组合的叙事单位组成的数据库。每个叙事单元由三个要素构成：叙事内容、一组前提条件和一组效果。与分支叙事不同，叙事单元系统没有预定的叙事序列。Kreminski和Wardrip-Fruin进一步将这一设计空间系统化，沿四个维度对叙事单元系统进行分类：前提条件类型、可重复性、内部结构和内容选择架构。<sup><a href="#bib-kreminski" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">13</a></sup></span></p>
+      <p><span class="lang-en">The term <em>storylet</em> originated in the game <em>Fallen London</em>, developed by Failbetter Games. Emily Short has discussed the storylet system extensively on her blog, defining it as "a way of organizing narrative content with more flexibility than the typical branching narrative."<sup><a href="#bib-short" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">12</a></sup> Its core logic is the construction of a database of discrete, recombinable narrative units. Each storylet consists of three elements: narrative content; a set of preconditions; and a set of effects. Unlike branching narrative, the storylet system has no predetermined narrative sequence. Kreminski and Wardrip-Fruin further systematised this design space, classifying storylet systems along four dimensions: precondition type, repeatability, internal structure, and content selection architecture.<sup><a href="#bib-kreminski" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">13</a></sup></span><span class="lang-zh"><em>叙事单元</em>（storylet）一词起源于Failbetter Games开发的游戏《堕落伦敦》。Emily Short在其博客中广泛讨论了叙事单元系统，将其定义为"一种比典型分支叙事更具灵活性的叙事内容组织方式"。<sup><a href="#bib-short" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">12</a></sup>其核心逻辑是构建一个由离散的、可重新组合的叙事单位组成的数据库。每个叙事单元由三个要素构成：叙事内容、一组前提条件和一组效果。与分支叙事不同，叙事单元系统没有预定的叙事序列。Kreminski和Wardrip-Fruin进一步将这一设计空间系统化，沿四个维度对叙事单元系统进行分类：前提条件类型、可重复性、内部结构和内容选择架构。<sup><a href="#bib-kreminski" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">13</a></sup></span></p>
 
       <p><span class="lang-en">Yet in the classificatory framework of Kreminski and Wardrip-Fruin, space appears in only an extremely limited capacity, serving merely as one type of precondition. Location functions solely as a logical switch: the player arrives at a specific place, the spatial condition is satisfied, and narrative content is triggered accordingly. In games such as <em>Fallen London</em> and StoryNexus, nearly all storylets are bound to location in precisely this way.<sup><a href="#bib-carvalhais" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">14</a></sup> Two spaces both tagged as "library," for instance, will trigger identical storylets and produce identical narrative content regardless of how great the formal differences between them may be.</span><span class="lang-zh">然而在Kreminski和Wardrip-Fruin的分类框架中，空间的出现极为有限，仅作为一种前提条件类型。位置仅作为逻辑开关运作：玩家到达特定地点，空间条件得到满足，叙事内容随之触发。在《堕落伦敦》和StoryNexus等游戏中，几乎所有叙事单元都以这种方式与位置绑定。<sup><a href="#bib-carvalhais" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">14</a></sup>例如，两个都被标记为"图书馆"的空间，无论其形式差异多大，都会触发相同的叙事单元并产生相同的叙事内容。</span></p>
 
@@ -1732,29 +1712,7 @@
 
       <p><span class="lang-en">The two prototype versions make the contribution of spatial form directly legible through comparison. In the text-only prototype, the player possesses only textual information; the narrative is traversable, but its spatial grammar is absent. Meaning must be imaginatively reconstructed from language alone. In the full spatial prototype, the player encounters the story through three-dimensional space — through a non-textual, embodied experience of manipulating form, scale, and material to obtain objects and clues. Space introduces what text alone cannot supply: an experiential, traversable dimension upon which the contextual and grammatical layers depend.</span><span class="lang-zh">两个版本的原型，使空间形态的贡献通过对比得以直接显现。在纯文字原型中，玩家只拥有文字信息；叙事可以被遍历，但其空间语法缺席。意义必须单纯从语言中被想象性地重建。在完整空间原型中，玩家通过三维空间遭遇故事——通过操作形态、尺度与材质以获得物品和线索的非文字，具身性体验。空间引入了文字单独无法提供的东西：一个语境层和语法层所依赖的、体验性的、可遍历的维度。</span></p>
 
-      <p><span class="lang-en">This embodied dimension calls to mind Rossi's concept of the <em>architectural type</em> — the idea that certain spatial forms recur across different cultures and histories, gradually accumulating layers of history and collective memory, and in doing so come to transcend their specific era and function. When the word "palace" is invoked, people automatically activate a set of associations around power, ritual, and monumentality. This ineffable human experience is transmitted in secret, in the form of a collective unconscious. Yet across different cultures, people hold strikingly different imaginings of what a "palace" looks like. When you read a passage like this:</span><span class="lang-zh">这种具身性维度让我想起Rossi的"建筑原型"（architectural type）概念中，某些空间形态在不同文化和历史中反复出现，逐渐沉积了历史和集体记忆，便开始超越具体时代和功能。当提起"宫殿"，人们便会自动激发关于权力、仪式、纪念性的联想。这种无法被言说的人类经验以集体潜意识的形式隐秘地传承。但在不同文化中，人们对于"宫殿"形象有着截然不同的想象，当阅读到这样的文段：</span></p>
-
-      <div class="pull-quote">
-        <p><span class="lang-en">According to the Archivist's records, over a hundred years have passed since the great war with Osaider. Nearly thirty years have passed since the last Commemoration Movement.<br>People have lost so much — home, faith, memory... and hope.<br>The Archivist assures the people that the efforts of their forebears will not be in vain. They will fight with everything they have to protect our shared home. This palace will stand forever, until the end of time.</span><span class="lang-zh">根据Archivist的记述，与Osaider的大战已经过去了上百年。距离上一次纪念运动也已经将近30年了。<br>人们失去了太多东西，家园，信仰，记忆...以及希望。<br>Archivist向人们保证，先辈们的努力不会付诸东流。他们会拼尽一切守护我们共同的家园。这座宫殿将会永远存在，直到时间的尽头。</span></p>
-      </div>
-
-      <p><span class="lang-en">Which of these images is closer to the picture in your mind?</span><span class="lang-zh">你脑海中的画面更接近下面哪一张图片呢？</span></p>
-
-      <div class="image-choice-row" id="palace-choice">
-        <div class="image-choice-option" data-choice="1">
-          <img src="essayimages/Palace01.png" alt="Palace imagination — option 1">
-        </div>
-        <div class="image-choice-option" data-choice="2">
-          <img src="essayimages/Palace02.png" alt="Palace imagination — option 2">
-        </div>
-        <div class="image-choice-option" data-choice="3">
-          <img src="essayimages/Palace03.png" alt="Palace imagination — option 3">
-        </div>
-      </div>
-
-      <div class="locked" id="palace-followup">
-        <p><span class="lang-en">The blanks and ambiguity that text affords create a vast imaginative space, and this is precisely where the charm of literature lies. Non-textual, "material" media, by weakening their own properties of expression and interpretation, instead cultivate a sense of distance. I do not wish to deny the romantic aesthetic experience that pure textual reading offers for ambiguous meaning; rather, building on the text-only prototype, I introduce a spatial medium in an attempt to find a narrative pathway that activates people's bodily experience and spatial perception. When people confront the unsayable, a sense of awe naturally arises — and this greatly heightens the immersive emotional experience of narrative.</span><span class="lang-zh">文字带来的留白和歧义创造了广阔的想象空间，这也正是文学的魅力所在。而非文字化的"物质"媒介因为弱化了自身"表达"和"诠释"的属性，营造出距离感。我并不想要否认纯文字阅读对于模糊意义的浪漫审美体验，而是在文字原型的基础上引入空间媒介，试图找到一种激发人们身体经验和空间感知的叙事途径。人们面对不可言说之物时会油然而生一种敬畏感，这将大大提高叙事的沉浸式情感体验。</span></p>
-      </div>
+      <p><span class="lang-en">This embodied dimension calls to mind Rossi's concept of the <em>architectural type</em> — the idea that certain spatial forms recur across different cultures and histories, gradually accumulating layers of history and collective memory, and in doing so come to transcend their specific era and function. When the word "palace" is invoked, people automatically activate a set of associations around power, ritual, and monumentality. This ineffable human experience is transmitted in secret, in the form of a collective unconscious.</span><span class="lang-zh">这种具身性维度让我想起Rossi的"建筑原型"（architectural type）概念中，某些空间形态在不同文化和历史中反复出现，逐渐沉积了历史和集体记忆，便开始超越具体时代和功能。当提起"宫殿"，人们便会自动激发关于权力、仪式、纪念性的联想。这种无法被言说的人类经验以集体潜意识的形式隐秘地传承。</span></p>
     </div>
 
     <div class="chapter-section tab-panel locked" id="ch4-tab-4">
@@ -1841,7 +1799,7 @@
         <div class="dice-result"></div>
       </div>
       <div class="dice-para-body">
-        <p><span class="lang-en">The first question this dissertation has sought to answer is how the design of a Spatial Storylet system might extend narrative grammar from temporal sequence into three-dimensional space. I have developed this across two levels, in Chapters 2 and 4: at the theoretical level, the eighth variable I propose — spatial morphology — extends Aarseth's seven-variable analytical framework into the spatial dimension; the three-layer model of lexical, contextual, and grammatical layers, in turn, provides an operable methodology for putting this extension into practice.</span><span class="lang-zh">我通过这篇论文试图回答的第一个问题是：空间叙事单元系统的设计如何将叙事语法从时间序列拓展至三维空间。我在第二章与第四章中分两个层面展开：在理论层面，我提出的第八变量——空间形态——将Aarseth的七变量分析框架延伸至三维空间维度；而词汇层、语境层、语法层的三层模型，为这一延伸提供了一套可操作的实践方法论。</span></p>
+        <p><span class="lang-en">The first question I'm trying to answer is how the design of a Spatial Storylet system might extend narrative grammar from temporal sequence into three-dimensional space. I have developed this across two levels, in Chapters 2 and 4: at the theoretical level, the eighth variable I propose — spatial morphology — extends Aarseth's seven-variable analytical framework into the spatial dimension; the three-layer model of lexical, contextual, and grammatical layers, in turn, provides an operable methodology for putting this extension into practice.</span><span class="lang-zh">我通过这篇论文试图回答的第一个问题是：空间叙事单元系统的设计如何将叙事语法从时间序列拓展至三维空间。我在第二章与第四章中分两个层面展开：在理论层面，我提出的第八变量——空间形态——将Aarseth的七变量分析框架延伸至三维空间维度；而词汇层、语境层、语法层的三层模型，为这一延伸提供了一套可操作的实践方法论。</span></p>
       </div>
     </div>
 
@@ -1947,7 +1905,6 @@
       <div class="bib-section-title"><span class="lang-en">Journal Articles and Book Chapters</span><span class="lang-zh">期刊论文与章节</span></div>
       <p class="bib-item" id="bib-carvalhais">Carvalhais, Miguel, and Pedro Cardoso. "Narrative Games in Ergodic Media." <em>Estudos em Comunicação</em> 27, no. 2 (2018): 55–65. <a href="https://doi.org/10.20287/ec.n27.v2.a04" target="_blank">https://doi.org/10.20287/ec.n27.v2.a04</a></p>
       <p class="bib-item" id="bib-kreminski">Kreminski, Max, and Noah Wardrip-Fruin. "Sketching a Map of the Storylets Design Space." In <em>Interactive Storytelling</em>, edited by Rebecca Rouse, Felix Koenitz, and Mads Haahr, 160–64. Cham: Springer, 2018.</p>
-      <p class="bib-item" id="bib-weed">Weed, Ethan. "A Labyrinth of Symbols: Exploring 'The Garden of Forking Paths.'" <em>Variaciones Borges</em>, no. 18 (2004): 161–189. <a href="https://www.jstor.org/stable/24880439" target="_blank">https://www.jstor.org/stable/24880439</a></p>
     </div>
 
     <div class="bib-section">
@@ -2116,68 +2073,6 @@
       body: {
         en: `<p><strong>7 User Function</strong> concerns what the user can do beyond interpreting. Four levels: <em>Interpretative</em>; <em>Explorative</em>; <em>Configurative</em>; <em>Textonic</em> — the user may permanently modify the textons and traversal function itself.</p>`,
         zh: `<p><strong>7 用户功能</strong>关涉用户除解释之外能做什么。四个层级：<em>解释性</em>；<em>探索性</em>；<em>配置性</em>；<em>文本性</em>——用户可永久修改文本元和遍历函数本身。</p>`
-      }
-    },
-    'fallen-london': {
-      label: { en: '// Fallen London', zh: '// 堕落伦敦' },
-      body: {
-        en: `<div class="annotation-genre">Narrative Browser Game</div>
-             <div class="annotation-fig"><img src="essayimages/Fallen London.jpg" alt="Fallen London" class="lightbox-trigger" onclick="document.getElementById('lightbox-overlay').classList.add('active');document.getElementById('lightbox-img').src=this.src;"></div>
-             <p><em>Fallen London</em> is a narrative-driven text adventure browser game developed by Failbetter Games, launched in 2009.</p>
-             <p>In its setting, London was sold in 1882 by a mysterious power known as "the Masters" to the underworld realm of the Neath, dragging the entire city underground.</p>
-             <p>Gameplay is <strong>text-centred</strong>, with almost no traditional combat or real-time action. Players progress the story mainly by reading text, making choices, gathering information, and raising their stats.</p>
-             <p>Many failed checks do not result in a "Game Over" — instead, failure opens up a new storyline, encouraging players to embrace uncertainty and consequence.</p>
-             <a class="annotation-link" href="https://www.failbettergames.com/games/fallen-london" target="_blank" rel="noopener">→ Failbetter Games</a>`,
-        zh: `<div class="annotation-genre">叙事驱动文字冒险游戏</div>
-             <div class="annotation-fig"><img src="essayimages/Fallen London.jpg" alt="堕落伦敦" class="lightbox-trigger" onclick="document.getElementById('lightbox-overlay').classList.add('active');document.getElementById('lightbox-img').src=this.src;"></div>
-             <p>《<em>堕落伦敦</em>》是由 Failbetter Games 开发的一款叙事驱动文字冒险游戏，于2009年上线。</p>
-             <p>游戏设定中，伦敦在1882年被神秘存在"The Masters"出售给地下世界"The Neath"，整座城市被拖入地底。</p>
-             <p>游戏玩法<strong>以文字为核心</strong>，几乎没有传统战斗和即时操作。玩家主要通过阅读文本、做出选择、收集情报、提升属性来推进故事。</p>
-             <p>很多检定失败不会导致 Game Over，相反，失败会开启新的故事线。因此游戏鼓励玩家接受不确定性和后果。</p>
-             <a class="annotation-link" href="https://www.failbettergames.com/games/fallen-london" target="_blank" rel="noopener">→ Failbetter Games</a>`
-      }
-    },
-    'emily-short': {
-      label: { en: '// Emily Short', zh: '// Emily Short' },
-      body: {
-        en: `<div class="annotation-fig"><img src="essayimages/Emily Short.jpg" alt="Emily Short" class="lightbox-trigger" onclick="document.getElementById('lightbox-overlay').classList.add('active');document.getElementById('lightbox-img').src=this.src;"></div>
-             <p><strong>Emily Short</strong> is an American-British <strong>interactive fiction author, narrative designer, coder, and critic</strong>, celebrated for pioneering realistic NPCs and procedural storytelling.</p>
-             <a class="annotation-link" href="https://en.wikipedia.org/wiki/Emily_Short" target="_blank" rel="noopener">→ Wikipedia</a>`,
-        zh: `<div class="annotation-fig"><img src="essayimages/Emily Short.jpg" alt="Emily Short" class="lightbox-trigger" onclick="document.getElementById('lightbox-overlay').classList.add('active');document.getElementById('lightbox-img').src=this.src;"></div>
-             <p><strong>Emily Short</strong> 是一位美英双重国籍的<strong>互动小说作者、叙事设计师、程序开发者与评论家</strong>，以开创性的写实NPC设计和程序化叙事著称。</p>
-             <a class="annotation-link" href="https://en.wikipedia.org/wiki/Emily_Short" target="_blank" rel="noopener">→ Wikipedia</a>`
-      }
-    },
-    'labyrinth': {
-      label: { en: '// Labyrinth', zh: '// 迷宫' },
-      body: {
-        en: `<p><em>How does text create a labyrinth?</em></p>
-             <p>A textual labyrinth is a labyrinth of symbols and ideas. Its core does not lie in the complexity of the plot or the openness of the ending, but in <strong>requiring readers to re-read and actively interpret it</strong>.</p>
-             <div class="annotation-fig"><img src="essayimages/Borges.jpg" alt="Jorge Luis Borges" class="lightbox-trigger" onclick="document.getElementById('lightbox-overlay').classList.add('active');document.getElementById('lightbox-img').src=this.src;"></div>
-             <p>At the same time, this textual labyrinth also metaphorises the essence of human cognition of time, space, history, and reality: history and reality themselves are labyrinths composed of multiple interpretations, and <strong>the so-called "truth" is nothing but the result of interpretation from a certain perspective</strong>.</p>
-             <p style="font-size:11px;color:var(--white-dim);">Reference: Weed, Ethan. <em>A Labyrinth of Symbols: Exploring 'The Garden of Forking Paths'</em>. <a href="#bib-weed" style="color:var(--blue);text-decoration:none;" title="Jump to bibliography">↓ Bibliography</a></p>`,
-        zh: `<p><em>文本如何构成迷宫？</em></p>
-             <p>文本迷宫是符号与观念的迷宫。其核心不在于情节的复杂性或结局的开放性，而在于<strong>要求读者反复阅读并主动进行解读</strong>。</p>
-             <div class="annotation-fig"><img src="essayimages/Borges.jpg" alt="豪尔赫·路易斯·博尔赫斯" class="lightbox-trigger" onclick="document.getElementById('lightbox-overlay').classList.add('active');document.getElementById('lightbox-img').src=this.src;"></div>
-             <p>同时，这种文本迷宫也隐喻着人类认知时间与空间、历史与现实的本质：历史与现实本身就是由多重解读构成的迷宫，<strong>所谓"真相"，不过是某种视角下解读的结果</strong>。</p>
-             <p style="font-size:11px;color:var(--white-dim);">参考文献：Weed, Ethan. 《<em>A Labyrinth of Symbols: Exploring 'The Garden of Forking Paths'</em>》。<a href="#bib-weed" style="color:var(--blue);text-decoration:none;" title="Jump to bibliography">↓ 参考文献</a></p>`
-      }
-    },
-    'costikyan': {
-      label: { en: '// Greg Costikyan', zh: '// Greg Costikyan' },
-      body: {
-        en: `<div class="annotation-genre">Game Designer &amp; Theorist</div>
-             <p>Greg Costikyan is an American game designer, game theorist, and science-fiction writer, regarded as one of the key figures in tabletop role-playing games (TRPGs) and modern game design theory.</p>
-             <p>He argues that a game is first and foremost a <strong>system of rules</strong>, and that the core of game design lies in creating <strong>meaningful choice and uncertainty</strong>.</p>
-             <p>In his book <em>Uncertainty in Games</em>, he systematically discusses why "uncertainty" is the core source of enjoyment and player engagement in games.</p>
-             <a class="annotation-link" href="https://en.wikipedia.org/wiki/Greg_Costikyan" target="_blank" rel="noopener">→ Wikipedia</a><br>
-             <a class="annotation-link" href="https://archive.org/details/uncertaintyingam0000cost" target="_blank" rel="noopener">→ Uncertainty in Games</a>`,
-        zh: `<div class="annotation-genre">游戏设计师与理论家</div>
-             <p>Greg Costikyan 是美国著名游戏设计师、游戏理论研究者和科幻小说作家，被认为是桌面角色扮演游戏（TRPG）和现代游戏设计理论的重要人物之一。</p>
-             <p>他主张：游戏首先是一个<strong>规则系统</strong>（system of rules）；游戏设计的核心是创造<strong>有意义的选择和不确定性</strong>。</p>
-             <p>在他的著作《<em>Uncertainty in Games</em>》中，他系统讨论了"不确定性"为何是游戏乐趣与玩家参与感的核心来源。</p>
-             <a class="annotation-link" href="https://en.wikipedia.org/wiki/Greg_Costikyan" target="_blank" rel="noopener">→ Wikipedia</a><br>
-             <a class="annotation-link" href="https://archive.org/details/uncertaintyingam0000cost" target="_blank" rel="noopener">→ Uncertainty in Games</a>`
       }
     },
     'linear-narrative-game': {
@@ -2444,7 +2339,7 @@
       if (e.key !== 'Enter') return;
       e.preventDefault();
       const raw = ch2PasswordInput.value.trim();
-      const match = raw.match(/^ergodic\s*2\.([1-5])$/i);
+      const match = raw.match(/^aarseth\s*2\.([1-5])$/i);
       const lang = currentSiteLang();
       if (!match) {
         ch2PasswordFeedback.textContent = lang === 'zh' ? '密码不正确。' : 'Incorrect password.';
@@ -2566,15 +2461,6 @@
       }
     });
   }
-
-  document.querySelectorAll('.image-choice-option').forEach(opt => {
-    opt.addEventListener('click', () => {
-      document.querySelectorAll('#palace-choice .image-choice-option').forEach(o => o.classList.remove('selected'));
-      opt.classList.add('selected');
-      const followup = document.getElementById('palace-followup');
-      if (followup) followup.classList.remove('locked');
-    });
-  });
 
   // ══════════════════════════════════════════
   // CHAPTER 4 — UNDERSTANDING GATE + SECTION TABS
