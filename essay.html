@@ -375,6 +375,28 @@
   .concept-box p { margin: 0; color: var(--white); }
   .concept-box p + p { margin-top: 12px; color: var(--white-dim); }
 
+  /* PALACE IMAGE CHOICE */
+  .palace-choice-row {
+    display: flex;
+    gap: 16px;
+    margin: 28px 0;
+    flex-wrap: wrap;
+  }
+  .palace-choice-img {
+    flex: 1;
+    min-width: 160px;
+    width: 100%;
+    display: block;
+    cursor: pointer;
+    border: 2px solid var(--border);
+    opacity: 0.8;
+    transition: border-color 0.2s, opacity 0.2s;
+  }
+  .palace-choice-img:hover { border-color: var(--red-dim); opacity: 1; }
+  .palace-choice-img.selected { border-color: var(--red); opacity: 1; }
+  .palace-reveal { display: none; }
+  .palace-reveal.show { display: block; }
+
   /* VARIABLE TABLE */
   .var-table {
     width: 100%;
@@ -1712,7 +1734,25 @@
 
       <p><span class="lang-en">The two prototype versions make the contribution of spatial form directly legible through comparison. In the text-only prototype, the player possesses only textual information; the narrative is traversable, but its spatial grammar is absent. Meaning must be imaginatively reconstructed from language alone. In the full spatial prototype, the player encounters the story through three-dimensional space — through a non-textual, embodied experience of manipulating form, scale, and material to obtain objects and clues. Space introduces what text alone cannot supply: an experiential, traversable dimension upon which the contextual and grammatical layers depend.</span><span class="lang-zh">两个版本的原型，使空间形态的贡献通过对比得以直接显现。在纯文字原型中，玩家只拥有文字信息；叙事可以被遍历，但其空间语法缺席。意义必须单纯从语言中被想象性地重建。在完整空间原型中，玩家通过三维空间遭遇故事——通过操作形态、尺度与材质以获得物品和线索的非文字，具身性体验。空间引入了文字单独无法提供的东西：一个语境层和语法层所依赖的、体验性的、可遍历的维度。</span></p>
 
-      <p><span class="lang-en">This embodied dimension calls to mind Rossi's concept of the <em>architectural type</em> — the idea that certain spatial forms recur across different cultures and histories, gradually accumulating layers of history and collective memory, and in doing so come to transcend their specific era and function. When the word "palace" is invoked, people automatically activate a set of associations around power, ritual, and monumentality. This ineffable human experience is transmitted in secret, in the form of a collective unconscious.</span><span class="lang-zh">这种具身性维度让我想起Rossi的"建筑原型"（architectural type）概念中，某些空间形态在不同文化和历史中反复出现，逐渐沉积了历史和集体记忆，便开始超越具体时代和功能。当提起"宫殿"，人们便会自动激发关于权力、仪式、纪念性的联想。这种无法被言说的人类经验以集体潜意识的形式隐秘地传承。</span></p>
+      <p><span class="lang-en">This embodied dimension calls to mind Rossi's concept of the <em>architectural type</em> — the idea that certain spatial forms recur across different cultures and histories, gradually accumulating layers of history and collective memory, and in doing so come to transcend their specific era and function. When the word "palace" is invoked, people automatically activate a set of associations around power, ritual, and monumentality. This ineffable human experience is transmitted in secret, in the form of a collective unconscious. Yet across different cultures, people's mental images of a "palace" can differ vastly. Consider the following passage:</span><span class="lang-zh">这种具身性维度让我想起Rossi的"建筑原型"（architectural type）概念中，某些空间形态在不同文化和历史中反复出现，逐渐沉积了历史和集体记忆，便开始超越具体时代和功能。当提起"宫殿"，人们便会自动激发关于权力、仪式、纪念性的联想。这种无法被言说的人类经验以集体潜意识的形式隐秘地传承。但在不同文化中，人们对于"宫殿"形象有着截然不同的想象，当阅读到这样的文段：</span></p>
+
+      <div class="concept-box">
+        <div class="concept-box-label"><span class="lang-en">// In-Game Text</span><span class="lang-zh">// 游戏内文本</span></div>
+        <p style="font-style:italic;">
+          <span class="lang-en">"According to the Archivist's record, the great war against Osaider ended over a hundred years ago. It has been nearly thirty years since the last commemorative campaign.<br><br>We have lost so much — home, faith, memory... and hope.<br><br>The Archivist assures the people that the sacrifices of our forebears will not be in vain. They will guard our shared home with everything they have. This palace will stand forever, until the end of time."</span>
+          <span class="lang-zh">"根据Archivist的记述，与Osaider的大战已经过去了上百年。距离上一次纪念运动也已经将近30年了。<br><br>人们失去了太多东西，家园，信仰，记忆……以及希望。<br><br>Archivist向人们保证，先辈们的努力不会付诸东流。他们会拼尽一切守护我们共同的家园。这座宫殿将会永远存在，直到时间的尽头。"</span>
+        </p>
+      </div>
+
+      <p><span class="lang-en">Which of the images below comes closer to the picture in your mind?</span><span class="lang-zh">你脑海中的画面更接近下面哪一张图片呢？</span></p>
+
+      <div class="palace-choice-row">
+        <img src="essayimages/Palace01.png" alt="Palace image option 1" class="palace-choice-img" onclick="document.querySelectorAll('.palace-choice-img').forEach(i=>i.classList.remove('selected'));this.classList.add('selected');var r=document.getElementById('ch4-palace-reveal');if(r){r.classList.add('show');}">
+        <img src="essayimages/Palace02.png" alt="Palace image option 2" class="palace-choice-img" onclick="document.querySelectorAll('.palace-choice-img').forEach(i=>i.classList.remove('selected'));this.classList.add('selected');var r=document.getElementById('ch4-palace-reveal');if(r){r.classList.add('show');}">
+        <img src="essayimages/Palace03.png" alt="Palace image option 3" class="palace-choice-img" onclick="document.querySelectorAll('.palace-choice-img').forEach(i=>i.classList.remove('selected'));this.classList.add('selected');var r=document.getElementById('ch4-palace-reveal');if(r){r.classList.add('show');}">
+      </div>
+
+      <p class="palace-reveal" id="ch4-palace-reveal"><span class="lang-en">The blanks and ambiguities that text affords create a vast space for imagination, and this is precisely where the charm of literature lies. Non-textual, "material" media, by weakening their own properties of expression and interpretation, instead cultivate a sense of distance. I do not wish to deny the romantic aesthetic experience that purely textual reading offers for ambiguous meaning; rather, building on the text-only prototype, I introduce a spatial medium in an attempt to find a narrative pathway that activates people's bodily experience and spatial perception. When people confront the unsayable, a sense of awe naturally arises — and this greatly heightens the immersive emotional experience of narrative.</span><span class="lang-zh">文字带来的留白和歧义创造了广阔的想象空间，这也正是文学的魅力所在。而非文字化的"物质"媒介因为弱化了自身"表达"和"诠释"的属性，营造出距离感。我并不想要否认纯文字阅读对于模糊意义的浪漫审美体验，而是在文字原型的基础上引入空间媒介，试图找到一种激发人们身体经验和空间感知的叙事途径。人们面对不可言说之物时会油然而生一种敬畏感，这将大大提高叙事的沉浸式情感体验。</span></p>
     </div>
 
     <div class="chapter-section tab-panel locked" id="ch4-tab-4">
@@ -1839,7 +1879,7 @@
         <div class="dice-result"></div>
       </div>
       <div class="dice-para-body">
-        <p><span class="lang-en"><em>OSAIDER</em> represents the author's exploratory attempt at the constitutive level of spatial morphology — <strong>a design in which spatial configuration is not a backdrop for narrative but its necessary condition.</strong> Building on the comparative analysis of the three case-study games, the balance <em>OSAIDER</em> seeks to strike is to introduce three-dimensional space — adding a perceptible dimension to the narrative text — while leaving the player's immersive experience unaffected, achieving a form of "bounded ambiguity": open enough to invite players to actively construct meaning, yet constrained enough to prevent meaning itself from collapsing.</span><span class="lang-zh"><em>OSAIDER</em>是笔者对空间形态构成性层级的一次探索性尝试——<strong>在这个设计中，空间构型不是叙事的背景，而是叙事的必要条件。</strong>在对三款案例游戏的对比分析的基础上，<em>OSAIDER</em>想要达到的平衡就是在引入三维空间增加叙事文本的可感知维度的同时，又保证玩家的沉浸式体验不被影响，达到"有界歧义性"——开放到足以邀请玩家主动建构意义，又受限到不至于让意义本身崩溃瓦解。</span></p>
+        <p><span class="lang-en"><em>OSAIDER</em> represents the author's exploratory attempt at the constitutive level of spatial morphology — <strong>a design in which spatial configuration is not a backdrop for narrative but its necessary condition.</strong> Building on the comparative analysis of the three case-study games, the balance <em>OSAIDER</em> seeks to strike is to introduce three-dimensional space — adding a perceptible dimension to the narrative text — while leaving the player's immersive experience unaffected, achieving a form of "bounded ambiguity"<sup><a href="#bib-fullerton" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">17</a></sup>: open enough to invite players to actively construct meaning, yet constrained enough to prevent meaning itself from collapsing.</span><span class="lang-zh"><em>OSAIDER</em>是笔者对空间形态构成性层级的一次探索性尝试——<strong>在这个设计中，空间构型不是叙事的背景，而是叙事的必要条件。</strong>在对三款案例游戏的对比分析的基础上，<em>OSAIDER</em>想要达到的平衡就是在引入三维空间增加叙事文本的可感知维度的同时，又保证玩家的沉浸式体验不被影响，达到"有界歧义性"<sup><a href="#bib-fullerton" style="color:var(--red);text-decoration:none;" title="Jump to bibliography">17</a></sup>——开放到足以邀请玩家主动建构意义，又受限到不至于让意义本身崩溃瓦解。</span></p>
       </div>
     </div>
 
