@@ -596,6 +596,152 @@
 </div>
 
 <div class="content-block reveal">
+  <div class="block-label"><span class="lang-en">// Game Loop</span><span class="lang-zh">// 玩法循环</span></div>
+  <div class="block-content">
+    <p>
+      <span class="lang-en">A full breakdown of the Phase 1 vertical slice cycle: explore a module, interact with its mechanisms, collect ideology-weighted items, submit three for a Dice Check, then let the result reveal the next module &mdash; Archivist or Whalemen.</span>
+      <span class="lang-zh">第一阶段垂直切片的完整玩法拆解：探索模块、操作其中的机械装置、收集带意识形态权重的物品，提交三件进行骰子检定，结果将决定揭示哪一派系的下一个模块——档案派或鲸民。</span>
+    </p>
+    <div style="max-width:640px; margin:24px auto 0; border:1px solid var(--border);">
+      <svg id="gameloop-diagram" width="100%" viewBox="0 0 1000 1460" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto;" role="img" aria-label="Osaider core gameplay loop diagram">
+      <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;display=swap');
+      text { font-family: 'JetBrains Mono','Noto Sans SC','Courier New',monospace; }
+      .cn { font-family: 'Noto Sans SC','JetBrains Mono',sans-serif; }
+      </style>
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M1 1L8 5L1 9" fill="none" stroke="#8a8478" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+        <marker id="arrow-gold" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M1 1L8 5L1 9" fill="none" stroke="#c9a227" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+        <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="1" x2="4" y2="1" stroke="#ffffff" stroke-width="0.4" opacity="0.035"/>
+        </pattern>
+      </defs>
+
+      <rect x="0" y="0" width="1000" height="1460" fill="#0b0b0a"/>
+      <rect x="0" y="0" width="1000" height="1460" fill="url(#scan)"/>
+      <rect x="10" y="10" width="980" height="1440" fill="none" stroke="#3a3833" stroke-width="1"/>
+
+      <text x="500" y="55" text-anchor="middle" font-size="34" font-weight="700" letter-spacing="5" fill="#ece6d8">OSAIDER</text>
+      <text x="500" y="82" text-anchor="middle" font-size="13" letter-spacing="2" fill="#9c9788">CORE GAMEPLAY LOOP — PHASE 1 VERTICAL SLICE</text>
+      <text x="500" y="100" text-anchor="middle" font-size="11" class="cn" fill="#6e6a60">核心玩法循环 · 第一阶段垂直切片</text>
+      <line x1="380" y1="114" x2="740" y2="114" stroke="#3a3833" stroke-width="0.5"/>
+      <text x="380" y="130" font-size="10" letter-spacing="1" fill="#5a5650">FILE: OSAIDER_GAMELOOP</text>
+      <text x="740" y="130" text-anchor="end" font-size="10" letter-spacing="1" fill="#5a5650">STATUS: ACTIVE</text>
+      <text x="380" y="146" font-size="10" class="cn" fill="#4a463f">文件：OSAIDER_GAMELOOP</text>
+      <text x="740" y="146" text-anchor="end" font-size="10" class="cn" fill="#4a463f">状态：进行中</text>
+
+      <!-- 01 Explore Module -->
+      <rect x="380" y="170" width="360" height="116" rx="4" fill="#161513" stroke="#4a4640" stroke-width="1"/>
+      <text x="392" y="188" font-size="10" fill="#5a5650">01</text>
+      <text x="560" y="202" text-anchor="middle" font-size="15" font-weight="600" fill="#ece6d8">EXPLORE MODULE</text>
+      <text x="560" y="222" text-anchor="middle" font-size="12" class="cn" fill="#c9c2b0">探索模块</text>
+      <text x="560" y="248" text-anchor="middle" font-size="11" fill="#9c9788">CAMERA SPLINE, CLICK-BASED NAVIGATION</text>
+      <text x="560" y="266" text-anchor="middle" font-size="10" class="cn" fill="#7d7868">相机样条导航，点击式探索</text>
+
+      <line x1="560" y1="286" x2="560" y2="324" stroke="#6e6a60" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- 02 Interact With Mechanisms -->
+      <rect x="380" y="326" width="360" height="116" rx="4" fill="#161513" stroke="#4a4640" stroke-width="1"/>
+      <text x="392" y="344" font-size="10" fill="#5a5650">02</text>
+      <text x="560" y="358" text-anchor="middle" font-size="15" font-weight="600" fill="#ece6d8">INTERACT WITH MECHANISMS</text>
+      <text x="560" y="378" text-anchor="middle" font-size="12" class="cn" fill="#c9c2b0">操作机械装置</text>
+      <text x="560" y="404" text-anchor="middle" font-size="11" fill="#9c9788">DRAG WHEELS, GEARS, SLIDERS, LOCKERS</text>
+      <text x="560" y="422" text-anchor="middle" font-size="10" class="cn" fill="#7d7868">拖动轮盘、齿轮、滑杆、储物柜</text>
+
+      <line x1="560" y1="442" x2="560" y2="480" stroke="#6e6a60" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- 03 Collect Items -->
+      <rect x="380" y="482" width="360" height="116" rx="4" fill="#161513" stroke="#4a4640" stroke-width="1"/>
+      <text x="392" y="500" font-size="10" fill="#5a5650">03</text>
+      <text x="560" y="514" text-anchor="middle" font-size="15" font-weight="600" fill="#ece6d8">COLLECT ITEMS</text>
+      <text x="560" y="534" text-anchor="middle" font-size="12" class="cn" fill="#c9c2b0">收集物品</text>
+      <text x="560" y="560" text-anchor="middle" font-size="11" fill="#9c9788">IDEOLOGY-WEIGHTED REWARDS ENTER INVENTORY</text>
+      <text x="560" y="578" text-anchor="middle" font-size="10" class="cn" fill="#7d7868">带意识形态权重的奖励进入背包</text>
+
+      <line x1="560" y1="598" x2="560" y2="636" stroke="#6e6a60" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- 04 Submit Three Items -->
+      <rect x="380" y="638" width="360" height="116" rx="4" fill="#161513" stroke="#4a4640" stroke-width="1"/>
+      <text x="392" y="656" font-size="10" fill="#5a5650">04</text>
+      <text x="560" y="670" text-anchor="middle" font-size="15" font-weight="600" fill="#ece6d8">SUBMIT THREE ITEMS</text>
+      <text x="560" y="690" text-anchor="middle" font-size="12" class="cn" fill="#c9c2b0">提交三件物品</text>
+      <text x="560" y="716" text-anchor="middle" font-size="11" fill="#9c9788">FILL SUBMISSION SLOTS FOR EVALUATION</text>
+      <text x="560" y="734" text-anchor="middle" font-size="10" class="cn" fill="#7d7868">填满提交槽位以供评定</text>
+
+      <line x1="560" y1="754" x2="560" y2="792" stroke="#6e6a60" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- 05 Dice Check -->
+      <rect x="380" y="794" width="360" height="116" rx="4" fill="#161513" stroke="#4a4640" stroke-width="1"/>
+      <text x="392" y="812" font-size="10" fill="#5a5650">05</text>
+      <text x="560" y="826" text-anchor="middle" font-size="15" font-weight="600" fill="#ece6d8">DICE CHECK</text>
+      <text x="560" y="846" text-anchor="middle" font-size="12" class="cn" fill="#c9c2b0">骰子检定</text>
+      <text x="560" y="872" text-anchor="middle" font-size="12" fill="#9c9788">2D6 + IDEOLOGY SUM &gt;= 7</text>
+      <text x="560" y="890" text-anchor="middle" font-size="10" class="cn" fill="#7d7868">2D6 + 意识形态总和 &gt;= 7</text>
+
+      <!-- split -->
+      <line x1="560" y1="910" x2="380" y2="978" stroke="#6e6a60" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <line x1="560" y1="910" x2="740" y2="978" stroke="#6e6a60" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- 06A Archivist Route -->
+      <rect x="230" y="980" width="300" height="116" rx="4" fill="#1d1313" stroke="#8f2e2e" stroke-width="1"/>
+      <text x="242" y="998" font-size="10" fill="#b97777">06A</text>
+      <text x="380" y="1012" text-anchor="middle" font-size="14" font-weight="600" fill="#e8a3a3">ARCHIVIST ROUTE</text>
+      <text x="380" y="1031" text-anchor="middle" font-size="12" class="cn" fill="#cf8888">档案派路线</text>
+      <text x="380" y="1056" text-anchor="middle" font-size="11" fill="#b97777">SCORE &gt;= 7 — OFFICIAL RECORD</text>
+      <text x="380" y="1074" text-anchor="middle" font-size="10" class="cn" fill="#a16868">分数 &gt;= 7 — 官方记录</text>
+
+      <!-- 06B Whalemen Route -->
+      <rect x="590" y="980" width="300" height="116" rx="4" fill="#11171d" stroke="#2c6f9e" stroke-width="1"/>
+      <text x="602" y="998" font-size="10" fill="#6f97b3">06B</text>
+      <text x="740" y="1012" text-anchor="middle" font-size="14" font-weight="600" fill="#9fcbe8">WHALEMEN ROUTE</text>
+      <text x="740" y="1031" text-anchor="middle" font-size="12" class="cn" fill="#84b3d6">鲸民路线</text>
+      <text x="740" y="1056" text-anchor="middle" font-size="11" fill="#6f97b3">SCORE &lt; 7 — HIDDEN MEMORY</text>
+      <text x="740" y="1074" text-anchor="middle" font-size="10" class="cn" fill="#5e8299">分数 &lt; 7 — 隐藏记忆</text>
+
+      <!-- merge -->
+      <line x1="380" y1="1096" x2="560" y2="1134" stroke="#6e6a60" stroke-width="1.2"/>
+      <line x1="740" y1="1096" x2="560" y2="1134" stroke="#6e6a60" stroke-width="1.2"/>
+      <line x1="560" y1="1134" x2="560" y2="1172" stroke="#6e6a60" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- 07 Reveal Next Module -->
+      <rect x="380" y="1174" width="360" height="116" rx="4" fill="#161513" stroke="#4a4640" stroke-width="1"/>
+      <text x="392" y="1192" font-size="10" fill="#5a5650">07</text>
+      <text x="560" y="1206" text-anchor="middle" font-size="15" font-weight="600" fill="#ece6d8">REVEAL NEXT MODULE</text>
+      <text x="560" y="1226" text-anchor="middle" font-size="12" class="cn" fill="#c9c2b0">揭示下一模块</text>
+      <text x="560" y="1252" text-anchor="middle" font-size="11" fill="#9c9788">UNHIDE ACTOR, ENABLE COLLISION</text>
+      <text x="560" y="1270" text-anchor="middle" font-size="10" class="cn" fill="#7d7868">取消隐藏，启用碰撞</text>
+
+      <!-- loop back -->
+      <path d="M380,1232 L120,1232 L120,228 L378,228" fill="none" stroke="#c9a227" stroke-width="1.2" stroke-dasharray="4 4" marker-end="url(#arrow-gold)"/>
+      <text x="138" y="200" font-size="10" fill="#c9a227" letter-spacing="1">↻ CYCLE CONTINUES</text>
+      <text x="138" y="216" font-size="10" class="cn" fill="#a3801f">循环继续</text>
+
+      <!-- legend -->
+      <rect x="380" y="1320" width="14" height="14" fill="#1d1313" stroke="#8f2e2e" stroke-width="1"/>
+      <text x="402" y="1331" font-size="11" fill="#e8a3a3">ARCHIVIST — constructed history, control</text>
+      <text x="402" y="1349" font-size="10" class="cn" fill="#a16868">档案派 — 建构历史，掌控秩序</text>
+
+      <rect x="380" y="1366" width="14" height="14" fill="#11171d" stroke="#2c6f9e" stroke-width="1"/>
+      <text x="402" y="1377" font-size="11" fill="#9fcbe8">WHALEMEN — preserved memory, resistance</text>
+      <text x="402" y="1395" font-size="10" class="cn" fill="#5e8299">鲸民 — 留存记忆，地下抵抗</text>
+
+      <text x="500" y="1422" text-anchor="middle" font-size="9" letter-spacing="1" fill="#5a5650">OSAIDER · UE5.6 · BLUEPRINT-DRIVEN STORYLET ARCHITECTURE</text>
+      <text x="500" y="1438" text-anchor="middle" font-size="9" class="cn" fill="#4a463f">OSAIDER · UE5.6 · 蓝图驱动的故事单元架构</text>
+      </svg>
+    </div>
+    <p style="margin-top:12px; font-size:11px; color:var(--white-dim); text-align:center;">
+      <span class="lang-en">// Core Gameplay Loop &mdash; [Osaider] &middot; 2026</span>
+      <span class="lang-zh">// 核心玩法循环图解 — [Osaider] · 2026</span>
+    </p>
+  </div>
+</div>
+
+<div class="content-block reveal">
   <div class="block-label"><span class="lang-en">// Unreal Engine</span><span class="lang-zh">// 虚幻引擎</span></div>
   <div class="block-content">
     <p>
