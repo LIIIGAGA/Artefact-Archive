@@ -1412,9 +1412,9 @@
         <div class="figure-caption">Figure 2. Mapping the distribution of electronic and paper texts. Source: Aarseth, Cybertext: Perspectives on Ergodic Literature (1997), figures 3.2–3.4.</div>
       </div>
 
-      <p><span class="lang-en">We can observe that "spatiality" appears twice among these seven variables, yet in both instances only as an abstract condition. In the <strong>Access</strong> variable, location can function as a kind of precondition, yet it operates merely as a logical label, not as physical space. In the <strong>Linking</strong> variable, "adjacency" remains adjacency in the topological sense, not in terms of actual spatial coordinates.</span><span class="lang-zh">我们可以观察到，"空间性"在这七个变量中出现了两次，但两次都仅作为抽象条件。在<strong>访问</strong>变量中，位置可作为一种前提条件，但它仅作为逻辑标签运作，而非物理空间。在<strong>链接</strong>变量中，"邻接"仍是拓扑意义上的邻接，而非实际空间坐标意义上的邻接。</span></p>
+      <p><span class="lang-en">We can observe that <strong>"spatiality" appears twice among these seven variables, yet in both instances only as an abstract condition.</strong> In the Access variable, location can function as a kind of precondition, yet it operates merely as a logical label, not as physical space. In the Linking variable, "adjacency" remains adjacency in the topological sense, not in terms of actual spatial coordinates.</span><span class="lang-zh">我们可以观察到，<strong>"空间性"在这七个变量中出现了两次，但两次都仅作为抽象条件。</strong>在访问变量中，位置可作为一种前提条件，但它仅作为逻辑标签运作，而非物理空间。在链接变量中，"邻接"仍是拓扑意义上的邻接，而非实际空间坐标意义上的邻接。</span></p>
 
-      <p><span class="lang-en">We may therefore say that Aarseth's seven-variable framework describes the logical and procedural dimensions of ergodic texts with considerable precision. Yet space is invariably logical and representational — its actual three-dimensional form lies outside the analytical frame. In my view, this gap arises from two sources: first, game design practices that treat spatial form as a core element of narrative have been relatively absent; and second, the potential of space's material form as a source of narrative meaning has been underestimated in existing theory.</span><span class="lang-zh">因此我们可以说，Aarseth的七变量框架以相当精确的方式描述了遍历性文本的逻辑与程序维度。然而空间始终是逻辑性和表征性的——其实际的三维形式处于分析框架之外。在我看来，这一缺口来自两个原因：其一，将空间形态作为叙事核心要素的游戏设计实践相对缺乏；其二，空间的物质形态作为叙事意义来源的潜力在现有理论中被低估。</span></p>
+      <p><span class="lang-en">We may therefore say that Aarseth's seven-variable framework describes the logical and procedural dimensions of ergodic texts with considerable precision. Yet space is invariably logical and representational — its actual three-dimensional form lies outside the analytical frame. In my view, this gap stems from two factors. First, within game design practice, spatial form is rarely treated as a central narrative element. Second, there is a lack of systematic methodology for using spatial form as a means of storytelling.</span><span class="lang-zh">因此我们可以说，Aarseth的七变量框架以相当精确的方式描述了遍历性文本的逻辑与程序维度。然而空间始终是逻辑性和表征性的——其实际的三维形式处于分析框架之外。在我看来，这一缺口来自两个原因：其一，游戏设计实践中较少会将空间形态作为叙事核心要素；其二，缺乏成体系的方法论将空间形态作为讲故事的手段。</span></p>
     </div>
 
     <div id="ch2-3" class="locked">
@@ -2406,7 +2406,8 @@
     document.getElementById('ch1').classList.remove('locked');
     activeGate = ch1Gate;
     activeGate.start();
-    unlockBibliography();
+    document.getElementById('div-bib').classList.remove('locked');
+    document.getElementById('bibliography').classList.remove('locked');
     document.getElementById('ch1').scrollIntoView({ behavior: 'smooth' });
     if (document.activeElement) document.activeElement.blur();
   });
