@@ -2580,16 +2580,24 @@
       ch4GateNo.disabled = true;
       document.getElementById('ch4-tabs').classList.remove('locked');
       document.getElementById('ch4-tabs').scrollIntoView({ behavior: 'smooth' });
-      const div5 = document.getElementById('div-ch5');
-      const ch5 = document.getElementById('ch5');
-      if (div5) div5.classList.remove('locked');
-      if (ch5) ch5.classList.remove('locked');
     });
   }
   if (ch4GateNo) {
     ch4GateNo.addEventListener('click', () => {
       document.getElementById('ch4-jump-wrap').style.display = 'block';
     });
+  }
+
+  const visitedCh4Tabs = new Set();
+  const CH4_TAB_IDS = ['ch4-tab-1', 'ch4-tab-2', 'ch4-tab-3', 'ch4-tab-4'];
+
+  function checkCh4AllTabsVisited() {
+    if (CH4_TAB_IDS.every(id => visitedCh4Tabs.has(id))) {
+      const div5 = document.getElementById('div-ch5');
+      const ch5 = document.getElementById('ch5');
+      if (div5) div5.classList.remove('locked');
+      if (ch5) ch5.classList.remove('locked');
+    }
   }
 
   document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -2603,6 +2611,8 @@
         btn.classList.add('active');
         panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
+      visitedCh4Tabs.add(targetId);
+      checkCh4AllTabsVisited();
     });
   });
 
