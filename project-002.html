@@ -343,6 +343,80 @@
   body.zh span.lang-zh { display: inline; }
   body.zh span.lang-en { display: none; }
 
+  /* IMAGE LIGHTBOX */
+  .image-slot:has(img) { cursor: zoom-in; }
+  .image-slot:has(img)::after {
+    content: '+';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(8, 8, 8, 0.75);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-size: 16px;
+    opacity: 0.55;
+    pointer-events: none;
+    transition: opacity 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .image-slot:has(img):hover::after {
+    opacity: 1;
+    border-color: var(--red-dim);
+    color: var(--red);
+  }
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 64px;
+    background: rgba(8, 8, 8, 0.96);
+    cursor: zoom-out;
+  }
+  .lightbox-overlay.active { display: flex; }
+  .lightbox-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border: 1px solid var(--border);
+    cursor: default;
+  }
+  .lightbox-close {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    z-index: 2001;
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--white-dim);
+    font: 11px var(--mono);
+    letter-spacing: 0.1em;
+    cursor: pointer;
+  }
+  .lightbox-close:hover { color: var(--red); border-color: var(--red-dim); }
+  .lightbox-hint {
+    position: fixed;
+    bottom: 22px;
+    left: 50%;
+    z-index: 2001;
+    transform: translateX(-50%);
+    color: var(--white-dim);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+  @media (max-width: 768px) {
+    .lightbox-overlay { padding: 56px 12px; }
+    .lightbox-close { top: 12px; right: 12px; }
+  }
+
 </style>
 </head>
 <body>
@@ -537,6 +611,12 @@
   <span><a href="index.html" style="color:var(--white-dim);text-decoration:none;"><span class="lang-en">← Return to Archive</span><span class="lang-zh">← 返回档案库</span></a></span>
 </footer>
 
+<div class="lightbox-overlay" id="image-lightbox" role="dialog" aria-modal="true" aria-label="Enlarged image" hidden>
+  <button class="lightbox-close" type="button"><span class="lang-en">CLOSE</span><span class="lang-zh">关闭</span> ×</button>
+  <img id="lightbox-image" src="" alt="">
+  <div class="lightbox-hint"><span class="lang-en">ESC OR CLICK OUTSIDE TO CLOSE</span><span class="lang-zh">按 ESC 或点击空白处关闭</span></div>
+</div>
+
 <script>
   const ch = document.getElementById('ch');
   const cv = document.getElementById('cv');
@@ -560,6 +640,51 @@
   }
   const savedLang = localStorage.getItem('lang') || 'en';
   setLang(savedLang);
+
+  const lightbox = document.getElementById('image-lightbox');
+  const lightboxImage = document.getElementById('lightbox-image');
+  const lightboxClose = lightbox.querySelector('.lightbox-close');
+  let lastFocusedImage = null;
+
+  function openLightbox(image) {
+    lastFocusedImage = image;
+    lightboxImage.src = image.currentSrc || image.src;
+    lightboxImage.alt = image.alt;
+    lightbox.hidden = false;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    lightboxClose.focus();
+  }
+
+  function closeLightbox() {
+    if (!lightbox.classList.contains('active')) return;
+    lightbox.classList.remove('active');
+    lightbox.hidden = true;
+    lightboxImage.removeAttribute('src');
+    document.body.style.overflow = '';
+    if (lastFocusedImage) lastFocusedImage.focus();
+  }
+
+  document.querySelectorAll('.image-slot img').forEach(image => {
+    image.tabIndex = 0;
+    image.setAttribute('role', 'button');
+    image.setAttribute('aria-label', `${image.alt || 'Image'} — click to enlarge`);
+    image.addEventListener('click', () => openLightbox(image));
+    image.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openLightbox(image);
+      }
+    });
+  });
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', event => {
+    if (event.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeLightbox();
+  });
 
 </script>
 </body>
