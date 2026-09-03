@@ -427,8 +427,73 @@
     width: 2px; height: 0;
     background: var(--red);
     transition: height 0.4s ease;
+    z-index: 3;
   }
   .category-card:hover::before { height: 100%; }
+
+  /* CATEGORY CARD — HOVER PREVIEW (故障显影 / glitch reveal) */
+  .cat-preview {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 0.45s ease;
+    filter: saturate(1.05) contrast(1.05);
+  }
+  .category-card:hover .cat-preview {
+    opacity: 0.35;
+    animation: catGlitch 0.4s steps(6, end) 1;
+  }
+  @keyframes catGlitch {
+    0%   { clip-path: inset(0 0 0 0);   transform: translate(0,0); }
+    12%  { clip-path: inset(8% 0 62% 0); transform: translate(-5px,0); }
+    24%  { clip-path: inset(68% 0 6% 0); transform: translate(4px,0); }
+    36%  { clip-path: inset(28% 0 42% 0); transform: translate(-3px,0); }
+    52%  { clip-path: inset(0 0 78% 0);  transform: translate(3px,0); }
+    68%  { clip-path: inset(48% 0 12% 0); transform: translate(-2px,0); }
+    100% { clip-path: inset(0 0 0 0);   transform: translate(0,0); }
+  }
+
+  /* scanline sweep, fires once per hover-in */
+  .cat-scanline {
+    position: absolute;
+    left: 0; right: 0; top: -8%;
+    height: 3px;
+    background: var(--red);
+    opacity: 0;
+    filter: blur(1px);
+    z-index: 4;
+    pointer-events: none;
+  }
+  .category-card:hover .cat-scanline {
+    animation: catScan 0.55s ease-out 1;
+  }
+  @keyframes catScan {
+    0%   { top: -8%; opacity: 0.9; }
+    100% { top: 106%; opacity: 0; }
+  }
+
+  /* "// ACCESSING…" flicker on the index label while previewing */
+  .category-card:hover .cat-index {
+    position: relative;
+  }
+  .category-card:hover .cat-index::after {
+    content: '// ACCESSING\2026';
+    position: absolute;
+    left: 0; top: 0;
+    background: var(--bg2);
+    color: var(--red);
+    animation: catFlicker 0.5s steps(1, end) 2;
+  }
+  @keyframes catFlicker {
+    0%, 100% { opacity: 0; }
+    20%, 60% { opacity: 1; }
+    40%, 80% { opacity: 0; }
+  }
 
   .cat-index {
     font-size: 11px;
@@ -436,6 +501,8 @@
     letter-spacing: 0.12em;
     margin-bottom: 20px;
     transition: color 0.2s;
+    position: relative;
+    z-index: 3;
   }
   .category-card:hover .cat-index { color: var(--red); }
 
@@ -447,6 +514,18 @@
     line-height: 1.0;
     letter-spacing: -0.02em;
     margin-bottom: 16px;
+    position: relative;
+    z-index: 3;
+  }
+  .category-card:hover .cat-title {
+    animation: catTitleJitter 0.3s steps(4, end) 2;
+  }
+  @keyframes catTitleJitter {
+    0%   { transform: translate(0,0); text-shadow: none; }
+    25%  { transform: translate(-2px, 0.5px); text-shadow: -2px 0 var(--red), 2px 0 #3a6cff; }
+    50%  { transform: translate(2px, -0.5px); text-shadow: 2px 0 var(--red), -2px 0 #3a6cff; }
+    75%  { transform: translate(-1.5px, 1px); text-shadow: -1px 0 var(--red), 1px 0 #3a6cff; }
+    100% { transform: translate(0,0); text-shadow: none; }
   }
 
   .cat-desc {
@@ -455,12 +534,16 @@
     line-height: 1.7;
     max-width: 360px;
     margin-bottom: 28px;
+    position: relative;
+    z-index: 3;
   }
 
   .cat-footer {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    position: relative;
+    z-index: 3;
   }
 
   .cat-count {
@@ -813,6 +896,8 @@
     <div class="category-grid">
 
       <a href="category-films.html" class="category-card reveal">
+        <video class="cat-preview" src="images/FilmsPreview.mp4" muted loop playsinline preload="none"></video>
+        <div class="cat-scanline"></div>
         <div>
           <div class="cat-index">// CATEGORY 01</div>
           <h3 class="cat-title">
@@ -829,6 +914,8 @@
       </a>
 
       <a href="category-games.html" class="category-card reveal">
+        <video class="cat-preview" src="images/GamesPreview.mp4" muted loop playsinline preload="none"></video>
+        <div class="cat-scanline"></div>
         <div>
           <div class="cat-index">// CATEGORY 02</div>
           <h3 class="cat-title">
@@ -845,6 +932,8 @@
       </a>
 
       <a href="category-immersive.html" class="category-card reveal">
+        <video class="cat-preview" src="images/ImmersivePreview.mp4" muted loop playsinline preload="none"></video>
+        <div class="cat-scanline"></div>
         <div>
           <div class="cat-index">// CATEGORY 03</div>
           <h3 class="cat-title">
@@ -861,6 +950,8 @@
       </a>
 
       <a href="category-architecture.html" class="category-card reveal">
+        <img class="cat-preview" src="images/ArchitecturePreview.png" alt="" loading="lazy">
+        <div class="cat-scanline"></div>
         <div>
           <div class="cat-index">// CATEGORY 04</div>
           <h3 class="cat-title">
@@ -1222,6 +1313,20 @@
     const entry = headerEl.closest('.tech-entry');
     entry.classList.toggle('open');
   }
+
+  // CATEGORY CARD HOVER PREVIEW — play/pause video on demand so the
+  // ~25MB clips only load once a card is actually hovered, not on page load.
+  document.querySelectorAll('.category-card').forEach(card => {
+    const vid = card.querySelector('video.cat-preview');
+    if (!vid) return;
+    card.addEventListener('mouseenter', () => {
+      vid.currentTime = 0;
+      vid.play().catch(() => {});
+    });
+    card.addEventListener('mouseleave', () => {
+      vid.pause();
+    });
+  });
 </script>
 </body>
 </html>
